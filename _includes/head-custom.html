@@ -1,0 +1,28 @@
+<style>
+  /* homework-banner: make the cayman header look like ruled notebook paper */
+  .page-header {
+    color: #16233b;
+    background-color: #fdfcf3;
+    background-image:
+      /* red left margin line */
+      linear-gradient(to right,
+        transparent 0 2.75rem,
+        rgba(214, 69, 69, .55) 2.75rem calc(2.75rem + 2px),
+        transparent calc(2.75rem + 2px)),
+      /* blue horizontal rules */
+      repeating-linear-gradient(to bottom,
+        transparent 0 2.25rem,
+        rgba(60, 110, 190, .28) 2.25rem calc(2.25rem + 1px),
+        transparent calc(2.25rem + 1px));
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+  }
+  .page-header .project-name {
+    color: #16233b;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .65);
+  }
+  .page-header .project-tagline {
+    color: #3f5168;
+    opacity: .9;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
+  }
+</style>
