@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grammar Detective</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column, one sentence "case card" at a time; big tap targets, color = word type (blue ADJ, green ADV, orange ART) */
+:root{
+  --bg:#F4F6FB; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DDE2F0; --hover:#EBEEF8;
+  --adj:#2563D9; --adj-soft:#E3ECFC; --adv:#11875A; --adv-soft:#DDF3E9; --art:#C9630F; --art-soft:#FCEBDC;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#11875A;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Lexend", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
+  --adj:#7EA8FF; --adj-soft:#22305E; --adv:#5ED3A0; --adv-soft:#1A3A3A; --art:#FFA75C; --art-soft:#3D2C2A;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3A0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
+  --adj:#7EA8FF; --adj-soft:#22305E; --adv:#5ED3A0; --adv-soft:#1A3A3A; --art:#FFA75C; --art-soft:#3D2C2A;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3A0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.6rem;font-weight:800}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--adj);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.hero{display:flex;flex-direction:column;gap:8px;padding-top:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.75rem;font-weight:400}
+.t-adj{background:var(--adj-soft);color:var(--adj)} .t-adv{background:var(--adv-soft);color:var(--adv)} .t-art{background:var(--art-soft);color:var(--art)}
+.c-adj{color:var(--adj)} .c-adv{color:var(--adv)} .c-art{color:var(--art)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.prompt{font-weight:600;font-size:1.05rem}
+.sentence{display:flex;flex-wrap:wrap;gap:4px 2px;font-size:clamp(1.25rem,4.6vw,1.5rem);line-height:1.6}
+.word{padding:2px 8px;border-radius:10px;border:2px solid transparent;font-weight:500;min-height:44px}
+.sentence.live .word:hover{background:var(--hover)}
+.word.oops{background:var(--miss-soft);animation:shake .35s}
+.word.look{border-color:var(--hl);animation:pulse 1s infinite}
+.word.found{background:var(--hl);color:var(--hl-ink);text-decoration:line-through;text-decoration-thickness:2px}
+.word.fixed{font-weight:600;color:var(--hl-ink);background:var(--hl)}
+.word.static{cursor:default}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:12px;font-weight:600;font-size:1.1rem;background:var(--card);min-height:52px}
+.choice:hover{border-color:var(--ink)}
+.choice.t-adj{background:var(--adj-soft)} .choice.t-adv{background:var(--adv-soft)} .choice.t-art{background:var(--art-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.nomistake{align-self:flex-start;border:2px dashed var(--line);border-radius:12px;padding:10px 14px;color:var(--muted);font-weight:500}
+.nomistake:hover{border-color:var(--muted);color:var(--ink)}
+.nomistake.oops{border-color:var(--miss);color:var(--miss);animation:shake .35s}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.adj{background:var(--adj-soft)} .result.adv{background:var(--adv-soft)} .result.art{background:var(--art-soft)}
+.result strong{font-family:var(--display);font-size:1.2rem}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pulse{50%{box-shadow:0 0 0 5px rgba(255,225,77,.5)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<p style="text-align:center;margin-top:24px"><a href="./" style="color:var(--muted)">Study guide</a></p>
+
+<script>
+const BANK=[
+ {t:'adj',s:"Tyrannosaurus rex ran on its power hind legs.",w:"power",fix:"powerful",o:["powerly","powers"],why:"Legs are a noun. You need a describer: powerful. Power is a thing, not a describing word."},
+ {t:'adj',s:"Eating vegetables is a health habit.",w:"health",fix:"healthy",o:["healthily","healths"],why:"Habit is a noun. What kind of habit? A healthy one. Add -y to turn the thing into a describer."},
+ {t:'adj',s:"We slept in a thatch hut by the ocean.",w:"thatch",fix:"thatched",o:["thatchly","thatches"],why:"What kind of hut? A thatched hut. Add -ed to make the describer."},
+ {t:'adj',s:"She is the faster runner on the whole team.",w:"faster",fix:"fastest",o:["fast","fastly"],why:"A whole team is more than 2 people, so use -est: fastest."},
+ {t:'adj',s:"Of the two pies, the cherry one is the best.",w:"best",fix:"better",o:["goodest","most good"],why:"Only two pies! Comparing 2 means better. Best is for 3 or more."},
+ {t:'adj',s:"This is the worse movie I have ever seen.",w:"worse",fix:"worst",o:["badder","worser"],why:"\"Ever\" means out of ALL movies, so it's the -est form: worst."},
+ {t:'adj',s:"The garbage smelled terribly.",w:"terribly",fix:"terrible",o:["terriblest","terribler"],why:"\"Smelled\" works like an equals sign: garbage = terrible. After is/was/smelled/tasted, use the adjective, no -ly."},
+ {t:'adj',s:"It was a danger storm, so we stayed inside.",w:"danger",fix:"dangerous",o:["dangerously","dangers"],why:"What kind of storm? A dangerous one. Danger is a thing; dangerous describes it."},
+ {t:'adj',s:"Mount Everest is the taller mountain in the world.",w:"taller",fix:"tallest",o:["tall","tallerest"],why:"In the whole world = out of many mountains, so use -est: tallest."},
+ {t:'adj',s:"The soup tasted deliciously.",w:"deliciously",fix:"delicious",o:["deliciouser","deliciousest"],why:"\"Tasted\" works like an equals sign: soup = delicious. Use the adjective, no -ly."},
+ {t:'adj',s:"Our soccer team had a success season.",w:"success",fix:"successful",o:["successfully","succeeds"],why:"What kind of season? A successful one. Add -ful to turn the thing into a describer."},
+ {t:'adj',s:"A cheetah is fast than a lion.",w:"fast",fix:"faster",o:["fastest","fastly"],why:"Comparing 2 animals (cheetah and lion), so use -er: faster."},
+ {t:'adj',s:"She is the tallest girl in her grade.",w:null,why:"No mistake! A whole grade has lots of girls, so tallest (-est) is right."},
+ {t:'adv',s:"The puppy ran quick across the yard.",w:"quick",fix:"quickly",o:["quicker","quickness"],why:"How did it run? Quickly. It describes the verb ran, so it needs -ly."},
+ {t:'adv',s:"I didn't have enoughly money for a snack.",w:"enoughly",fix:"enough",o:["enoughs","enougher"],why:"Fake -ly! Enough never takes -ly."},
+ {t:'adv',s:"Tomorrow we went to the beach.",w:"Tomorrow",fix:"Yesterday",o:["Next week","Tonight"],why:"\"Went\" already happened, so the WHEN word must be in the past: Yesterday."},
+ {t:'adv',s:"Mia did good on her spelling test.",w:"good",fix:"well",o:["goodly","gooder"],why:"How did she do? Well. Good describes nouns; well describes how something is done."},
+ {t:'adv',s:"The T-rex, as it is popular called, was huge.",w:"popular",fix:"popularly",o:["popularer","populars"],why:"How is it called? Popularly. It describes the verb called, so add -ly."},
+ {t:'adv',s:"My aunt will certain have to wait until summer.",w:"certain",fix:"certainly",o:["certainer","certains"],why:"It describes the verb \"will have\", so it needs -ly: certainly."},
+ {t:'adv',s:"The dog barked loud at the mail carrier.",w:"loud",fix:"loudly",o:["louder","loudest"],why:"How did it bark? Loudly. Describing a verb, so add -ly."},
+ {t:'adv',s:"The tiger moved silent through the grass.",w:"silent",fix:"silently",o:["silenter","silence"],why:"How did it move? Silently. Describing the verb moved, so add -ly."},
+ {t:'adv',s:"The cheetah ran fastly across the plain.",w:"fastly",fix:"fast",o:["fastness","fastish"],why:"Fake -ly! Fast is already an adverb. Fastly is not a word."},
+ {t:'adv',s:"She worked hardly on her science project.",w:"hardly",fix:"hard",o:["hardy","hardness"],why:"Hardly means \"barely\"! She worked hard. Hard is an adverb with no -ly."},
+ {t:'adv',s:"Next week, we visited Grandma.",w:"Next",fix:"Last",o:["Tomorrow","Soon"],why:"\"Visited\" already happened, so it was LAST week, not next week."},
+ {t:'adv',s:"Dinosaurs ruled for approximate 135 million years.",w:"approximate",fix:"approximately",o:["approximates","approximation"],why:"How much time? Approximately 135 million years. It tells how much, so add -ly."},
+ {t:'adv',s:"The crowd cheered extreme loudly.",w:"extreme",fix:"extremely",o:["extremer","extremest"],why:"How loudly? Extremely. A word that describes another adverb is also an adverb, so add -ly."},
+ {t:'adv',s:"He finished his homework quickly.",w:null,why:"No mistake! How did he finish? Quickly. The -ly is right."},
+ {t:'art',s:"We saw a elephant at the zoo.",w:"a",fix:"an",o:["the a","on"],why:"Elephant starts with a vowel sound (eh), so use an."},
+ {t:'art',s:"It was a honor to meet the mayor.",w:"a",fix:"an",o:["am","one"],why:"The h in honor is silent. It sounds like \"ON-er\", so use an."},
+ {t:'art',s:"That was a extremely loud thunderclap.",w:"a",fix:"an",o:["on","in"],why:"Match the word right after the article. Extremely starts with a vowel sound, so use an."},
+ {t:'art',s:"The moon is a brightest object in the night sky.",w:"a",fix:"the",o:["an","one"],why:"There's only one brightest object, so use the."},
+ {t:'art',s:"I ate an banana for breakfast.",w:"an",fix:"a",o:["and","in"],why:"Banana starts with a consonant sound (b), so use a."},
+ {t:'art',s:"She dressed up as an unicorn for Halloween.",w:"an",fix:"a",o:["and","on"],why:"Unicorn sounds like \"YOU-nicorn\", a consonant sound. Use a, even though u is a vowel."},
+ {t:'art',s:"We waited a hour for the bus.",w:"a",fix:"an",o:["one","on"],why:"The h in hour is silent. It sounds like \"OW-er\", so use an."},
+ {t:'art',s:"Neil Armstrong was a first person to walk on the moon.",w:"a",fix:"the",o:["an","one"],why:"There can only be one first person, so use the."},
+ {t:'art',s:"Can I have a apple?",w:"a",fix:"an",o:["the a","on"],why:"Apple starts with a vowel sound, so use an."},
+ {t:'art',s:"We waited an hour for the bus.",w:null,why:"No mistake! Hour has a silent h and sounds like \"OW-er\", so an is right."}
+];
+const NAME={adj:"Adjective",adv:"Adverb",art:"Article"};
+const HINT={
+ adj:"<b>Adjective hunt:</b> find a word that should describe a noun (what kind? which one?). Is it a thing pretending to be a describer? Comparing 2 (-er) or 3+ (-est)?",
+ adv:"<b>Adverb hunt:</b> find a word that tells HOW, WHEN, WHERE, or HOW MUCH. Not every adverb ends in -ly, and some never do (enough, fast, hard).",
+ art:"<b>Article hunt:</b> look only at a, an, the. Say the next word out loud. Vowel sound means an. Only one of something means the."
+};
+const RULE={adj:"Adjectives describe nouns. 2 things: -er. 3 or more: -est. After is/was/smells/tastes, no -ly.",
+ adv:"Adverbs answer how, when, where, how much. Not all end in -ly. Enough, fast, hard never take -ly.",
+ art:"a / an goes by SOUND. The = only one, or a specific one."};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('gd-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('gd-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const clean=w=>w.replace(/[.,!?;:"]/g,'');
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <header class="hero">
+    <span class="label">Adjectives · Adverbs · Articles</span>
+    <h1>Grammar <span class="mark">Detective</span></h1>
+    <p class="muted">Find the mistake. Fix it. Close the case.</p>
+  </header>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick case<small>5 sentences · all three types · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one type (6 sentences)</span>
+    <div class="topics">
+      <button class="topic t-adj" data-act="start" data-mode="adj">Adjectives<span>describe nouns</span></button>
+      <button class="topic t-adv" data-act="start" data-mode="adv">Adverbs<span>how · when · where</span></button>
+      <button class="topic t-art" data-act="start" data-mode="art">Articles<span>a · an · the</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How a case works</span>
+    <ol class="steps">
+      <li><span><b>Tap</b> the word that's wrong. Watch out: some sentences are tricks with no mistake.</span></li>
+      <li><span><b>Pick</b> the fix.</span></li>
+      <li><span>In a quick case, <b>name the type</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Cases closed: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  const errs=shuffle(pool.filter(q=>q.w)), none=shuffle(pool.filter(q=>!q.w));
+  const qs=errs.slice(0,n-1); qs.push(none.length&&Math.random()<.6?none[0]:errs[n-1]);
+  S={mode,qs:shuffle(qs),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'find',miss:0,fixMiss:0,typeMiss:0,msg:'',opts:q.w?shuffle([q.fix,...q.o]):[],pts:0,oops:null});
+  S.toks=q.s.split(' '); S.target=q.w?S.toks.findIndex(t=>clean(t)===q.w):-1;
+  S.max+=S.mode==='mix'?3:2;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  const words=S.toks.map((t,k)=>{
+    let cls='word', txt=t;
+    if(k===S.target&&ph==='fix')cls+=' found static';
+    else if(k===S.target&&(ph==='type'||ph==='done')){cls+=' fixed static';txt=t.replace(q.w,q.fix)}
+    else if(ph!=='find')cls+=' static';
+    if(ph==='find'&&k===S.target&&S.miss>=3)cls+=' look';
+    if(S.oops===k)cls+=' oops';
+    return `<button class="${cls}" data-act="word" data-k="${k}" ${ph!=='find'?'tabindex="-1"':''}>${esc(txt)}</button>`;
+  }).join('');
+  let body='';
+  if(ph==='find'){
+    body=`<p class="prompt">Tap the word that's wrong.</p>
+    <div class="sentence live">${words}</div>
+    <button class="nomistake ${S.oops==='none'?'oops':''}" data-act="none">No mistake here</button>`;
+  }else if(ph==='fix'){
+    body=`<p class="prompt">Nice find! Pick the fix:</p><div class="sentence">${words}</div>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="fix" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: what kind of error was it?</p><div class="sentence">${words}</div>
+    <div class="choices">${['adj','adv','art'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?3:2;
+    body=`<div class="sentence">${words}</div>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Case cracked!':S.pts>0?'Solved!':'Solved with help.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next sentence →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mystery type</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Sentence ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function findMissHint(q){
+  S.miss++;
+  if(!q.w){S.msg=S.miss===1?"Read it out loud slowly, one word at a time. Does every word sound right?":"This might be a trick sentence. If nothing is wrong, tap <b>No mistake here</b>.";return}
+  if(S.mode==='mix'&&S.miss===1)S.msg="Read it out loud with your finger under each word. Which one sounds off?";
+  else S.msg=HINT[q.t]+(S.miss>=3?" <b>Look at the glowing word.</b>":"");
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='word'&&S.phase==='find'){
+    const k=+b.dataset.k;
+    if(k===S.target){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.phase='fix'; S.msg=''; }
+    else{ S.oops=k; findMissHint(q); }
+    return render();
+  }
+  if(a==='none'&&S.phase==='find'){
+    if(!q.w){ if(S.miss===0)S.pts+=S.mode==='mix'?3:2; else{S.pts+=1;S.missed.add(q.t)} S.phase='done'; S.msg=''; }
+    else{ S.oops='none'; S.miss++; S.msg="There IS a mistake hiding in this one. "+(S.mode==='mix'?"Read it out loud slowly.":HINT[q.t]); }
+    return render();
+  }
+  if(a==='fix'&&S.phase==='fix'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.fix){ if(S.fixMiss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; S.fixMiss++; S.msg="Not quite. Read the sentence out loud with each choice. "+(S.fixMiss>1?HINT[q.t]:''); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the fixed word. Does it describe a noun (<b>Adjective</b>), tell how/when/where/how much (<b>Adverb</b>), or is it a/an/the (<b>Article</b>)?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  const pct=S.stars/S.max, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Master detective!":pct>=.6?"Case closed!":"Case closed. Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}s:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another case<small>Same type, new sentences</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+</body>
+</html>
