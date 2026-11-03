@@ -1,5 +1,4 @@
 title: Grammar Detective
-description: Find the mistake. Fix it. Close the case.
-theme: jekyll-theme-midnight
+theme: jekyll-theme-cayman
 exclude:
   - CLAUDE.md
