@@ -1,0 +1,7 @@
+# Local override of the theme's author data so the theme author's real name,
+# email, and social links are never published on this site.
+name: Grammar Detective
+dp: ""
+description: ""
+email: ""
+contact: []

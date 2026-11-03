@@ -1,4 +1,18 @@
 title: Grammar Detective
-theme: jekyll-theme-cayman
+remote_theme: sharadcodes/jekyll-theme-serial-programmer
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jemoji
+# This theme only ships `blog` and `post` layouts (no default/page), so apply
+# `post` to our static pages. quiz.html has no front matter, so it stays a
+# verbatim static file, untouched by this default.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: post
 exclude:
   - CLAUDE.md
