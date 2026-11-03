@@ -1,0 +1,8 @@
+# Homework intake: raw scans/photos of the child's work and diagnosis notes.
+# Kept locally for the homework-intake skill to read; never committed (repo is public).
+_intake/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*~

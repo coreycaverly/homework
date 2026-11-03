@@ -2,3 +2,6 @@ title: Grammar Detective
 theme: jekyll-theme-cayman
 exclude:
   - CLAUDE.md
+  - .claude
+  - _intake
+  - README.md

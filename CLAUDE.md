@@ -43,16 +43,23 @@ This is based on Passage 23 "Deadly Dino" (he found 10 of 11 errors) and Passage
 ## Repo layout
 
 ```
-index.md               Subject hub (landing page): lists subjects, links into each
+index.md               Subject hub (landing page): subject cards live between the
+                       <!-- homework-intake:subjects:start/end --> markers
 grammar/
   index.md             Grammar study guide (Jekyll renders it; theme set in _config.yml)
   quiz.html            Self-contained quiz: inline CSS + JS, no build step, no dependencies
   answer-key.html      Parent answer key (rendered from answer-key.md), kept off the guide
-_config.yml            Jekyll config (theme: jekyll-theme-cayman; excludes CLAUDE.md)
+_includes/
+  head-custom.html     Shared banner styling (ruled-notebook-paper look)
+_layouts/
+  default.html         Cayman layout override that strips the "View on GitHub" / owner links
+_config.yml            Jekyll config (theme: jekyll-theme-cayman; excludes CLAUDE.md, .claude, _intake)
 CLAUDE.md              This file
+_intake/               GITIGNORED: raw worksheet scans + diagnosis notes (never committed/published)
+.claude/skills/homework-intake/   The intake skill (autoloaded by Claude Code, excluded from the site)
 ```
 
-**Multiple subjects:** the site is a per-subject folder structure. Grammar lives in `grammar/`; a new subject is a new top-level folder (e.g. `math/`) with its own `index.md` and assets, linked from the root `index.md` hub. Navigation is a simple in-content breadcrumb line on each page (`[← All subjects](../)`); factor it into a Jekyll `_includes/` partial once there are several subjects.
+**Multiple subjects:** the site is a per-subject folder structure. Grammar lives in `grammar/`; a new subject is a new top-level folder (e.g. `math/`) with its own `index.md`, `quiz.html`, and `answer-key`, linked from the root `index.md` hub. The **homework-intake skill** creates and wires these up (see below). Navigation is a breadcrumb line on each page (`[← All subjects](../)`) plus the hub's marker block.
 
 **URLs:** hub `/`, grammar guide `/grammar/`, quiz `/grammar/quiz.html`, answer key `/grammar/answer-key.html`.
 
@@ -81,7 +88,13 @@ The question bank is the `BANK` array near the top of the `<script>` in `grammar
 
 **Suggested refactor before the skill exists:** move `BANK` to `data/questions.json` and load it with `fetch('data/questions.json')`, so the skill edits JSON instead of JavaScript.
 
-## The planned skill: what it should do
+## The homework-intake skill
+
+Implemented at `.claude/skills/homework-intake/` (autoloaded by Claude Code, excluded
+from the published site). It turns a scan/photo of a worksheet into a study guide and
+quiz, organized by subject, reusing the base theme, auto-managing navigation, and
+keeping answer keys and the child's scans private. Its SKILL.md and `references/` hold
+the full workflow; the summary below is the original intent it was built from.
 
 **Input:** a photo of a completed worksheet (his pencil marks plus the circle counts).
 
