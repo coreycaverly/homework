@@ -43,17 +43,24 @@ This is based on Passage 23 "Deadly Dino" (he found 10 of 11 errors) and Passage
 ## Repo layout
 
 ```
-index.md      Study guide (Jekyll renders it; theme set in _config.yml)
-quiz.html     Self-contained quiz: inline CSS + JS, no build step, no dependencies
-_config.yml   Jekyll config (theme: jekyll-theme-cayman; excludes CLAUDE.md)
-CLAUDE.md     This file
+index.md               Subject hub (landing page): lists subjects, links into each
+grammar/
+  index.md             Grammar study guide (Jekyll renders it; theme set in _config.yml)
+  quiz.html            Self-contained quiz: inline CSS + JS, no build step, no dependencies
+  answer-key.html      Parent answer key (rendered from answer-key.md), kept off the guide
+_config.yml            Jekyll config (theme: jekyll-theme-cayman; excludes CLAUDE.md)
+CLAUDE.md              This file
 ```
 
-**Hosting:** GitHub Pages, deployed from branch `main`, folder `/ (root)`. A push to main redeploys in about 1 minute.
+**Multiple subjects:** the site is a per-subject folder structure. Grammar lives in `grammar/`; a new subject is a new top-level folder (e.g. `math/`) with its own `index.md` and assets, linked from the root `index.md` hub. Navigation is a simple in-content breadcrumb line on each page (`[← All subjects](../)`); factor it into a Jekyll `_includes/` partial once there are several subjects.
+
+**URLs:** hub `/`, grammar guide `/grammar/`, quiz `/grammar/quiz.html`, answer key `/grammar/answer-key.html`.
+
+**Hosting:** GitHub Pages, deployed from branch `main`, folder `/ (root)`, classic branch build (no GitHub Action). A push to main redeploys in about 1 minute.
 
 ## Quiz data format
 
-The question bank is the `BANK` array near the top of the `<script>` in `quiz.html`:
+The question bank is the `BANK` array near the top of the `<script>` in `grammar/quiz.html`:
 
 ```js
 {t:'adv',                                   // 'adj' | 'adv' | 'art'
@@ -82,7 +89,7 @@ The question bank is the `BANK` array near the top of the `<script>` in `quiz.ht
 2. **Diagnose** each error as found, missed, or wrong fix. Give a per-type score (e.g. "Adverbs 2/5").
 3. **Map** the misses to the gaps in the table above, adding a new row if a new pattern shows up.
 4. **Add 3–6 original quiz items** that target the misses, following the rules above.
-5. **Update `index.md`** only if a new trap appears. Add it under the matching section using the same Wrong / Right / Clue format.
+5. **Update `grammar/index.md`** only if a new trap appears. Add it under the matching section using the same Wrong / Right / Clue format. (If it reveals a missing answer-key entry, update `grammar/answer-key.md` too.)
 6. **Write a short parent summary:** score, top gap, one thing to practice tonight.
 7. **Commit** with a message like `Add 5 adverb items from Passage 25 diagnosis`.
 
@@ -90,7 +97,7 @@ The question bank is the `BANK` array near the top of the `<script>` in `quiz.ht
 
 - The site is **public**. Never publish the child's name, school, photos of his work, or mention of ADHD.
 - Keep worksheet photos and diagnosis notes out of the repo, or in a private repo.
-- The parent answer key is currently on the public page. Move it to a separate page or remove it if he shouldn't be able to see it.
+- The parent answer key lives on its own page (`grammar/answer-key.html`), linked only by a small note at the bottom of the guide — not in the student's quiz flow. The site is public, so this is obscurity, not real gating; if he must not reach it, move the key to a private repo instead.
 
 ## Ideas for later
 
