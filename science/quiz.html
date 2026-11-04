@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Science Detective</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Multiple-choice quiz in the site's style. Color = topic: Motion purple, Newton's Laws teal, Calculations rose. */
+:root{
+  --bg:#F4F6FB; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DDE2F0; --hover:#EBEEF8;
+  --motion:#7C3AED; --motion-soft:#EDE4FD; --law:#0D9488; --law-soft:#D6F0EC; --calc:#E11D48; --calc-soft:#FCE1E8;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#0D9488;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Lexend", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
+  --motion:#B79CF5; --motion-soft:#2A2250; --law:#5ED3C4; --law-soft:#123A38; --calc:#FF8DA6; --calc-soft:#3E1F2A;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3C4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
+  --motion:#B79CF5; --motion-soft:#2A2250; --law:#5ED3C4; --law-soft:#123A38; --calc:#FF8DA6; --calc-soft:#3E1F2A;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3C4; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.6rem;font-weight:800}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--motion);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.hero{display:flex;flex-direction:column;gap:8px;padding-top:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.72rem;font-weight:400}
+.t-motion{background:var(--motion-soft);color:var(--motion)} .t-law{background:var(--law-soft);color:var(--law)} .t-calc{background:var(--calc-soft);color:var(--calc)}
+.c-motion{color:var(--motion)} .c-law{color:var(--law)} .c-calc{color:var(--calc)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.badge.t-motion{background:var(--motion-soft);color:var(--motion)} .badge.t-law{background:var(--law-soft);color:var(--law)} .badge.t-calc{background:var(--calc-soft);color:var(--calc)}
+.prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.05rem;background:var(--card);min-height:52px;text-align:left}
+.choice:hover{border-color:var(--ink)}
+.choice.t-motion{background:var(--motion-soft)} .choice.t-law{background:var(--law-soft)} .choice.t-calc{background:var(--calc-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.choice.pick{border-color:var(--good);background:var(--law-soft)}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.motion{background:var(--motion-soft)} .result.law{background:var(--law-soft)} .result.calc{background:var(--calc-soft)}
+.result strong{font-family:var(--display);font-size:1.2rem}
+.answerline{font-weight:600}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<p style="text-align:center;margin-top:24px"><a href="./" style="color:var(--muted)">Study guide</a> <span style="color:var(--muted)">·</span> <a href="../" style="color:var(--muted)">All subjects</a></p>
+
+<script>
+const BANK=[
+ // MOTION
+ {t:'motion',q:"Velocity is speed AND what else?",a:"direction",o:["mass","time","weight"],why:"Velocity = speed AND direction. That extra piece is what makes it different from plain speed."},
+ {t:'motion',q:"A car drives a steady 30 mph around a curve. Is it accelerating?",a:"Yes — its direction is changing",o:["No — its speed is steady","No — it isn't speeding up","Only if it speeds up"],why:"Acceleration is ANY change in velocity. Turning changes direction, so it's accelerating even at a steady speed."},
+ {t:'motion',q:"What is inertia?",a:"An object's resistance to a change in its motion",o:["The pull of gravity","How fast something moves","A push or a pull"],why:"Inertia is the resistance to a change in motion. More mass means more inertia."},
+ {t:'motion',q:"Which has MORE inertia?",a:"A loaded shopping cart",o:["An empty shopping cart","They have the same inertia","A rolling marble"],why:"More mass = more inertia. The loaded cart is harder to start or stop."},
+ {t:'motion',q:"Acceleration is the rate at which ______ changes.",a:"velocity",o:["mass","inertia","weight"],why:"Acceleration = how fast velocity changes: speeding up, slowing down, or turning."},
+ // NEWTON'S LAWS
+ {t:'law',q:"A soccer ball sits still until someone kicks it. Which law?",a:"1st Law (inertia)",o:["2nd Law (F = m×a)","3rd Law (action–reaction)","Law of momentum"],why:"An object at rest stays at rest until an unbalanced force acts. That's inertia — the 1st Law."},
+ {t:'law',q:"A swimmer pushes water backward and glides forward. Which law?",a:"3rd Law (action–reaction)",o:["1st Law (inertia)","2nd Law (F = m×a)","Law of gravity"],why:"Every action has an equal and opposite reaction. Push water back → water pushes you forward."},
+ {t:'law',q:"A rocket pushes exhaust gases down and lifts off. Which law?",a:"3rd Law (action–reaction)",o:["1st Law (inertia)","2nd Law (F = m×a)","Law of inertia"],why:"Gases pushed down → rocket pushed up. Equal and opposite = the 3rd Law."},
+ {t:'law',q:"Using the SAME push on a FULL cart and an EMPTY cart, which speeds up more?",a:"The empty cart",o:["The full cart","They speed up the same","The heavier one, always"],why:"Same force, less mass = MORE acceleration. a = F ÷ m, so the empty cart wins."},
+ {t:'law',q:"Why don't Newton's 3rd Law force pairs cancel each other out?",a:"They act on two DIFFERENT objects",o:["One force is bigger","They happen at different times","They act on the same object"],why:"Action and reaction act on different objects, so they can't cancel out on one object."},
+ {t:'law',q:"A book rests on a table. The forces on it are balanced. What is the net force?",a:"0 N",o:["9.8 N downward","The book's weight, upward","It depends on the book"],why:"Balanced forces are equal and opposite, so they add up to a net force of 0 N — no change in motion."},
+ {t:'law',q:"Unbalanced forces act on a box. What happens?",a:"It accelerates (its motion changes)",o:["It keeps the same velocity","Nothing — forces always balance","It stops instantly"],why:"Unbalanced forces mean a net force that isn't zero, so the object accelerates."},
+ // CALCULATIONS
+ {t:'calc',q:"A 6 kg object accelerates at 4 m/s². What is the net force? (F = m × a)",a:"24 N",o:["10 N","1.5 N","24 kg"],why:"F = m × a = 6 × 4 = 24 N. Force is measured in newtons (N)."},
+ {t:'calc',q:"A 2 kg ball is pushed with 10 N. What is its acceleration? (a = F ÷ m)",a:"5 m/s²",o:["20 m/s²","12 m/s²","0.2 m/s²"],why:"Rearrange F = m × a to a = F ÷ m = 10 ÷ 2 = 5 m/s²."},
+ {t:'calc',q:"Forces on a box: 45 N right and 15 N left. What is the net force?",a:"30 N right",o:["60 N right","30 N left","60 N left"],why:"Opposite directions subtract: 45 − 15 = 30 N, pointing the bigger way (right)."},
+ {t:'calc',q:"Forces on a box: 20 N right and 60 N left. What is the net force?",a:"40 N left",o:["80 N left","40 N right","80 N right"],why:"60 − 20 = 40 N, toward the larger force — left."},
+ {t:'calc',q:"Two forces, 25 N left and 25 N right, act on a box. Net force?",a:"0 N (balanced)",o:["50 N right","50 N left","25 N"],why:"Equal and opposite forces cancel: 25 − 25 = 0 N. Balanced, so motion doesn't change."},
+ {t:'calc',q:"Momentum = mass × velocity. A 1,000 kg car at 20 m/s has how much momentum?",a:"20,000 kg·m/s",o:["1,020 kg·m/s","50 kg·m/s","20,000 N"],why:"p = m × v = 1,000 × 20 = 20,000 kg·m/s."}
+];
+const NAME={motion:"Motion",law:"Newton's Laws",calc:"Calculations"};
+const HINT={
+ motion:"<b>Motion:</b> Velocity includes direction. Acceleration is ANY change in velocity (even turning). Inertia depends on mass.",
+ law:"<b>Newton's Laws:</b> 1st = things keep doing what they're doing (inertia). 2nd = F = m×a (more mass → less acceleration for the same force). 3rd = every push has an equal push back on a different object.",
+ calc:"<b>Calculations:</b> Write the formula, plug in, then add the units. F = m×a, a = F÷m. Net force: add if same direction, subtract if opposite. p = m×v."
+};
+const RULE={
+ motion:"Velocity = speed AND direction. Acceleration = any change in velocity. More mass = more inertia.",
+ law:"1st Law = inertia. 2nd Law: F = m × a (same force, more mass = less acceleration). 3rd Law: equal, opposite pairs on DIFFERENT objects.",
+ calc:"F = m × a, so a = F ÷ m. Net force: add same-direction forces, subtract opposite ones. Momentum p = m × v."
+};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('sd-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('sd-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>(''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <header class="hero">
+    <span class="label">Forces · Motion · Newton's Laws</span>
+    <h1>Science <span class="mark">Detective</span></h1>
+    <p class="muted">Pick the answer. Know the why. Close the case.</p>
+  </header>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick case<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one topic (6 questions)</span>
+    <div class="topics">
+      <button class="topic t-motion" data-act="start" data-mode="motion">Motion<span>speed · velocity</span></button>
+      <button class="topic t-law" data-act="start" data-mode="law">Newton's Laws<span>1st · 2nd · 3rd</span></button>
+      <button class="topic t-calc" data-act="start" data-mode="calc">Calculations<span>F = m×a</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How a case works</span>
+    <ol class="steps">
+      <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
+      <li><span>Every answer gives you the <b>why</b> — the law or the formula.</span></li>
+      <li><span>In a quick case, <b>name the topic</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Cases closed: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  S={mode,qs:shuffle(pool).slice(0,n),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'answer',miss:0,typeMiss:0,msg:'',opts:shuffle([q.a,...q.o]),pts:0,oops:null});
+  S.max+=S.mode==='mix'?2:1;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  let body='';
+  if(ph==='answer'){
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: what topic was that question?</p>
+    <div class="choices">${['motion','law','calc'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?2:1;
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Case cracked!':S.pts>0?'Solved!':'Solved with help.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mystery topic</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function missHint(q){
+  S.miss++;
+  if(S.miss===1)S.msg="Not quite — read it again slowly. What is the question really asking?";
+  else S.msg=HINT[q.t];
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='answer'&&S.phase==='answer'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.a){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; missHint(q); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the question again. Is it describing motion, naming a law, or doing a calculation?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Master detective!":pct>=.6?"Case closed!":"Case closed. Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another case<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+</body>
+</html>

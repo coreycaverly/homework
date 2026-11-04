@@ -14,6 +14,12 @@ Pick a subject to practice. One short session a day beats one long one.
 Find and fix adjective, adverb, and article errors on your own.
 
 **[Study guide →](grammar/)**  ·  **[Play the quiz →](grammar/quiz.html)**
+
+### 🔬 Science Detective
+
+Forces, motion, and Newton's laws — answer it, then explain the why.
+
+**[Study guide →](science/)**  ·  **[Play the quiz →](science/quiz.html)**
 <!-- homework-intake:subjects:end -->
 
 ---
