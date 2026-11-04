@@ -47,7 +47,8 @@ index.md               Subject hub (landing page): subject cards live between th
                        <!-- homework-intake:subjects:start/end --> markers
 grammar/
   index.md             Grammar study guide (Jekyll renders it; theme set in _config.yml)
-  quiz.html            Self-contained quiz: inline CSS + JS, no build step, no dependencies
+  quiz.html            Quiz: a Jekyll page (layout: default) that renders inside the
+                       site theme; inline CSS + JS wrapped in {% raw %}, no external deps
   answer-key.html      Parent answer key (rendered from answer-key.md), kept off the guide
 _includes/
   head-custom.html     Shared banner styling (ruled-notebook-paper look)

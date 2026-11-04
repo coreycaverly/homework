@@ -1,10 +1,14 @@
 # Quiz format (how to build a subject quiz)
 
 The canonical engine is `grammar/quiz.html`. Read it before building a quiz. It is a
-single self-contained HTML file: inline CSS, a `BANK` data array near the top of the
-`<script>`, and a small state machine that runs each item through phases
-**find → fix → (name the type) → done**, with escalating hints, stars, and
-`localStorage` progress. Reuse this; don't rebuild it from scratch.
+**Jekyll page that renders inside the site theme** (front matter `layout: default`,
+body wrapped in `{% raw %}…{% endraw %}`, a `<div id="app">`, scoped inline CSS, and a
+`<script>`). The `BANK` data array sits near the top of the `<script>`, and a small
+state machine runs each item through phases **find → fix → (name the type) → done**,
+with escalating hints, stars, and `localStorage` progress. The banner/background/fonts
+come from the theme — don't re-add a `<head>` or a dark-mode palette. Reuse this engine;
+don't rebuild it from scratch. The science quiz (`science/quiz.html`) is the
+multiple-choice variant of the same page shape.
 
 There are two quiz styles. Pick by subject.
 

@@ -8,9 +8,13 @@ Everything you generate must match what's already on the site. Reuse, don't rein
   `jekyll-theme-cayman` theme (set in `_config.yml`). The banner is styled by the
   shared `_includes/head-custom.html` (ruled-notebook-paper look) — it applies to
   every page automatically. Do not add per-subject theme CSS unless asked.
-- **Quizzes** (`<subject>/quiz.html`) are standalone HTML with inline CSS + JS, no
-  build step and no dependencies. They do **not** use the Jekyll theme; they carry
-  their own self-contained styles. Model new quizzes on `grammar/quiz.html`.
+- **Quizzes** (`<subject>/quiz.html`) are **Jekyll pages that use the site theme** so
+  they match the guides. Each one starts with front matter (`title:` + `layout: default`),
+  then the quiz body wrapped in `{% raw %} … {% endraw %}` (so Liquid leaves the JS
+  alone): a `<div id="app"></div>`, a `.quiz-nav` footer, a scoped `<style>`, and the
+  `<script>`. No `<!doctype>`/`<head>`/`<body>` — the theme supplies the banner,
+  background, fonts, and footer. Style only the quiz UI, scoped under `#app`; no
+  dark-mode palette (the theme is light). Model new quizzes on `grammar/quiz.html`.
 
 ## ADHD-friendly principles (non-negotiable)
 
