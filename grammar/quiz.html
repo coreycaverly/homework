@@ -1,44 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammar Detective</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;600&display=swap">
+---
+title: Grammar Detective
+---
+
+{% raw %}
+<div id="app"></div>
+<p class="quiz-nav"><a href="./">Study guide</a> · <a href="../">All subjects</a></p>
+
 <style>
-/* Layout: one narrow column, one sentence "case card" at a time; big tap targets, color = word type (blue ADJ, green ADV, orange ART) */
+/* Quiz UI, themed to sit inside the cayman page: the banner, background, fonts and
+   footer come from the site theme; only the interactive quiz is styled here. */
+#app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
+#app *{box-sizing:border-box}
+.quiz-nav{text-align:center;margin-top:28px}
 :root{
-  --bg:#F4F6FB; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DDE2F0; --hover:#EBEEF8;
+  --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
   --adj:#2563D9; --adj-soft:#E3ECFC; --adv:#11875A; --adv-soft:#DDF3E9; --art:#C9630F; --art-soft:#FCEBDC;
   --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#11875A;
-  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body:"Lexend", "Verdana", system-ui, sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
-  --adj:#7EA8FF; --adj-soft:#22305E; --adv:#5ED3A0; --adv-soft:#1A3A3A; --art:#FFA75C; --art-soft:#3D2C2A;
-  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3A0; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#121630; --card:#1C2145; --ink:#EEF0FA; --muted:#A3AACB; --line:#2E3463; --hover:#272D58;
-  --adj:#7EA8FF; --adj-soft:#22305E; --adv:#5ED3A0; --adv-soft:#1A3A3A; --art:#FFA75C; --art-soft:#3D2C2A;
-  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#FF7A86; --miss-soft:#47233A; --good:#5ED3A0; color-scheme:dark}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
-main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
-h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
-h1{font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.02em}
-h2{font-size:1.6rem;font-weight:800}
-p{margin:0}
-button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
-button:focus-visible{outline:3px solid var(--adj);outline-offset:2px}
+#app, #app button{font-family:inherit}
+#app p{margin:0}
+#app button{color:inherit;cursor:pointer;border:0;background:none}
+#app button:focus-visible{outline:3px solid var(--adj);outline-offset:2px}
 .muted{color:var(--muted)}
 .mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
-.hero{display:flex;flex-direction:column;gap:8px;padding-top:8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.intro{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
 .big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
   background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
 .big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
@@ -84,7 +70,7 @@ button:focus-visible{outline:3px solid var(--adj);outline-offset:2px}
 .hint b{font-weight:600}
 .result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
 .result.adj{background:var(--adj-soft)} .result.adv{background:var(--adv-soft)} .result.art{background:var(--art-soft)}
-.result strong{font-family:var(--display);font-size:1.2rem}
+.result strong{font-weight:800;font-size:1.2rem}
 .next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
 .stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
 .stars .off{color:var(--line)}
@@ -97,10 +83,6 @@ button:focus-visible{outline:3px solid var(--adj);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
 </style>
-</head>
-<body>
-<main id="app"></main>
-<p style="text-align:center;margin-top:24px"><a href="./" style="color:var(--muted)">Study guide</a> <span style="color:var(--muted)">·</span> <a href="../" style="color:var(--muted)">All subjects</a></p>
 
 <script>
 const BANK=[
@@ -164,11 +146,7 @@ const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function home(){
   S=null;
   app.innerHTML=`
-  <header class="hero">
-    <span class="label">Adjectives · Adverbs · Articles</span>
-    <h1>Grammar <span class="mark">Detective</span></h1>
-    <p class="muted">Find the mistake. Fix it. Close the case.</p>
-  </header>
+  <p class="intro muted">Tap the word that's wrong, pick the fix, and close the case. Short rounds — about 3 minutes.</p>
   <button class="big-btn" data-act="start" data-mode="mix">
     <div>Quick case<small>5 sentences · all three types · about 3 minutes</small></div><span aria-hidden="true">→</span>
   </button>
@@ -299,5 +277,4 @@ function finish(){
 }
 home();
 </script>
-</body>
-</html>
+{% endraw %}
