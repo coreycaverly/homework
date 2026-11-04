@@ -29,11 +29,28 @@ existing style, organized by subject.
 
 ## What you accept as input
 
-- One or more **images** of a worksheet (completed with his pencil marks, or blank).
-  Read them with vision. A completed sheet lets you **diagnose** (found / missed /
-  wrong fix); a blank sheet you use only to learn the skill being taught.
-- Optional context from the user: subject name, which pages to target, error counts,
+- **Any number of images and/or PDFs**, in one message or across several. Read images
+  with vision; read PDFs page by page. A completed sheet (his pencil marks visible)
+  lets you **diagnose** (found / missed / wrong fix); a blank sheet you use only to
+  learn the skill being taught.
+- A single input set may contain **several worksheets**, and those worksheets may span
+  **several subjects** — so always start by grouping the inputs (step 0) before you
+  build anything.
+- Optional context from the user: subject name(s), which pages to target, error counts,
   or "just add N items."
+
+### Multiple documents — how to handle them
+
+- **Group first.** Sort the inputs into **worksheets**. One worksheet may be spread
+  across several images or PDF pages (front/back, multi-page, or a close-up plus a wide
+  shot) — keep those together. Different worksheets are processed separately.
+- **When grouping is ambiguous, ask** before generating: confirm how many worksheets
+  there are and which subject each belongs to. A wrong grouping produces wrong content.
+- **Process one worksheet at a time** through the workflow below, but **batch all
+  content for the same subject together** (one guide/quiz/answer-key update per subject,
+  even if two worksheets target it) so you don't thrash the same files.
+- **Report per worksheet.** Give a short diagnosis/summary for each, and note the
+  subject each one landed in.
 
 ## Core rules (do not violate)
 
@@ -73,11 +90,18 @@ _config.yml                      Jekyll config; excludes .claude and _intake
 
 Follow these steps in order. Keep sessions short and the output focused.
 
+### 0. Group the inputs into worksheets
+Look at everything provided. Decide how many distinct **worksheets** there are, which
+images/PDF pages belong to each (front/back and multi-page stay together), and which
+**subject** each worksheet is. If this is at all ambiguous, state your grouping and
+ask the user to confirm before generating. Then run steps 1–6 **per worksheet**, and
+batch everything for the same subject into a single set of file updates.
+
 ### 1. Read the worksheet
-Look at the image(s). Identify: the **subject**, the specific **skill/topic** being
-taught, and — if his marks are visible — each planted error and whether he **found**
-it, **missed** it, or applied a **wrong fix**. Note the error counts if the sheet
-shows them.
+Look at that worksheet's image(s)/page(s). Identify: the **subject**, the specific
+**skill/topic** being taught, and — if his marks are visible — each planted error and
+whether he **found** it, **missed** it, or applied a **wrong fix**. Note the error
+counts if the sheet shows them.
 
 ### 2. Diagnose (completed sheets only)
 Score it per skill/type (e.g. "Adverbs 2/5"). Map each miss to a gap. If a new kind
@@ -116,12 +140,14 @@ In your chat reply (not on the site): the score, the top gap, and one thing to
 practice tonight. Keep it to a few lines.
 
 ### 7. Commit
-Stage the derived content only (guides, quizzes, answer keys, hub). Confirm
-`git status` shows nothing under `_intake/`. Commit with a clear message, e.g.
+Once every worksheet in the batch is processed, stage the derived content only
+(guides, quizzes, answer keys, hub). Confirm `git status` shows nothing under
+`_intake/`. Commit **per subject** (not per worksheet) with a clear message, e.g.
 `Add 5 adverb items from a Passage 25 diagnosis` or
 `Add Math Detective subject (multiplication facts)`. Do not push unless asked.
 
 ## Before you finish — checklist
+- [ ] Every worksheet in the batch was processed, and each was reported with its subject.
 - [ ] Nothing from `_intake/` is staged or committed.
 - [ ] No worksheet text copied verbatim; items are original.
 - [ ] Answer key (if any) is linked only from the guide's parent note.
