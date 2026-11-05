@@ -20,6 +20,12 @@ Find and fix adjective, adverb, and article errors on your own.
 Forces, motion, and Newton's laws — answer it, then explain the why.
 
 **[Study guide →](science/)**  ·  **[Play the quiz →](science/quiz.html)**
+
+### 🔢 Math Detective
+
+Ratios, rates, and unit rates — name the move, then solve it.
+
+**[Study guide →](math/)**  ·  **[Play the quiz →](math/quiz.html)**
 <!-- homework-intake:subjects:end -->
 
 ---
