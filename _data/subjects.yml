@@ -1,22 +1,29 @@
-# The subject registry. Builds the hub (index.md) AND each subject's landing page
-# (<slug>/index.md reads its own entry by slug). The homework-intake skill edits THIS
-# file to add a subject: append an entry under the matching area, or add a new area block.
-# slug must equal the folder name. added = the date it was added.
+# Subject registry. Drives the whole site:
+#   index.md (root)      -> lists the AREAS below (one row each)
+#   <area.slug>/index.md -> an area page listing that area's subjects (only needed when an
+#                           area has more than one subject; single-subject areas link
+#                           straight to the subject landing)
+#   <slug>/index.md       -> the subject landing (reads its own entry by slug)
+# The homework-intake skill edits THIS file. slug = folder name; added = date added.
 - area: English
+  slug: english
   emoji: "📚"
   subjects:
     - { name: Grammar Detective, slug: grammar, emoji: "📝", added: 2026-11-03, blurb: "Find and fix adjective, adverb, and article errors on your own." }
     - { name: Editor Detective,  slug: editor,  emoji: "✏️", added: 2026-11-05, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
     - { name: Writing Detective, slug: writing, emoji: "✍️", added: 2026-11-05, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
 - area: Math
+  slug: math
   emoji: "🧮"
   subjects:
     - { name: Math Detective, slug: math, emoji: "🔢", added: 2026-11-05, blurb: "Ratios, rates, and unit rates — name the move, then solve it." }
 - area: Science
+  slug: science
   emoji: "🧪"
   subjects:
     - { name: Science Detective, slug: science, emoji: "🔬", added: 2026-11-03, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
 - area: Spanish
+  slug: spanish
   emoji: "🌎"
   subjects:
     - { name: Spanish Detective, slug: spanish, emoji: "💬", added: 2026-11-05, blurb: "Numbers, calendar, weather, and classroom words — say it out loud." }

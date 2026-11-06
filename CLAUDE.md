@@ -65,9 +65,9 @@ _intake/               GITIGNORED: raw worksheet scans + diagnosis notes (never 
 .claude/skills/homework-intake/   The intake skill (autoloaded by Claude Code, excluded from the site)
 ```
 
-**Multiple subjects:** the site is a per-subject folder structure. Each subject folder has a **landing** (`index.md`: Guide + Quiz buttons), a **guide** (`guide.md`), a **quiz**, and an **answer key**. The hub (`index.md`) is a calm area-grouped menu generated from `_data/subjects.yml`; each row links to a subject's landing. Every page's banner links home. The **homework-intake skill** creates and wires these up (see below).
+**Navigation (3 levels, all from `_data/subjects.yml`):** the **root** (`index.md`) is a short menu of **areas** (English, Math, Science, Spanish). An area with several subjects has an **area page** (`<area>/index.md`, e.g. `english/`) listing them; a single-subject area links straight to the subject. Each **subject** folder has a **landing** (`index.md`: Guide + Quiz buttons + date/progress), a **guide** (`guide.md`), a **quiz**, and an **answer key**. Every page's banner links home. The **homework-intake skill** creates and wires these up (see below).
 
-**URLs:** hub `/`, subject landing `/grammar/`, guide `/grammar/guide.html`, quiz `/grammar/quiz.html`, answer key `/grammar/answer-key.html`.
+**URLs:** root `/` (areas) · area `/english/` · subject landing `/grammar/` · guide `/grammar/guide.html` · quiz `/grammar/quiz.html` · answer key `/grammar/answer-key.html`.
 
 **Progress:** each quiz writes `localStorage['hw-done-<slug>']` on finish; the hub and the subject landing read it to show a "done" check (per-device, client-only).
 

@@ -103,8 +103,10 @@ just "what's the right answer?".
 ## Repo map (where things go)
 
 ```
-index.md                         Hub — generated from _data/subjects.yml (don't hand-edit)
-_data/subjects.yml               Subject registry (name, slug, emoji, area, added date)
+index.md                         Root — lists AREAS (from _data/subjects.yml; don't hand-edit)
+_data/subjects.yml               Registry: areas → subjects (name, slug, emoji, added, blurb)
+<area>/index.md                  Area page listing that area's subjects (only when >1 subject;
+                                 copy english/index.md). Single-subject areas link straight to the subject.
 <subject>/
   index.md                       Subject LANDING: Guide + Quiz buttons (reads _data/subjects.yml
                                  by slug). Uniform template — copy an existing one, set title+slug.
@@ -164,12 +166,18 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
 - **Answer key** (`<subject>/answer-key.md` → `answer-key.html`): from
   `templates/answer-key.md`, if the subject's practice section has one.
 
-### 5. Auto-manage navigation
-- The hub (`index.md`) is **generated from `_data/subjects.yml`** — you don't edit the hub
-  HTML. To add a subject, add an entry `{ name, slug, emoji, added: <today> }` under the
-  matching `area:` block; if no area fits, add a new area block (`- area: … / emoji: … /
-  subjects: …`). The `slug` must equal the folder name. Set `added` to today's date so the
-  hub shows when it was added. Never remove existing entries.
+### 5. Auto-manage navigation (three levels, all from `_data/subjects.yml`)
+The site is: **root** (`index.md`, lists AREAS) → **area page** (lists that area's subjects,
+only for areas with >1 subject) → **subject landing** (`<slug>/index.md`, Guide + Quiz).
+You don't hand-edit the root or area HTML — you edit the registry and copy templates.
+- **Add a subject to an existing area:** append `{ name, slug, emoji, added: <today>, blurb }`
+  under that area's `subjects:`. The `slug` = folder name. If the area had only ONE subject
+  before (so it had no area page and the root linked straight to it), now create its area
+  page `<area.slug>/index.md` by copying `english/index.md` (set `title:` and `area:`), and
+  make sure `area.slug` is NOT equal to any subject slug (rename it if it clashes).
+- **New area:** add a new block `- area: <Name> / slug: <unique, not a subject slug> /
+  emoji: … / subjects: [ {…} ]`. A single-subject area needs no area page — the root links
+  straight to the subject. Never remove existing entries.
 - Every page's banner already links home ("← Homework Helper") via `_layouts/default.html`,
   so you don't add that. Link pages within a subject: the **guide** breadcrumb is
   `[← <Name>](./)` (back to the landing) and it links to `quiz.html`; the **quiz** footer
