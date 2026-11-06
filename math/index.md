@@ -28,7 +28,8 @@ area: math
   .hub { max-width: 560px; margin: 1.25rem auto 0; }
   .hub .subj-list { list-style: none; margin: 0; padding: 0; }
   .hub .subj { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .75rem; min-height: 56px; padding: .35rem .25rem; border-bottom: 1px solid rgba(20,30,60,.08); }
-  .hub .subj-link { display: flex; align-items: center; gap: .6rem; flex: 1 1 auto; text-decoration: none; color: #16233b; font-weight: 600; font-size: 1.12rem; padding: .55rem .5rem; margin: -.55rem -.5rem; border-radius: 10px; min-height: 44px; }
+  .hub .subj-link { display: flex; align-items: center; gap: .6rem; flex: 1 1 10rem; min-width: 0; text-decoration: none; color: #16233b; font-weight: 600; font-size: 1.1rem; line-height: 1.25; padding: .55rem .5rem; margin: -.55rem -.5rem; border-radius: 10px; min-height: 44px; }
+  .hub .subj-name { overflow-wrap: anywhere; }
   .hub .subj-link:hover { background: rgba(20,30,60,.05); }
   .hub .subj-emoji { font-size: 1.3rem; }
   .hub .subj-date { color: #8b93b0; font-size: .82rem; white-space: nowrap; }
