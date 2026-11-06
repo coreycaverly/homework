@@ -32,6 +32,12 @@ Ratios, rates, and unit rates — name the move, then solve it.
 Numbers, calendar, weather, and classroom words — say it out loud.
 
 **[Study guide →](spanish/)**  ·  **[Play the quiz →](spanish/quiz.html)**
+
+### ✏️ Editor Detective
+
+Conjunctions, prepositions, and interjections — find the mistake, fix it.
+
+**[Study guide →](editor/)**  ·  **[Play the quiz →](editor/quiz.html)**
 <!-- homework-intake:subjects:end -->
 
 ---
