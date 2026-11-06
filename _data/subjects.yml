@@ -1,29 +1,28 @@
-# Subject registry. Drives the whole site:
-#   index.md (root)      -> lists the AREAS below (one row each)
-#   <area.slug>/index.md -> an area page listing that area's subjects (only needed when an
-#                           area has more than one subject; single-subject areas link
-#                           straight to the subject landing)
-#   <slug>/index.md       -> the subject landing (reads its own entry by slug)
+# Site registry: SUBJECTS, each with its LESSONS. Drives the whole site:
+#   index.md (root)       -> lists the SUBJECTS below (one row each)
+#   <subject.slug>/index.md -> a subject page listing its lessons (only when >1 lesson;
+#                              single-lesson subjects link straight to the lesson landing)
+#   <lesson.slug>/index.md  -> the lesson landing (Guide + Quiz; reads its own entry by slug)
 # The homework-intake skill edits THIS file. slug = folder name; added = date added.
-- area: English
+- subject: English
   slug: english
   emoji: "📚"
-  subjects:
-    - { name: Grammar Detective, slug: grammar, emoji: "📝", added: 2026-11-03, blurb: "Find and fix adjective, adverb, and article errors on your own." }
-    - { name: Editor Detective,  slug: editor,  emoji: "✏️", added: 2026-11-05, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
-    - { name: Writing Detective, slug: writing, emoji: "✍️", added: 2026-11-05, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
-- area: Math
+  lessons:
+    - { name: "Adjectives, Adverbs & Articles", slug: grammar, emoji: "📝", added: 2026-11-03, blurb: "Find and fix adjective, adverb, and article errors on your own." }
+    - { name: "Conjunctions, Prepositions & Interjections", slug: editor, emoji: "🔗", added: 2026-11-05, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
+    - { name: "Writing", slug: writing, emoji: "✍️", added: 2026-11-05, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
+- subject: Math
   slug: math
   emoji: "🧮"
-  subjects:
-    - { name: Math Detective, slug: math, emoji: "🔢", added: 2026-11-05, blurb: "Ratios, rates, and unit rates — name the move, then solve it." }
-- area: Science
+  lessons:
+    - { name: "Ratios & Rates", slug: math, emoji: "🔢", added: 2026-11-05, blurb: "Ratios, rates, and unit rates — name the move, then solve it." }
+- subject: Science
   slug: science
   emoji: "🧪"
-  subjects:
-    - { name: Science Detective, slug: science, emoji: "🔬", added: 2026-11-03, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
-- area: Spanish
+  lessons:
+    - { name: "Forces & Motion", slug: science, emoji: "🔬", added: 2026-11-03, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
+- subject: Spanish
   slug: spanish
   emoji: "🌎"
-  subjects:
-    - { name: Spanish Detective, slug: spanish, emoji: "💬", added: 2026-11-05, blurb: "Numbers, calendar, weather, and classroom words — say it out loud." }
+  lessons:
+    - { name: "Vocabulary", slug: spanish, emoji: "💬", added: 2026-11-05, blurb: "Numbers, calendar, weather, and classroom words — say it out loud." }

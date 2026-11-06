@@ -1,5 +1,5 @@
 ---
-title: Spanish Detective
+title: Vocabulary
 layout: default
 ---
 
@@ -124,7 +124,7 @@ function home(){
   app.innerHTML=`
   <p class="intro muted">Read it, pick the answer, and learn the why. Short rounds — about 3 minutes.</p>
   <button class="big-btn" data-act="start" data-mode="mix">
-    <div>Quick case<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+    <div>Quick round<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
   </button>
   <div class="card">
     <span class="label">Practice one topic (6 questions)</span>
@@ -135,13 +135,13 @@ function home(){
     </div>
   </div>
   <div class="card">
-    <span class="label">How a case works</span>
+    <span class="label">How it works</span>
     <ol class="steps">
       <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
       <li><span>Every answer gives you the <b>why</b> — the rule to remember.</span></li>
-      <li><span>In a quick case, <b>name the topic</b> for a bonus star.</span></li>
+      <li><span>In a quick round, <b>name the topic</b> for a bonus star.</span></li>
     </ol>
-    <div class="stats muted"><span>Cases closed: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+    <div class="stats muted"><span>Rounds done: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
   </div>`;
 }
 
@@ -171,10 +171,10 @@ function render(){
     const of=mix?2:1;
     body=`<p class="prompt">${esc(q.q)}</p>
     <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
-    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Case cracked!':S.pts>0?'Solved!':'Solved with help.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Perfect!':S.pts>0?'Nice!':'Got it.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
     <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
   }
-  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mystery topic</span>`;
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mixed</span>`;
   app.innerHTML=`
   <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
   <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
@@ -212,7 +212,7 @@ function finish(){
   stats.cases++; stats.stars+=S.stars; save();
   try{localStorage.setItem('hw-done-spanish',new Date().toISOString().slice(0,10))}catch(e){}
   const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
-  const head=pct>=.9?"Master detective!":pct>=.6?"Case closed!":"Case closed. Good work sticking with it!";
+  const head=pct>=.9?"Amazing!":pct>=.6?"Nice work!":"Good work sticking with it!";
   const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
   app.innerHTML=`
   <section class="card center">
@@ -222,7 +222,7 @@ function finish(){
     <p><b>${S.stars}</b> of ${S.max} stars</p>
   </section>
   ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
-  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another case<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another round<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
   <button class="back" data-act="home">← Home</button>`;
 }
 home();

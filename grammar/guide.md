@@ -1,16 +1,16 @@
 ---
-title: Grammar Detective Study Guide
+title: Adjectives, Adverbs & Articles — Study guide
 ---
 
-[← Grammar Detective](./)
+[← Back](./)
 
-**[Play the Grammar Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 ## Start here: the 3-pass method
 
 Do one section a day, about 5 minutes each. Set a timer, then stop when it rings, even if you're on a roll.
 
-**Your mission on every Editor in Chief passage:** find every error the circles say are hiding. The circles are your checklist. You're not done until every circle is crossed off.
+**Your goal on every Editor in Chief passage:** find every error the circles say are hiding. The circles are your checklist. You're not done until every circle is crossed off.
 
 1. **Count first.** Look at the circles. Write the totals in the margin, like **ADJ 4 · ADV 5 · ART 2**.
 2. **Pass 1: Adjectives.** Read the passage once and look only at words that describe nouns. Cross off a circle for each fix.
@@ -142,7 +142,7 @@ Circle the wrong word and write the fix on the line. Each sentence has **one** e
 
 *30-second stretch break!*
 
-### Round 2: detective mode (no hints)
+### Round 2: no hints
 
 Write **ADJ, ADV,** or **ART** after each fix.
 

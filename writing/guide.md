@@ -1,10 +1,10 @@
 ---
-title: Writing Detective — Say it in full sentences
+title: Writing — Study guide
 ---
 
-[← Writing Detective](./)
+[← Back](./)
 
-**[Play the Writing Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 You already know the answers. This is about **writing them clearly and finishing the
 job** — the points you lose in *every* class. Slow down. Full sentences. Check it.

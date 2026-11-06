@@ -1,5 +1,5 @@
 ---
-title: SUBJECT_NAME — Answer Key
+title: LESSON_NAME — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**
@@ -12,5 +12,5 @@ For the practice section ("Spot it, fix it") in the [study guide](guide.html).
 | --- | --- | --- | --- |
 | 1 | WRONG → **RIGHT** | TYPE | short reason |
 
-**Coaching tip:** When he misses one, don't give the answer. Ask the detective
-question from the cheat card and let him find it.
+**Coaching tip:** When he misses one, don't give the answer. Ask the question
+from the cheat card and let him find it.

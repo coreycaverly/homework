@@ -1,13 +1,13 @@
 ---
-title: Editor Detective — Conjunctions, Prepositions, Interjections
+title: Conjunctions, Prepositions & Interjections — Study guide
 ---
 
-[← Editor Detective](./)
+[← Back](./)
 
-**[Play the Editor Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 Your next Editor in Chief unit: **conjunctions, prepositions, and interjections**. Same
-detective job — find the hidden mistake and fix it. Do one section a day, about 5 minutes.
+job — find the hidden mistake and fix it. Do one section a day, about 5 minutes.
 
 ## The 3-pass method (one pass per type)
 

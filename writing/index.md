@@ -1,10 +1,10 @@
 ---
-title: Writing Detective
+title: Writing
 layout: default
 slug: writing
 ---
 {%- assign me = nil -%}
-{%- for g in site.data.subjects -%}{%- for s in g.subjects -%}{%- if s.slug == page.slug -%}{%- assign me = s -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+{%- for g in site.data.subjects -%}{%- for s in g.lessons -%}{%- if s.slug == page.slug -%}{%- assign me = s -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
 
 <p class="subj-blurb">{{ me.blurb }}</p>
 

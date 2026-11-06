@@ -103,14 +103,15 @@ just "what's the right answer?".
 ## Repo map (where things go)
 
 ```
-index.md                         Root — lists AREAS (from _data/subjects.yml; don't hand-edit)
-_data/subjects.yml               Registry: areas → subjects (name, slug, emoji, added, blurb)
-<area>/index.md                  Area page listing that area's subjects (only when >1 subject;
-                                 copy english/index.md). Single-subject areas link straight to the subject.
-<subject>/
-  index.md                       Subject LANDING: Guide + Quiz buttons (reads _data/subjects.yml
+index.md                         Root — lists SUBJECTS (from _data/subjects.yml; don't hand-edit)
+_data/subjects.yml               Registry: subjects → lessons (name, slug, emoji, added, blurb)
+<subject>/index.md               Subject page listing that subject's lessons (only when the
+                                 subject has >1 lesson; copy english/index.md). A single-lesson
+                                 subject has no subject page — the root links straight to the lesson.
+<lesson>/
+  index.md                       Lesson LANDING: Guide + Quiz buttons (reads _data/subjects.yml
                                  by slug). Uniform template — copy an existing one, set title+slug.
-  guide.md                       Study guide (cayman + base design) → /<subject>/guide.html
+  guide.md                       Study guide (cayman + base design) → /<lesson>/guide.html
   quiz.html                      Self-contained quiz (no build step, no deps)
   answer-key.html                Parent answer key (rendered from answer-key.md)
   answer-key.md                  Source for the above
@@ -167,17 +168,21 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
   `templates/answer-key.md`, if the subject's practice section has one.
 
 ### 5. Auto-manage navigation (three levels, all from `_data/subjects.yml`)
-The site is: **root** (`index.md`, lists AREAS) → **area page** (lists that area's subjects,
-only for areas with >1 subject) → **subject landing** (`<slug>/index.md`, Guide + Quiz).
-You don't hand-edit the root or area HTML — you edit the registry and copy templates.
-- **Add a subject to an existing area:** append `{ name, slug, emoji, added: <today>, blurb }`
-  under that area's `subjects:`. The `slug` = folder name. If the area had only ONE subject
-  before (so it had no area page and the root linked straight to it), now create its area
-  page `<area.slug>/index.md` by copying `english/index.md` (set `title:` and `area:`), and
-  make sure `area.slug` is NOT equal to any subject slug (rename it if it clashes).
-- **New area:** add a new block `- area: <Name> / slug: <unique, not a subject slug> /
-  emoji: … / subjects: [ {…} ]`. A single-subject area needs no area page — the root links
-  straight to the subject. Never remove existing entries.
+**Terminology:** the site has **subjects** (English, Math, Science, Spanish) and, inside each,
+**lessons** (e.g. "Ratios & Rates", "Conjunctions, Prepositions & Interjections"). Each lesson
+is one folder with a landing + guide + quiz + answer key. The nav is:
+**root** (`index.md`, lists SUBJECTS) → **subject page** (lists a subject's lessons, only when
+it has >1 lesson) → **lesson landing** (`<slug>/index.md`, Guide + Quiz). You don't hand-edit
+the root or subject HTML — you edit the registry and copy templates.
+- **Add a lesson to an existing subject:** append `{ name, slug, emoji, added: <today>, blurb }`
+  under that subject's `lessons:`. `name` is the lesson's real topic (not a theme name); `slug`
+  = folder name. If the subject had only ONE lesson before (no subject page; root linked
+  straight to it), now create its subject page `<subject.slug>/index.md` by copying
+  `english/index.md` (set `title:` and `area:` to the subject), and make sure `subject.slug`
+  is NOT equal to any lesson slug (rename it if it clashes).
+- **New subject:** add a block `- subject: <Name> / slug: <unique, not a lesson slug> /
+  emoji: … / lessons: [ {…} ]`. A single-lesson subject needs no subject page — the root links
+  straight to the lesson. Never remove existing entries.
 - Every page's banner already links home ("← Homework Helper") via `_layouts/default.html`,
   so you don't add that. Link pages within a subject: the **guide** breadcrumb is
   `[← <Name>](./)` (back to the landing) and it links to `quiz.html`; the **quiz** footer
@@ -195,7 +200,7 @@ Once every worksheet in the batch is processed, stage the derived content only
 (guides, quizzes, answer keys, hub). Confirm `git status` shows nothing under
 `_intake/`. Commit **per subject** (not per worksheet) with a clear message, e.g.
 `Add 5 adverb items from a Passage 25 diagnosis` or
-`Add Math Detective subject (multiplication facts)`. Do not push unless asked.
+`Add a Ratios & Rates lesson (Math)`. Do not push unless asked.
 
 ## Before you finish — checklist
 - [ ] Every worksheet in the batch was processed, and each was reported with its subject.

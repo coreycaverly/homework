@@ -1,5 +1,5 @@
 ---
-title: Math Detective — Answer Key
+title: Ratios & Rates — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

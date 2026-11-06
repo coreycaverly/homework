@@ -22,7 +22,7 @@ Everything you generate must match what's already on the site. Reuse, don't rein
 2. **Immediate feedback.** Every answer gets a one-line "why" rule, not just
    right/wrong.
 3. **Escalating hints, never the answer.** First a read-aloud / re-check prompt,
-   then a skill-specific detective question, then (only after repeated misses) the
+   then a skill-specific question, then (only after repeated misses) the
    target glows or is pointed at.
 4. **Consistent color code.** Grammar uses Adjective = **blue**, Adverb = **green**,
    Article = **orange**; a found/fixed word is highlighter **yellow**. A new subject

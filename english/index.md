@@ -6,11 +6,11 @@ area: english
 {%- assign me = nil -%}
 {%- for g in site.data.subjects -%}{%- if g.slug == page.area -%}{%- assign me = g -%}{%- endif -%}{%- endfor -%}
 
-<p class="hub-intro">Pick a subject. A check means the quiz is done.</p>
+<p class="hub-intro">Pick a lesson. A check means the quiz is done.</p>
 
 <nav class="hub">
   <ul class="subj-list">
-  {% for s in me.subjects %}
+  {% for s in me.lessons %}
     <li class="subj">
       <a class="subj-link" href="{{ s.slug | append: '/' | relative_url }}">
         <span class="subj-emoji" aria-hidden="true">{{ s.emoji }}</span>

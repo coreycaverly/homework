@@ -1,5 +1,5 @@
 ---
-title: Writing Detective — Answer Key
+title: Writing — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

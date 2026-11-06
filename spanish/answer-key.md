@@ -1,5 +1,5 @@
 ---
-title: Spanish Detective — Answer Key
+title: Vocabulary — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

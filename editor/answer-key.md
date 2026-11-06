@@ -1,5 +1,5 @@
 ---
-title: Editor Detective — Answer Key
+title: Conjunctions, Prepositions & Interjections — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

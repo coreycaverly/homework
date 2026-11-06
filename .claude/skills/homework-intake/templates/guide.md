@@ -1,16 +1,16 @@
 ---
-title: SUBJECT_NAME Study Guide
+title: LESSON_NAME — Study guide
 ---
 
-[← SUBJECT_NAME](./)
+[← Back](./)
 
-**[Play the SUBJECT_NAME quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 ## Start here: the pass method
 
 Do one section a day, about 5 minutes each. Set a timer, then stop when it rings.
 
-**Your mission:** find every mistake the worksheet is hiding. You're not done until
+**Your goal:** find every mistake the worksheet is hiding. You're not done until
 every one is crossed off.
 
 1. **Count first.** Note how many of each type you're looking for.
@@ -42,7 +42,7 @@ Circle the wrong word and write the fix. One has no mistake (a trick!).
 
 |  | Ask yourself | Watch for |
 | --- | --- | --- |
-| **TYPE_1** | the detective question | the common traps |
+| **TYPE_1** | the question to ask | the common traps |
 
 **Not done until every mistake is crossed off. Read it out loud at the end.**
 

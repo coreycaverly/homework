@@ -1,10 +1,10 @@
 ---
-title: Spanish Detective — Vocabulario
+title: Vocabulary — Study guide
 ---
 
-[← Spanish Detective](./)
+[← Back](./)
 
-**[Play the Spanish Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 Numbers, calendar, weather, and classroom words. Do one section a day, about 5 minutes.
 Say every answer **out loud** — Spanish is a sound-first subject.

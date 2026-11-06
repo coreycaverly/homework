@@ -1,10 +1,10 @@
 ---
-title: Science Detective — Forces & Motion
+title: Forces & Motion — Study guide
 ---
 
-[← Science Detective](./)
+[← Back](./)
 
-**[Play the Science Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 Forces, motion, and Newton's three laws. Do one section a day, about 5 minutes each.
 Set a timer and stop when it rings — even if you're on a roll.

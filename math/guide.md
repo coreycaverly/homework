@@ -1,10 +1,10 @@
 ---
-title: Math Detective — Ratios & Rates
+title: Ratios & Rates — Study guide
 ---
 
-[← Math Detective](./)
+[← Back](./)
 
-**[Play the Math Detective quiz →](quiz.html)**
+**[Take the quiz →](quiz.html)**
 
 Ratios, rates, and unit rates. Do one section a day, about 5 minutes. Set a timer and
 stop when it rings.

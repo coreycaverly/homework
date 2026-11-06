@@ -1,4 +1,4 @@
-# CLAUDE.md — Grammar Detective
+# CLAUDE.md — Homework Helper
 
 Context for anyone (human or Claude) working on this repo.
 
@@ -38,7 +38,7 @@ Across every class, he **masters the content** (strong test scores) but loses po
 
 1. **Short rounds.** 5–6 items per quiz round; one guide section per day, about 5 minutes each.
 2. **Immediate feedback.** Every answer gets a one-line "why" rule, not just right or wrong.
-3. **Escalating hints, never the answer.** First the read-aloud prompt, then the type-specific detective question, then the target word glows.
+3. **Escalating hints, never the answer.** First the read-aloud prompt, then the type-specific question, then the target word glows.
 4. **Consistent color code everywhere:** Adjective = **blue**, Adverb = **green**, Article = **orange**. Highlighter yellow marks a found word.
 5. **Trick items.** About 1 in 6 sentences has no error, to train him not to overcorrect.
 6. **Readable type.** Lexend for body text (designed for reading ease), Bricolage Grotesque for headings. Large tap targets (44px or more).

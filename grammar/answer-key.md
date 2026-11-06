@@ -1,5 +1,5 @@
 ---
-title: Grammar Detective — Answer Key
+title: Adjectives, Adverbs & Articles — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

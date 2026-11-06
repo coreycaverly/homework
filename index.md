@@ -7,12 +7,12 @@ layout: default
 
 <nav class="areas">
 {% for g in site.data.subjects %}
-  {%- assign n = g.subjects | size -%}
-  {%- if n > 1 -%}{%- assign href = g.slug | append: '/' -%}{%- else -%}{%- assign href = g.subjects[0].slug | append: '/' -%}{%- endif -%}
+  {%- assign n = g.lessons | size -%}
+  {%- if n > 1 -%}{%- assign href = g.slug | append: '/' -%}{%- else -%}{%- assign href = g.lessons[0].slug | append: '/' -%}{%- endif -%}
   <a class="area-btn" href="{{ href | relative_url }}">
     <span class="area-emoji" aria-hidden="true">{{ g.emoji }}</span>
-    <span class="area-name">{{ g.area }}</span>
-    <span class="area-count">{{ n }} subject{% if n > 1 %}s{% endif %}</span>
+    <span class="area-name">{{ g.subject }}</span>
+    <span class="area-count">{{ n }} lesson{% if n > 1 %}s{% endif %}</span>
   </a>
 {% endfor %}
 </nav>
