@@ -30,6 +30,10 @@ This is based on Passage 23 "Deadly Dino" (he found 10 of 11 errors) and Passage
 
 **Strengths:** He reliably catches nouns used as adjectives (*power → powerful*), missing -ly (*popular → popularly*), -er/-est in obvious cases, and *a/an* before vowels.
 
+### The bigger pattern (all subjects)
+
+Across every class, he **masters the content** (strong test scores) but loses points on two things: **written expression** (incomplete sentences, run-ons, thin answers that don't restate the question or explain the reasoning) and **completing/turning in work** (rushed, late, or incomplete). So the site aims past content recall: it builds written-expression and finish-it habits using the house methods **CUPS+E** (edit), **ARMS** (revise), **ACE** (explain reasoning), and a **STOP & CHECK** finish box. The `writing/` subject is the cross-subject toolkit; other subjects should add an "explain it / write it" angle where it fits. (Full guidance lives in the homework-intake skill.)
+
 ## Design principles (ADHD-friendly)
 
 1. **Short rounds.** 5–6 items per quiz round; one guide section per day, about 5 minutes each.

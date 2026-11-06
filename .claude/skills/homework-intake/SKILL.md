@@ -27,6 +27,35 @@ existing style, organized by subject.
   not to overcorrect. Full rules in `references/design-system.md` — read it before
   writing any page.
 
+### The real pattern: it's not content, it's expression + completion
+
+Across his classes he **masters the content** (strong test scores) but loses points on
+two things, in every subject:
+
+1. **Written expression** — incomplete sentences and fragments, run-ons, thin answers
+   that don't restate the question or explain the reasoning. He *can* do the work; he
+   doesn't put it into clear, complete written form.
+2. **Completing and checking work** — rushed, late, or incomplete items. He needs a
+   slow-down/finish habit, not more content drills.
+
+So the site's job is bigger than content recall. **Prefer content that also builds
+written-expression and finish-it habits.** Use these house methods (keep the names — his
+learning-center coach uses the same ones, so consistency matters):
+
+- **CUPS+E** editing checklist: **C**apitals · **U**sage (who + did what) · **P**unctuation ·
+  **S**pelling (homophones) · **+E**xpand (add a when/where/how/why detail).
+- **ARMS** revision: **A**dd a detail · **R**emove what repeats · **M**ove a sentence ·
+  **S**ubstitute a stronger word.
+- **ACE** for explaining reasoning (math, science, history): **A**nswer in a complete
+  sentence that restates the question · **C**alculate/state it with labels · **E**xplain
+  why it's right.
+- **STOP & CHECK** + whisper-read: the work isn't done until it's checked. Build this into
+  every guide ("not done until every box is ticked") — it's the fix for late/incomplete work.
+
+When you build or extend a subject, add an **"explain it / write it" angle** where it
+fits (e.g. "which answer is stronger?", "fix the fragment", "restate the question"), not
+just "what's the right answer?".
+
 ## What you accept as input
 
 - **Any number of images and/or PDFs**, in one message or across several. Read images

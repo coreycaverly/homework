@@ -36,6 +36,29 @@ Everything you generate must match what's already on the site. Reuse, don't rein
 8. **Chunk + pass structure.** Guides teach a multi-pass method (one pass per error
    type / skill), stress that paragraph 2 counts as much as paragraph 1, and frame
    completion as "not done until every circle is crossed off."
+9. **Write it + finish it.** His real gaps are written expression and completing work
+   (see SKILL.md). Favor content that builds complete-sentence, restate-and-explain
+   habits, and end every guide with a **STOP & CHECK** finish box.
+
+## House methods (use these names and shapes site-wide)
+
+These are the frameworks his learning center uses — keep the names so everything matches.
+
+- **CUPS+E** (editing): Capitals · Usage (who + did what) · Punctuation · Spelling
+  (homophones: to/too/two, there/their/they're) · +Expand (add when/where/how/why).
+- **ARMS** (revision): Add a detail · Remove what repeats · Move a sentence · Substitute
+  a stronger word.
+- **ACE** (explain reasoning in any subject): Answer in a complete sentence that restates
+  the question · Calculate/state it with labels (not bare numbers) · Explain why.
+- **STOP & CHECK** finish box: a short checklist a session isn't done until every box is
+  ticked (e.g. "☐ complete sentences ☐ capitals & end marks ☐ I whisper-read it"). Put one
+  at the end of guides and practice sections. This is the fix for rushed/late/incomplete work.
+- **Slow-down steps:** who + did what? → whisper-read (period where your voice stops) →
+  CUPS+E check. "Restate the question" is the default first sentence of any written answer.
+
+A good "written expression" quiz mixes: homophone/capital fixes, "sentence vs. fragment
+vs. run-on", and "which explanation is stronger?" (the ACE one). Use the multiple-choice
+engine for these.
 
 ## Guide format conventions
 
