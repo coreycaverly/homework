@@ -38,6 +38,12 @@ Numbers, calendar, weather, and classroom words — say it out loud.
 Conjunctions, prepositions, and interjections — find the mistake, fix it.
 
 **[Study guide →](editor/)**  ·  **[Play the quiz →](editor/quiz.html)**
+
+### ✍️ Writing Detective
+
+Full sentences, homophones, and explaining your answer — the points you lose in *every* class.
+
+**[Study guide →](writing/)**  ·  **[Play the quiz →](writing/quiz.html)**
 <!-- homework-intake:subjects:end -->
 
 ---
