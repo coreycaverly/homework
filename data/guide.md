@@ -4,6 +4,8 @@ title: Data Sets & Distributions — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 8.** Describing a pile of data with a few numbers: the **center** (typical value)
 and the **spread** (how spread out it is), plus reading the graphs.
 

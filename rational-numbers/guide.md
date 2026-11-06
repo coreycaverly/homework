@@ -4,6 +4,8 @@ title: Rational Numbers — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 7.** Negative numbers, the number line, absolute value, and the coordinate plane.
 Big idea: **the number line keeps going left past zero** — into the negatives.
 

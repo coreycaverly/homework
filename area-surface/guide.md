@@ -4,6 +4,8 @@ title: Area & Surface Area — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 1.** Area is the number of unit squares that cover a flat shape. The whole trick:
 **cut a hard shape into easy ones** (rectangles and triangles), find each area, then add.
 

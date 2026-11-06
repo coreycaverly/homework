@@ -4,6 +4,8 @@ title: Percent Increase & Decrease — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 6.** Percent means **"per 100."** This unit is all the real-money stuff: discounts,
 tax, tips, and markups — finding a percent of a number, then adding or taking it away.
 

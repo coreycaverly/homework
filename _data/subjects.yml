@@ -13,15 +13,15 @@
   slug: math
   emoji: "🧮"
   lessons:
-    - { name: "Area & Surface Area", slug: area-surface, emoji: "📐", added: 2026-11-05, quiz: false, blurb: "Area of triangles and polygons, surface area, and nets. (Unit 1)" }
+    - { name: "Area & Surface Area", slug: area-surface, emoji: "📐", added: 2026-11-05, quiz: true, blurb: "Area of triangles and polygons, surface area, and nets. (Unit 1)" }
     - { name: "Ratios, Rates & Percentages", slug: ratios, emoji: "🔢", added: 2026-11-05, quiz: true, blurb: "Equivalent ratios, unit rates, and percentages. (Unit 2)" }
-    - { name: "Fractions & Decimals", slug: fractions-decimals, emoji: "➗", added: 2026-11-05, quiz: false, blurb: "Dividing fractions and computing with decimals. (Unit 3)" }
-    - { name: "Expressions & Equations", slug: expressions-equations, emoji: "✳️", added: 2026-11-05, quiz: false, blurb: "Expressions, exponents, and solving one-step equations. (Unit 4)" }
-    - { name: "Proportional Relationships", slug: proportional, emoji: "📈", added: 2026-11-05, quiz: false, blurb: "Constant of proportionality, tables, graphs, and scale. (Unit 5)" }
-    - { name: "Percent Increase & Decrease", slug: percent-change, emoji: "📊", added: 2026-11-05, quiz: false, blurb: "Percent change, discounts, tax, and tips. (Unit 6)" }
-    - { name: "Rational Numbers", slug: rational-numbers, emoji: "➖", added: 2026-11-05, quiz: false, blurb: "Negatives, the number line, absolute value, and the coordinate plane. (Unit 7)" }
-    - { name: "Data Sets & Distributions", slug: data, emoji: "📉", added: 2026-11-05, quiz: false, blurb: "Mean, median, mode, range, and reading data. (Unit 8)" }
-    - { name: "Putting It All Together", slug: math-review, emoji: "🧩", added: 2026-11-05, quiz: false, blurb: "A mixed review across all the Grade 6 units. (Unit 9)" }
+    - { name: "Fractions & Decimals", slug: fractions-decimals, emoji: "➗", added: 2026-11-05, quiz: true, blurb: "Dividing fractions and computing with decimals. (Unit 3)" }
+    - { name: "Expressions & Equations", slug: expressions-equations, emoji: "✳️", added: 2026-11-05, quiz: true, blurb: "Expressions, exponents, and solving one-step equations. (Unit 4)" }
+    - { name: "Proportional Relationships", slug: proportional, emoji: "📈", added: 2026-11-05, quiz: true, blurb: "Constant of proportionality, tables, graphs, and scale. (Unit 5)" }
+    - { name: "Percent Increase & Decrease", slug: percent-change, emoji: "📊", added: 2026-11-05, quiz: true, blurb: "Percent change, discounts, tax, and tips. (Unit 6)" }
+    - { name: "Rational Numbers", slug: rational-numbers, emoji: "➖", added: 2026-11-05, quiz: true, blurb: "Negatives, the number line, absolute value, and the coordinate plane. (Unit 7)" }
+    - { name: "Data Sets & Distributions", slug: data, emoji: "📉", added: 2026-11-05, quiz: true, blurb: "Mean, median, mode, range, and reading data. (Unit 8)" }
+    - { name: "Putting It All Together", slug: math-review, emoji: "🧩", added: 2026-11-05, quiz: true, blurb: "A mixed review across all the Grade 6 units. (Unit 9)" }
 - subject: Science
   slug: science
   emoji: "🧪"

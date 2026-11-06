@@ -4,6 +4,8 @@ title: Fractions & Decimals — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 3.** Dividing fractions, and adding, subtracting, multiplying, and dividing decimals.
 Two big ideas: **"keep–change–flip"** for fractions, and **line up / count the places** for decimals.
 

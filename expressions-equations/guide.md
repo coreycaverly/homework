@@ -4,6 +4,8 @@ title: Expressions & Equations — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 4.** Exponents, writing expressions with letters, and solving one-step equations.
 Big idea for equations: **do the same thing to both sides** to get the letter alone.
 

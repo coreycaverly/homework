@@ -4,6 +4,8 @@ title: Putting It All Together — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 9.** A quick review of every unit, plus mixed practice. Use it before a test: read
 the one-line reminder, and if it feels fuzzy, open that unit's guide.
 

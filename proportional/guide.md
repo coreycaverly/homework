@@ -4,6 +4,8 @@ title: Proportional Relationships — Study guide
 
 [← Back](./)
 
+**[Take the quiz →](quiz.html)**
+
 **Unit 5.** Two amounts are **proportional** when one is always the **same number times**
 the other. That number is the **constant of proportionality** — it's just a unit rate.
 
