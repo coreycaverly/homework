@@ -34,6 +34,26 @@ you answer, always add *"because…"* with the law or the formula.
 > A car going a steady 30 mph around a curve **is accelerating** — its *direction* is
 > changing, so its velocity is changing.
 
+**Reference point:** motion is always measured against a fixed spot (a *reference point*).
+Sitting on a bus, you're still compared to the bus but moving compared to the sidewalk —
+both are correct, each from its own reference point.
+
+**Distance–time graph:** a **steeper** line means **faster** (more distance in the same
+time). A **flat** line means the object is **at rest**.
+
+## The six forces (name the push or pull)
+
+A force is a push or a pull, measured in **newtons (N)**. Learn to name each one:
+
+| Force | What it is | Example |
+| --- | --- | --- |
+| **Gravity** (weight) | Earth pulls mass downward | an apple falls |
+| **Normal** | a surface pushes out, perpendicular to it | a table holding up a book |
+| **Friction** | opposes two surfaces **sliding** | a box dragged across the floor |
+| **Applied** | a person or object **pushes/pulls** | you push a cart |
+| **Tension** | a pull through a **rope/string/cable** | a dog on a leash |
+| **Drag** (air resistance) | air pushes back on something **moving through it** | wind on a cyclist |
+
 ## Newton's three laws (in kid words)
 
 | Law | Kid version | Clue words |
@@ -61,18 +81,35 @@ The two forces are equal and opposite — so why doesn't everything freeze?
 | --- | --- | --- |
 | They cancel because they push on each other | They act on **two different objects**, so they can't cancel on one | Foot pushes ground; ground pushes foot — different objects. |
 
+### Trap 3: Net force 0 doesn't mean "stopped"
+
+Balanced forces (net **0 N**) mean velocity **doesn't change** — the object is **at rest OR
+moving at a constant speed**. "Net force is zero" is not the same as "not moving."
+
+### Trap 4: Gravity + normal force are NOT a 3rd-Law pair
+
+On a book resting on a table, gravity (down) and the normal force (up) both act on the
+**same object** — the book. They're **balanced forces**, not an action–reaction pair. A real
+3rd-Law pair acts on **different** objects (Earth pulls the book down; the book pulls Earth up).
+
 ## Do the math
 
-**F = m × a** — three steps, every time:
+Every calculation: **write the formula → substitute → solve + units.**
 
-1. **Write the formula:** F = m × a
-2. **Substitute:** F = 6 kg × 4 m/s²
-3. **Solve + units:** F = **24 N**
+**Speed, distance, time:**
 
-Rearrange it when they ask for something else:
+- Speed: **s = d ÷ t** — 180 m ÷ 30 s = **6 m/s**
+- Distance: **d = v × t** — 70 km/h × 4 h = **280 km**
+- Time: **t = d ÷ v** — 100 m ÷ 5 m/s = **20 s**
 
-- Need acceleration? **a = F ÷ m**
-- Need mass? **m = F ÷ a**
+**Acceleration** — how fast velocity changes:
+
+- From a speed change: **a = (v₂ − v₁) ÷ t** — (10 − 2) ÷ 4 = **2 m/s²**
+- From force and mass: **a = F ÷ m**
+
+**Force: F = m × a** — e.g. 6 kg × 4 m/s² = **24 N**. (Need mass? **m = F ÷ a**.)
+
+**Weight: W = m × g** (g ≈ 9.8 m/s²) — an 8 kg backpack weighs 8 × 9.8 = **78.4 N**.
 
 **Net force** (add up the forces):
 
@@ -80,7 +117,16 @@ Rearrange it when they ask for something else:
 - Opposite directions → **subtract**, and the answer points the bigger way.
 - Equal and opposite → **0 N (balanced)** → no change in motion.
 
-**Momentum: p = m × v.** A 1,000 kg car at 20 m/s has p = 20,000 kg·m/s.
+**Momentum: p = m × v** — a 1,000 kg car at 20 m/s has p = 20,000 kg·m/s. Both mass **and**
+speed matter, so a light, fast object can have more momentum than a heavy, slow one.
+
+## Mass vs. weight
+
+- **Mass** = how much matter (kilograms). It **never changes** — same on Earth, the Moon,
+  or in space.
+- **Weight** = the force of gravity on that mass (newtons), and it **changes** with gravity:
+  **W = m × g**. On a planet with weaker gravity, your mass stays the same but your weight
+  goes down.
 
 ## Balanced vs. unbalanced
 
@@ -102,9 +148,9 @@ Answer each one, then say your *"because…"* out loud.
 
 |  | Ask yourself | Watch for |
 | --- | --- | --- |
-| **Motion** | Speed, or speed **and direction**? Is anything changing? | velocity = +direction · turning still = accelerating · more mass = more inertia |
-| **Newton's Laws** | 1st (inertia), 2nd (F=ma), or 3rd (push-back)? | same force → lighter accelerates more · pairs act on **different objects** |
-| **Calculations** | What's the formula? Plug in, then units. | F = m×a · a = F÷m · net force adds/subtracts · p = m×v |
+| **Motion** | Speed, or speed **and direction**? Changing? From what reference point? | velocity = +direction · turning = accelerating · steeper graph = faster |
+| **Forces & Laws** | Which force? Which law? | tension / normal / friction / drag / gravity · 1 = inertia, 2 = F=ma, 3 = pairs on **different objects** · net 0 = balanced (not always stopped) |
+| **Calculations** | What's the formula? Plug in, then units. | s = d÷t · a = Δv÷t · F = m×a · W = m×g · p = m×v |
 
 **Always answer with a "because…" — the law or the formula.**
 

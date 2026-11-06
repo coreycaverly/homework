@@ -99,18 +99,42 @@ const BANK=[
  {t:'calc',q:"Forces on a box: 45 N right and 15 N left. What is the net force?",a:"30 N right",o:["60 N right","30 N left","60 N left"],why:"Opposite directions subtract: 45 − 15 = 30 N, pointing the bigger way (right)."},
  {t:'calc',q:"Forces on a box: 20 N right and 60 N left. What is the net force?",a:"40 N left",o:["80 N left","40 N right","80 N right"],why:"60 − 20 = 40 N, toward the larger force — left."},
  {t:'calc',q:"Two forces, 25 N left and 25 N right, act on a box. Net force?",a:"0 N (balanced)",o:["50 N right","50 N left","25 N"],why:"Equal and opposite forces cancel: 25 − 25 = 0 N. Balanced, so motion doesn't change."},
- {t:'calc',q:"Momentum = mass × velocity. A 1,000 kg car at 20 m/s has how much momentum?",a:"20,000 kg·m/s",o:["1,020 kg·m/s","50 kg·m/s","20,000 N"],why:"p = m × v = 1,000 × 20 = 20,000 kg·m/s."}
+ {t:'calc',q:"Momentum = mass × velocity. A 1,000 kg car at 20 m/s has how much momentum?",a:"20,000 kg·m/s",o:["1,020 kg·m/s","50 kg·m/s","20,000 N"],why:"p = m × v = 1,000 × 20 = 20,000 kg·m/s."},
+ // --- added to match the teacher's study guide ---
+ // MOTION: reference point, graphs, velocity vs speed
+ {t:'motion',q:"You sit still in your seat on a moving bus. Are you moving?",a:"It depends on the reference point",o:["No, never","Yes, always","Only if you stand up"],why:"Motion is measured against a reference point: you're still compared to the bus, but moving compared to the sidewalk."},
+ {t:'motion',q:"On a distance–time graph, what does a STEEPER line mean?",a:"Greater speed",o:["Slower speed","The object is at rest","It is moving backward"],why:"A steeper line covers more distance in the same time, so it means greater speed. A flat line means at rest."},
+ {t:'motion',q:"Two cars both go 20 m/s, one east and one west. Same velocity?",a:"No — velocity includes direction",o:["Yes, same speed is same velocity","Yes, both are 20","No, different speeds"],why:"Same speed (20 m/s), but velocity includes direction and they go opposite ways — so different velocities."},
+ // FORCES & LAWS: force types + tested misconceptions
+ {t:'law',q:"A rope pulls a wagon. What type of force is that?",a:"Tension",o:["Friction","Normal force","Gravity"],why:"A pull through a rope, string, or cable is tension."},
+ {t:'law',q:"A tabletop pushes up on a book. What type of force?",a:"Normal force",o:["Tension","Applied force","Drag"],why:"The support force a surface pushes on an object (perpendicular to the surface) is the normal force."},
+ {t:'law',q:"A box slides across the floor and a force opposes it. What force?",a:"Friction",o:["Tension","Normal force","Drag"],why:"Friction acts between surfaces in contact and opposes sliding."},
+ {t:'law',q:"Air pushes back on a moving cyclist. What type of force?",a:"Drag (air resistance)",o:["Tension","Normal force","Gravity"],why:"The push of air on an object moving through it is drag, or air resistance."},
+ {t:'law',q:"Earth pulls an object straight down. What type of force?",a:"Gravity (weight)",o:["Normal force","Friction","Tension"],why:"The pull of Earth on an object's mass is gravity; that downward pull is the object's weight."},
+ {t:'law',q:"If the net force on an object is 0 N, is it definitely stopped?",a:"No — it may be still OR moving at a constant velocity",o:["Yes, it must be stopped","Yes, it must be slowing down","No, it must speed up"],why:"Net force 0 means balanced forces, so velocity doesn't change — it could be at rest OR moving steadily."},
+ {t:'law',q:"On a book resting on a table, are gravity and the normal force a 3rd-Law pair?",a:"No — they act on the SAME object (the book)",o:["Yes, they're equal and opposite","Yes, every force pair is","No, gravity is stronger"],why:"A 3rd-Law pair acts on DIFFERENT objects. Gravity and the normal force both act on the book — they're balanced forces, not a pair."},
+ {t:'law',q:"A cart is moving LEFT, but the net force on it points RIGHT. What happens?",a:"It slows down (accelerates to the right)",o:["It speeds up to the left","Nothing changes","It stops instantly"],why:"Acceleration points the way the net force points. Moving left with a rightward net force means it slows down — it may stop, then go right."},
+ {t:'law',q:"A box moves right at a CONSTANT velocity. What is the net force on it?",a:"0 N — the applied force and friction are balanced",o:["To the right","To the left","Equal to the box's weight"],why:"Constant velocity means no acceleration, so the net force is 0 N — applied force and friction are equal and opposite."},
+ // CALCULATIONS: speed/distance/time, acceleration, weight, momentum
+ {t:'calc',q:"A cyclist travels 180 m in 30 s. What is the average speed? (s = d ÷ t)",a:"6 m/s",o:["150 m/s","5,400 m/s","0.17 m/s"],why:"s = d ÷ t = 180 m ÷ 30 s = 6 m/s."},
+ {t:'calc',q:"A car travels at 70 km/h for 4 hours. How far does it go? (d = v × t)",a:"280 km",o:["17.5 km","74 km","66 km"],why:"d = v × t = 70 km/h × 4 h = 280 km."},
+ {t:'calc',q:"A runner goes 100 m at 5 m/s. How long does it take? (t = d ÷ v)",a:"20 s",o:["500 s","105 s","20 m"],why:"t = d ÷ v = 100 m ÷ 5 m/s = 20 s."},
+ {t:'calc',q:"A skateboarder speeds up from 2 m/s to 10 m/s in 4 s. Acceleration? (a = (v₂ − v₁) ÷ t)",a:"2 m/s²",o:["3 m/s²","8 m/s²","12 m/s²"],why:"a = (10 − 2) ÷ 4 = 8 ÷ 4 = 2 m/s²."},
+ {t:'calc',q:"A backpack has a mass of 8 kg. What is its weight on Earth? (W = m × g, g = 9.8)",a:"78.4 N",o:["8 N","0.82 N","78.4 kg"],why:"W = m × g = 8 × 9.8 = 78.4 N. Weight is a force, measured in newtons."},
+ {t:'calc',q:"An astronaut travels to a planet with weaker gravity. What changes?",a:"Weight goes down; mass stays the same",o:["Both go down","Mass goes down; weight stays","Both stay the same"],why:"Mass is the amount of matter (same everywhere). Weight = m × g, and g is smaller there, so weight decreases."},
+ {t:'calc',q:"A 0.5 kg ball moves at 12 m/s. What is its momentum? (p = m × v)",a:"6 kg·m/s",o:["12.5 kg·m/s","24 kg·m/s","6 N"],why:"p = m × v = 0.5 × 12 = 6 kg·m/s."},
+ {t:'calc',q:"Does the HEAVIER object always have more momentum?",a:"No — a light, fast object can have more",o:["Yes, heavier always wins","Only if it is moving fast","Yes, mass is all that matters"],why:"Momentum p = m × v depends on both. A 0.5 kg ball at 12 m/s (6 kg·m/s) beats a 10 kg box at 0.2 m/s (2 kg·m/s)."}
 ];
-const NAME={motion:"Motion",law:"Newton's Laws",calc:"Calculations"};
+const NAME={motion:"Motion",law:"Forces & Laws",calc:"Calculations"};
 const HINT={
- motion:"<b>Motion:</b> Velocity includes direction. Acceleration is ANY change in velocity (even turning). Inertia depends on mass.",
- law:"<b>Newton's Laws:</b> 1st = things keep doing what they're doing (inertia). 2nd = F = m×a (more mass → less acceleration for the same force). 3rd = every push has an equal push back on a different object.",
- calc:"<b>Calculations:</b> Write the formula, plug in, then add the units. F = m×a, a = F÷m. Net force: add if same direction, subtract if opposite. p = m×v."
+ motion:"<b>Motion:</b> Velocity = speed + direction. Acceleration is ANY change in velocity (even turning). Motion is measured from a reference point; a steeper distance–time line means faster. Inertia depends on mass.",
+ law:"<b>Forces & Laws:</b> Name the force — tension (rope), normal (surface push), friction (opposes sliding), drag (air), gravity (weight). Newton: 1st = inertia, 2nd = F = m×a, 3rd = equal & opposite on DIFFERENT objects. Net force 0 = balanced (still OR constant speed).",
+ calc:"<b>Calculations:</b> Write the formula, plug in, add units. Speed s = d÷t. Acceleration a = (v₂−v₁)÷t and a = F÷m. Force F = m×a. Weight W = m×g (g ≈ 9.8). Momentum p = m×v. Net force: add same way, subtract opposite."
 };
 const RULE={
- motion:"Velocity = speed AND direction. Acceleration = any change in velocity. More mass = more inertia.",
- law:"1st Law = inertia. 2nd Law: F = m × a (same force, more mass = less acceleration). 3rd Law: equal, opposite pairs on DIFFERENT objects.",
- calc:"F = m × a, so a = F ÷ m. Net force: add same-direction forces, subtract opposite ones. Momentum p = m × v."
+ motion:"Velocity = speed AND direction. Acceleration = any change in velocity. Motion depends on a reference point. More mass = more inertia.",
+ law:"Force types: tension, normal, friction, drag, applied, gravity. 1st Law = inertia; 2nd: F = m×a; 3rd: equal & opposite pairs on DIFFERENT objects. Net force 0 = balanced (no change in motion).",
+ calc:"s = d÷t · a = (v₂−v₁)÷t · F = m×a · W = m×g (g ≈ 9.8) · p = m×v. Net force: add same-direction, subtract opposite."
 };
 
 const app=document.getElementById('app');
@@ -131,9 +155,9 @@ function home(){
   <div class="card">
     <span class="label">Practice one topic (6 questions)</span>
     <div class="topics">
-      <button class="topic t-motion" data-act="start" data-mode="motion">Motion<span>speed · velocity</span></button>
-      <button class="topic t-law" data-act="start" data-mode="law">Newton's Laws<span>1st · 2nd · 3rd</span></button>
-      <button class="topic t-calc" data-act="start" data-mode="calc">Calculations<span>F = m×a</span></button>
+      <button class="topic t-motion" data-act="start" data-mode="motion">Motion<span>speed · velocity · graphs</span></button>
+      <button class="topic t-law" data-act="start" data-mode="law">Forces &amp; Laws<span>force types · net force · 1·2·3</span></button>
+      <button class="topic t-calc" data-act="start" data-mode="calc">Calculations<span>speed · F=ma · weight</span></button>
     </div>
   </div>
   <div class="card">
@@ -201,7 +225,7 @@ app.addEventListener('click',e=>{
   }
   if(a==='type'&&S.phase==='type'){
     if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
-    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the question again. Is it describing motion, naming a law, or doing a calculation?"; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the question again. Is it describing motion, a force or a law, or a calculation?"; }
     return render();
   }
   if(a==='next'){
