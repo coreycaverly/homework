@@ -1,4 +1,5 @@
-title: Grammar Detective
+title: Homework Helper
+description: Find the mistake. Fix it. Close the case.
 theme: jekyll-theme-cayman
 exclude:
   - CLAUDE.md

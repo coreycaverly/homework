@@ -158,11 +158,15 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
   `templates/answer-key.md`, if the subject's practice section has one.
 
 ### 5. Auto-manage navigation
-- **New subject:** insert a subject card just before
-  `<!-- homework-intake:subjects:end -->` in `index.md`. Never touch existing cards.
-- Ensure every subject page has the breadcrumb `[← All subjects](../)` at the top,
-  the guide links to its quiz, and the answer key links back to the guide. The quiz's
-  footer links to `./` (guide) and `../` (hub). These are the only nav you manage.
+- The hub groups subjects under **area headings** (`## <emoji> <Area>` — e.g. 📚 English,
+  🧮 Math, 🧪 Science, 🌎 Spanish) inside the `homework-intake:subjects` markers. To add a
+  subject, find its matching area heading and append the `###` card at the end of that
+  area's list (before the next `##` or the end marker). If no area fits, create a new
+  `## <emoji> <Area>` section before the end marker. Never touch existing cards.
+- Every page's banner already links home ("← Homework Helper") via `_layouts/default.html`,
+  so you don't add that. Still give each subject guide the breadcrumb `[← All subjects](../)`
+  at the top, link the guide to its quiz, and link the answer key back to the guide; the
+  quiz footer links to `./` (guide) and `../` (hub).
 
 ### 6. Write a short parent summary (completed sheets)
 In your chat reply (not on the site): the score, the top gap, and one thing to
