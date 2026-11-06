@@ -1,0 +1,21 @@
+# The subject registry that builds the hub (index.md) and tracks when each was added.
+# The homework-intake skill edits THIS file to add a subject: append an entry under the
+# matching area, or add a new area block. Keep slugs matching the folder names.
+- area: English
+  emoji: "📚"
+  subjects:
+    - { name: Grammar Detective,  slug: grammar, emoji: "📝", added: 2026-11-03 }
+    - { name: Editor Detective,   slug: editor,  emoji: "✏️", added: 2026-11-05 }
+    - { name: Writing Detective,  slug: writing, emoji: "✍️", added: 2026-11-05 }
+- area: Math
+  emoji: "🧮"
+  subjects:
+    - { name: Math Detective,     slug: math,    emoji: "🔢", added: 2026-11-05 }
+- area: Science
+  emoji: "🧪"
+  subjects:
+    - { name: Science Detective,  slug: science, emoji: "🔬", added: 2026-11-03 }
+- area: Spanish
+  emoji: "🌎"
+  subjects:
+    - { name: Spanish Detective,  slug: spanish, emoji: "💬", added: 2026-11-05 }

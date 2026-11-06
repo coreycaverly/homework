@@ -262,6 +262,7 @@ app.addEventListener('click',e=>{
 });
 function finish(){
   stats.cases++; stats.stars+=S.stars; save();
+  try{localStorage.setItem('hw-done-grammar',new Date().toISOString().slice(0,10))}catch(e){}
   const pct=S.stars/S.max, on=Math.min(5,Math.round(pct*5));
   const head=pct>=.9?"Master detective!":pct>=.6?"Case closed!":"Case closed. Good work sticking with it!";
   const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}s:</b> ${RULE[t]}</li>`).join('');

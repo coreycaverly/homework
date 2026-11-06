@@ -103,8 +103,8 @@ just "what's the right answer?".
 ## Repo map (where things go)
 
 ```
-index.md                         Hub. Subject cards live between the
-                                 <!-- homework-intake:subjects:start/end --> markers.
+index.md                         Hub — generated from _data/subjects.yml (don't hand-edit)
+_data/subjects.yml               Subject registry (name, slug, emoji, area, added date)
 <subject>/
   index.md                       Study guide (cayman + base design)
   quiz.html                      Self-contained quiz (no build step, no deps)
@@ -158,15 +158,18 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
   `templates/answer-key.md`, if the subject's practice section has one.
 
 ### 5. Auto-manage navigation
-- The hub groups subjects under **area headings** (`## <emoji> <Area>` — e.g. 📚 English,
-  🧮 Math, 🧪 Science, 🌎 Spanish) inside the `homework-intake:subjects` markers. To add a
-  subject, find its matching area heading and append the `###` card at the end of that
-  area's list (before the next `##` or the end marker). If no area fits, create a new
-  `## <emoji> <Area>` section before the end marker. Never touch existing cards.
+- The hub (`index.md`) is **generated from `_data/subjects.yml`** — you don't edit the hub
+  HTML. To add a subject, add an entry `{ name, slug, emoji, added: <today> }` under the
+  matching `area:` block; if no area fits, add a new area block (`- area: … / emoji: … /
+  subjects: …`). The `slug` must equal the folder name. Set `added` to today's date so the
+  hub shows when it was added. Never remove existing entries.
 - Every page's banner already links home ("← Homework Helper") via `_layouts/default.html`,
   so you don't add that. Still give each subject guide the breadcrumb `[← All subjects](../)`
   at the top, link the guide to its quiz, and link the answer key back to the guide; the
   quiz footer links to `./` (guide) and `../` (hub).
+- **Progress:** every quiz, on finish, sets `localStorage['hw-done-<slug>']` to the date, and
+  the hub shows a per-quiz "done" checkbox from it. New quizzes copied from an existing one
+  must keep that line in `finish()` (swap the slug) so completion is tracked.
 
 ### 6. Write a short parent summary (completed sheets)
 In your chat reply (not on the site): the score, the top gap, and one thing to

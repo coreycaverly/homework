@@ -1,60 +1,80 @@
 ---
 title: Homework Helper
+layout: default
 ---
 
-Pick a subject to practice. One short session a day beats one long one.
+<p class="hub-intro">Pick a subject. One short session beats one long one. A check means the quiz is done.</p>
 
-<!-- homework-intake:subjects:start -->
-<!-- Subjects are grouped under area headings (## <emoji> <Area>). To add one, the
-     homework-intake skill appends the ### card under its matching area, or creates a
-     new area section before the end marker. Keep this in sync with the subject folders;
-     do not remove existing cards. -->
+<nav class="hub">
+{% for group in site.data.subjects %}
+  <section class="area">
+    <h2 class="area-h">{{ group.emoji }} {{ group.area }}</h2>
+    <ul class="subj-list">
+    {% for s in group.subjects %}
+      <li class="subj">
+        <a class="subj-link" href="{{ s.slug | append: '/' | relative_url }}">
+          <span class="subj-emoji" aria-hidden="true">{{ s.emoji }}</span>
+          <span class="subj-name">{{ s.name }}</span>
+        </a>
+        <span class="subj-date">added {{ s.added | date: "%b&nbsp;%-d" }}</span>
+        <label class="subj-check"><input type="checkbox" data-quiz="{{ s.slug }}"><span>quiz done</span></label>
+      </li>
+    {% endfor %}
+    </ul>
+  </section>
+{% endfor %}
+</nav>
 
-## 📚 English
+<style>
+  .hub-intro { max-width: 640px; margin: 1.25rem auto 0; color: #4a5578; }
+  .hub { max-width: 640px; margin: 1.25rem auto 0; display: flex; flex-direction: column; gap: 1.75rem; }
+  .hub .area { margin: 0; }
+  .hub .area-h {
+    margin: 0 0 .4rem; padding: 0; border: 0;
+    font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #7a85a6;
+  }
+  .hub .subj-list { list-style: none; margin: 0; padding: 0; }
+  .hub .subj {
+    display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .75rem;
+    min-height: 56px; padding: .35rem .25rem; border-bottom: 1px solid rgba(20,30,60,.08);
+  }
+  .hub .subj-link {
+    display: flex; align-items: center; gap: .6rem; flex: 1 1 auto;
+    text-decoration: none; color: #16233b; font-weight: 600; font-size: 1.15rem;
+    padding: .55rem .5rem; margin: -.55rem -.5rem; border-radius: 10px; min-height: 44px;
+  }
+  .hub .subj-link:hover { background: rgba(20,30,60,.05); }
+  .hub .subj-emoji { font-size: 1.3rem; }
+  .hub .subj-date { color: #8b93b0; font-size: .82rem; white-space: nowrap; }
+  .hub .subj-check {
+    display: inline-flex; align-items: center; gap: .35rem; cursor: pointer;
+    color: #8b93b0; font-size: .82rem; white-space: nowrap; min-height: 44px; padding: 0 .25rem;
+  }
+  .hub .subj-check input { width: 20px; height: 20px; accent-color: #0d9488; cursor: pointer; }
+  .hub .subj.is-done .subj-check { color: #0d9488; font-weight: 600; }
+  .hub .subj.is-done .subj-link::after { content: "✓"; color: #0d9488; font-weight: 700; margin-left: .15rem; }
+  @media (max-width: 460px) {
+    .hub .subj-date { order: 3; margin-left: 2.1rem; }
+    .hub .subj-check { order: 4; margin-left: auto; }
+  }
+</style>
 
-### 📝 Grammar Detective
-
-Find and fix adjective, adverb, and article errors on your own.
-
-**[Study guide →](grammar/)**  ·  **[Play the quiz →](grammar/quiz.html)**
-
-### ✏️ Editor Detective
-
-Conjunctions, prepositions, and interjections — find the mistake, fix it.
-
-**[Study guide →](editor/)**  ·  **[Play the quiz →](editor/quiz.html)**
-
-### ✍️ Writing Detective
-
-Full sentences, homophones, and explaining your answer — the points you lose in *every* class.
-
-**[Study guide →](writing/)**  ·  **[Play the quiz →](writing/quiz.html)**
-
-## 🧮 Math
-
-### 🔢 Math Detective
-
-Ratios, rates, and unit rates — name the move, then solve it.
-
-**[Study guide →](math/)**  ·  **[Play the quiz →](math/quiz.html)**
-
-## 🧪 Science
-
-### 🔬 Science Detective
-
-Forces, motion, and Newton's laws — answer it, then explain the why.
-
-**[Study guide →](science/)**  ·  **[Play the quiz →](science/quiz.html)**
-
-## 🌎 Spanish
-
-### 💬 Spanish Detective
-
-Numbers, calendar, weather, and classroom words — say it out loud.
-
-**[Study guide →](spanish/)**  ·  **[Play the quiz →](spanish/quiz.html)**
-<!-- homework-intake:subjects:end -->
-
----
-
-*More subjects coming soon.*
+{% raw %}
+<script>
+(function () {
+  function key(s){ return 'hw-done-' + s; }
+  function get(s){ try { return localStorage.getItem(key(s)); } catch (e) { return null; } }
+  function set(s, v){ try { v ? localStorage.setItem(key(s), v) : localStorage.removeItem(key(s)); } catch (e) {} }
+  document.querySelectorAll('.subj-check input[data-quiz]').forEach(function (box) {
+    var slug = box.getAttribute('data-quiz');
+    var row = box.closest('.subj');
+    function paint(done){ box.checked = !!done; if (row) row.classList.toggle('is-done', !!done); }
+    paint(get(slug));
+    box.addEventListener('change', function () {
+      var v = box.checked ? new Date().toISOString().slice(0, 10) : null;
+      set(slug, v); paint(v);
+    });
+  });
+})();
+</script>
+{% endraw %}
