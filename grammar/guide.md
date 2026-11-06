@@ -52,12 +52,21 @@ These verbs work like an equals sign. The word after them describes the noun, so
 
 Rule of thumb: **"of all" or "ever" means -est / most.**
 
+**Never both.** Use *-er* **or** *more*, never the two together. Same for *-est* and *most*.
+
+| Wrong | Right |
+| --- | --- |
+| the **most coolest** one | the **coolest** one |
+| even **more better** | even **better** |
+| flew **more far** | flew **farther** |
+
 ### Trap 4: The rule-breakers
 
 | One | Two (-er) | All (-est) |
 | --- | --- | --- |
 | good | **better** | **best** |
 | bad | **worse** | **worst** |
+| far | **farther** | **farthest** |
 | many / much | **more** | **most** |
 
 **Make-sense check:** "Our *better* ones are not as good as your *worse* ones." Aunt is comparing her whole pile to yours, so it's **best** and **worst**. Ask: *Is this comparing 2, or comparing the top/bottom of a group?*
@@ -153,6 +162,8 @@ Write **ADJ, ADV,** or **ART** after each fix.
 11. That was a extremely loud thunderclap. Fix: \_\_\_\_\_\_\_\_ Type: \_\_\_\_
 12. This is the worse movie I have ever seen. Fix: \_\_\_\_\_\_\_\_ Type: \_\_\_\_
 13. We waited an hour for the bus. Fix: \_\_\_\_\_\_\_\_ Type: \_\_\_\_
+14. That was the most funniest joke I have ever heard. Fix: \_\_\_\_\_\_\_\_ Type: \_\_\_\_
+15. Jupiter is more far from the sun than Earth is. Fix: \_\_\_\_\_\_\_\_ Type: \_\_\_\_
 
 ## Cheat card (cut out and keep by the homework)
 

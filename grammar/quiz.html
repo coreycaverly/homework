@@ -86,6 +86,8 @@ layout: default
 </style>
 
 <script>
+// A fix of DEL means "this word should not be there": the button reads "(cross it out)" and the word is struck through.
+const DEL="(cross it out)";
 const BANK=[
  {t:'adj',s:"Tyrannosaurus rex ran on its power hind legs.",w:"power",fix:"powerful",o:["powerly","powers"],why:"Legs are a noun. You need a describer: powerful. Power is a thing, not a describing word."},
  {t:'adj',s:"Eating vegetables is a health habit.",w:"health",fix:"healthy",o:["healthily","healths"],why:"Habit is a noun. What kind of habit? A healthy one. Add -y to turn the thing into a describer."},
@@ -100,6 +102,10 @@ const BANK=[
  {t:'adj',s:"Our soccer team had a success season.",w:"success",fix:"successful",o:["successfully","succeeds"],why:"What kind of season? A successful one. Add -ful to turn the thing into a describer."},
  {t:'adj',s:"A cheetah is fast than a lion.",w:"fast",fix:"faster",o:["fastest","fastly"],why:"Comparing 2 animals (cheetah and lion), so use -er: faster."},
  {t:'adj',s:"She is the tallest girl in her grade.",w:null,why:"No mistake! A whole grade has lots of girls, so tallest (-est) is right."},
+ {t:'adj',s:"That was the most funniest joke I have ever heard.",w:"most",fix:DEL,o:["more","much"],why:"Funniest already means the most funny. Never use most and -est together, so cross out most."},
+ {t:'adj',s:"My new bike is more faster than my old one.",w:"more",fix:DEL,o:["most","very"],why:"Faster already means more fast. Never use more and -er together, so cross out more."},
+ {t:'adj',s:"Jupiter is farer from the sun than Earth is.",w:"farer",fix:"farther",o:["farest","farrer"],why:"Far is a rule-breaker: far, farther, farthest."},
+ {t:'adj',s:"Of the two puzzles, this one is more difficult.",w:null,why:"No mistake! Two puzzles, and difficult is a long word, so more difficult is right."},
  {t:'adv',s:"The puppy ran quick across the yard.",w:"quick",fix:"quickly",o:["quicker","quickness"],why:"How did it run? Quickly. It describes the verb ran, so it needs -ly."},
  {t:'adv',s:"I didn't have enoughly money for a snack.",w:"enoughly",fix:"enough",o:["enoughs","enougher"],why:"Fake -ly! Enough never takes -ly."},
  {t:'adv',s:"Tomorrow we went to the beach.",w:"Tomorrow",fix:"Yesterday",o:["Next week","Tonight"],why:"\"Went\" already happened, so the WHEN word must be in the past: Yesterday."},
@@ -191,7 +197,7 @@ function render(){
   const words=S.toks.map((t,k)=>{
     let cls='word', txt=t;
     if(k===S.target&&ph==='fix')cls+=' found static';
-    else if(k===S.target&&(ph==='type'||ph==='done')){cls+=' fixed static';txt=t.replace(q.w,q.fix)}
+    else if(k===S.target&&(ph==='type'||ph==='done')){if(q.fix===DEL)cls+=' found static';else{cls+=' fixed static';txt=t.replace(q.w,q.fix)}}
     else if(ph!=='find')cls+=' static';
     if(ph==='find'&&k===S.target&&S.miss>=3)cls+=' look';
     if(S.oops===k)cls+=' oops';

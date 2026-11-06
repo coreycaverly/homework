@@ -86,6 +86,8 @@ layout: default
 </style>
 
 <script>
+// A fix of DEL means "this word should not be there": the button reads "(cross it out)" and the word is struck through.
+const DEL="(cross it out)";
 const BANK=[
  // CONJUNCTIONS
  {t:'conj',s:"I wanted to play outside, and it was raining.",w:"and",fix:"but",o:["or","nor"],why:"The two ideas disagree (wanting to play vs. the rain), so use but to show contrast."},
@@ -94,6 +96,10 @@ const BANK=[
  {t:'conj',s:"He didn't study, but he failed the test.",w:"but",fix:"so",o:["or","nor"],why:"Not studying caused the failing, so use so to show the result."},
  {t:'conj',s:"You can have cake and ice cream, but not both.",w:"and",fix:"or",o:["nor","so"],why:"\"Not both\" means a choice between two — use or: cake or ice cream."},
  {t:'conj',s:"We can walk or we can take the bus.",w:null,why:"No mistake! Or correctly shows a choice between two options."},
+ {t:'conj',s:"We stayed inside unless the storm passed.",w:"unless",fix:"until",o:["nor","although"],why:"Until means up to that time: you stay in up to the moment the storm passes. Unless means except if."},
+ {t:'conj',s:"The coach wants both speed or teamwork from us.",w:"or",fix:"and",o:["nor","but"],why:"Both pairs with and: both speed and teamwork."},
+ {t:'conj',s:"Not only did we finish early, and we also got an A.",w:"and",fix:"but",o:["or","so"],why:"Not only pairs with but also: not only… but we also got an A."},
+ {t:'conj',s:"After the movie ended, we walked home.",w:null,why:"No mistake! After fits the time, and the comma comes right where the first part ends."},
  // PREPOSITIONS
  {t:'prep',s:"She is really good in math.",w:"in",fix:"at",o:["on","to"],why:"We say good AT something: good at math."},
  {t:'prep',s:"We arrived to the school early.",w:"to",fix:"at",o:["in","on"],why:"You arrive AT a place: arrived at school."},
@@ -101,6 +107,10 @@ const BANK=[
  {t:'prep',s:"Let's meet at Friday afternoon.",w:"at",fix:"on",o:["in","to"],why:"Use ON with days of the week: on Friday."},
  {t:'prep',s:"I am interested on science.",w:"on",fix:"in",o:["at","to"],why:"We say interested IN something."},
  {t:'prep',s:"The cat is hiding under the bed.",w:null,why:"No mistake! Under is the right preposition for where the cat is."},
+ {t:'prep',s:"The cat jumped off of the kitchen counter.",w:"of",fix:DEL,o:["from","to"],why:"Off already does the job. Off of has one word too many, so cross out of."},
+ {t:'prep',s:"Where did you leave your shoes at?",w:"at",fix:DEL,o:["in","to"],why:"Where already asks for the place. The at at the end is extra, so cross it out."},
+ {t:'prep',s:"The coach handed out snacks between all six players.",w:"between",fix:"among",o:["across","beside"],why:"Six players is more than two. Between is for 2; among is for 3 or more."},
+ {t:'prep',s:"We hung the banner among the two doors.",w:"among",fix:"between",o:["during","of"],why:"Only two doors, so use between. Among is for 3 or more."},
  // INTERJECTIONS
  {t:'interj',s:"Hooray, I lost my homework!",w:"Hooray",fix:"Oh no",o:["Yippee","Yay"],why:"Hooray shows joy, but losing homework is bad news — use Oh no."},
  {t:'interj',s:"Ouch, we won the big game!",w:"Ouch",fix:"Hooray",o:["Oops","Ow"],why:"Ouch means pain; winning is exciting, so Hooray fits the feeling."},
@@ -110,7 +120,7 @@ const BANK=[
 const NAME={conj:"Conjunction",prep:"Preposition",interj:"Interjection"};
 const HINT={
  conj:"<b>Conjunction hunt:</b> look at the joining words (and, but, or, so, nor). Does it match the meaning — contrast (but), choice (or), result (so)? Correlatives must pair: neither…nor, either…or.",
- prep:"<b>Preposition hunt:</b> look at the little position words (in, on, at, to, from). Some go with set phrases: good AT, arrive AT, interested IN, different FROM, ON a day.",
+ prep:"<b>Preposition hunt:</b> look at the little position words (in, on, at, to, from). Some go with set phrases: good AT, arrive AT, interested IN, different FROM, ON a day. Some are EXTRA: read it without the little word. Between = 2, among = 3 or more.",
  interj:"<b>Interjection hunt:</b> find the feeling word at the start (Wow, Ouch, Hooray, Ugh). Does the feeling match what happens?"
 };
 const RULE={
@@ -175,7 +185,7 @@ function render(){
   const words=S.toks.map((t,k)=>{
     let cls='word', txt=t;
     if(k===S.target&&ph==='fix')cls+=' found static';
-    else if(k===S.target&&(ph==='type'||ph==='done')){cls+=' fixed static';txt=t.replace(q.w,q.fix)}
+    else if(k===S.target&&(ph==='type'||ph==='done')){if(q.fix===DEL)cls+=' found static';else{cls+=' fixed static';txt=t.replace(q.w,q.fix)}}
     else if(ph!=='find')cls+=' static';
     if(ph==='find'&&k===S.target&&S.miss>=3)cls+=' look';
     if(S.oops===k)cls+=' oops';

@@ -41,6 +41,23 @@ Run every piece of writing through these before you turn it in.
 
 > **Whisper-read tip:** where your voice naturally stops, that's where the period goes.
 
+**One more rescue:** a **semicolon (;)** can join two complete sentences that go together.
+→ *We finished the game; we went out for pizza.*
+
+## Capitals & commas: the C and P in CUPS
+
+**Capitalize:** the first word · **I** · names · places · days, months, and holidays ·
+titles like **Dr.** · **Mom/Dad** when used as a name (but not *my mom*).
+
+| Comma goes… | Example |
+| --- | --- |
+| after an intro word or phrase | **After lunch,** we read. · **Yes,** I did. |
+| around the name of the person you're talking to | Can you help, **Sam,** with the dishes? |
+| before **and / but / so** joining two sentences | I finished math**, but** I still have to read. |
+| after a starter like **When / After / Although** | **When the bell rang,** we left. |
+| in dates and between a city and state | March 4**,** 2027 · Austin**,** Texas |
+| before a quote (and the end mark stays **inside**) | Dad asked**,** "Are you ready?" |
+
 ## Homophones: the sound-alikes that cost points
 
 | Words | Trick to remember |
@@ -75,6 +92,8 @@ When a question wants a *why*, don't give a bare number or one word. Use **ACE**
 4. Rescue the run-on: *My team lost the game we still had fun.* \_\_\_\_\_\_\_\_
 5. A strong answer starts by doing what? \_\_\_\_\_\_\_\_
 6. What's missing? *"Store B is cheaper."* (Which is the better deal?) \_\_\_\_\_\_\_\_
+7. Fix the capitals: *on friday, my cousin and i went to the denver zoo.* \_\_\_\_\_\_\_\_
+8. Add the commas: *Hey Leo can you come over on May 2 2027?* \_\_\_\_\_\_\_\_
 
 ## STOP & CHECK (the finish box — this is the work)
 

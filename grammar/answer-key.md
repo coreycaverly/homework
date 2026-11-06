@@ -23,5 +23,7 @@ For the practice section ("Spot it, fix it") in the [study guide](guide.html).
 | 11 | a → **an** extremely | ART | vowel sound |
 | 12 | worse → **worst** | ADJ | "ever" = -est |
 | 13 | **No error!** | ART | "hour" starts with a vowel sound, so "an" is right |
+| 14 | cross out **most** (funniest) | ADJ | never most + -est together |
+| 15 | more far → **farther** | ADJ | far, farther, farthest |
 
 **Coaching tip:** When he misses one, don't give the answer. Ask the question from the cheat card ("How did she do it?") and let him find it.

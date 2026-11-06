@@ -84,6 +84,10 @@ const BANK=[
  {t:'sentence',q:"What is this? \"Running down the hallway after lunch.\"",a:"Fragment",o:["Complete sentence","Run-on","Two sentences"],why:"No subject doing a main action. Add a WHO + DID WHAT: 'Jake got in trouble for running…'."},
  {t:'sentence',q:"Which is the best fix? \"My team lost the game we still had fun.\"",a:"My team lost the game, but we still had fun.",o:["My team lost the game we still, had fun.","My team lost the game we still had fun!","My team, lost the game we still had fun."],why:"Two complete ideas that contrast — join with ', but' (or split with a period)."},
  {t:'sentence',q:"Which one is a COMPLETE sentence?",a:"The ball rolled across the floor.",o:["On the coordinate plane.","Newton's first law.","After the long game."],why:"Only this has a WHO (the ball) and a DID WHAT (rolled). The others are fragments."},
+ {t:'sentence',q:"Which sentence has every capital it needs?",a:"On Monday, my friend Sam and I went to Lake Tahoe.",o:["on Monday, my friend sam and I went to Lake Tahoe.","On monday, my friend Sam and i went to lake Tahoe.","On Monday, my Friend Sam and I went to lake tahoe."],why:"Capitalize the first word, days, names, places, and I. Friend is not a name, so it stays lowercase."},
+ {t:'sentence',q:"Where do the commas go? \"After lunch Maya can you help me clean up?\"",a:"After lunch, Maya, can you help me clean up?",o:["After, lunch Maya can you help me clean up?","After lunch Maya, can you help me, clean up?","After lunch Maya can you help me clean, up?"],why:"A comma after the intro phrase (After lunch,) and commas around the name of the person you're talking to (, Maya,)."},
+ {t:'sentence',q:"Which run-on fix uses a semicolon correctly?",a:"The rain stopped; we went back outside.",o:["The rain; stopped we went back outside.","The rain stopped we; went back outside.","The rain stopped we went back outside;"],why:"A semicolon goes between two complete sentences: The rain stopped ; we went back outside."},
+ {t:'sentence',q:"Which quote is punctuated correctly?",a:"Dad asked, \"Are you ready to go?\"",o:["Dad asked \"Are you ready to go\"?","Dad asked, \"Are you ready to go\"?","Dad asked \"are you ready to go?\""],why:"Comma before the quote, a capital to start it, and the ? stays inside the quotation marks."},
  // HOMOPHONES
  {t:'homophone',q:"Choose the right word: \"I have ___ pencils in my bag.\"",a:"two",o:["too","to","tow"],why:"two = 2. (too = also/very; to = toward.)"},
  {t:'homophone',q:"Choose the right word: \"This homework is ___ hard!\"",a:"too",o:["two","to","toe"],why:"too = very or also. 'Too hard' means very hard."},
@@ -101,12 +105,12 @@ const BANK=[
 ];
 const NAME={sentence:"Sentences",homophone:"Homophones",explain:"Explain It"};
 const HINT={
- sentence:"<b>Sentences:</b> a complete sentence has a WHO + DID WHAT. A fragment is missing one. A run-on squishes two sentences together — split with a period or join with ', and / , but / , so'.",
+ sentence:"<b>Sentences:</b> a complete sentence has a WHO + DID WHAT. A fragment is missing one. A run-on squishes two sentences together — split with a period or join with ', and / , but / , so'. Capitals: first word, I, names, places, days. Commas: after an intro, around a name you're talking to, before a quote.",
  homophone:"<b>Homophones:</b> two = 2 · too = also/very · to = toward. there = a place (has 'here') · their = they own it · they're = they are. you're = you are · its = belongs to it.",
  explain:"<b>Explain it (ACE):</b> Answer in a full sentence that restates the question, Calculate/show it with labels, and Explain why. Never start with 'Because'."
 };
 const RULE={
- sentence:"Complete sentence = WHO + DID WHAT. Fragment = missing one. Run-on = two sentences joined wrong (split, or use , and / , but / , so).",
+ sentence:"Complete sentence = WHO + DID WHAT. Fragment = missing one. Run-on = two sentences joined wrong (split, or use , and / , but / , so / ;). Capitals and commas follow the CUPS rules.",
  homophone:"two=2, too=also/very, to=toward · there=place, their=they own, they're=they are · you're=you are, its=belongs to it.",
  explain:"ACE: Answer (restate the question) · Calculate with labels · Explain why. Start by restating; never start with 'Because'."
 };
