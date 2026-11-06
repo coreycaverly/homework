@@ -1,0 +1,229 @@
+---
+title: Spanish Detective
+layout: default
+---
+
+{% raw %}
+<div id="app"></div>
+<p class="quiz-nav"><a href="./">Study guide</a> · <a href="../">All subjects</a></p>
+
+<style>
+/* Quiz UI, themed to sit inside the cayman page. Color = topic:
+   Números red, Calendario y clima amber, Vocabulario green. */
+#app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
+#app *{box-sizing:border-box}
+.quiz-nav{text-align:center;margin-top:28px}
+:root{
+  --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
+  --num:#DC2626; --num-soft:#FBE0E0; --cal:#B45309; --cal-soft:#FBEAD2; --voc:#059669; --voc-soft:#D6F2E6;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#059669;
+}
+#app, #app button{font-family:inherit}
+#app p{margin:0}
+#app button{color:inherit;cursor:pointer;border:0;background:none}
+#app button:focus-visible{outline:3px solid var(--num);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.intro{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.72rem;font-weight:400}
+.t-num{background:var(--num-soft);color:var(--num)} .t-cal{background:var(--cal-soft);color:var(--cal)} .t-voc{background:var(--voc-soft);color:var(--voc)}
+.c-num{color:var(--num)} .c-cal{color:var(--cal)} .c-voc{color:var(--voc)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.badge.t-num{background:var(--num-soft);color:var(--num)} .badge.t-cal{background:var(--cal-soft);color:var(--cal)} .badge.t-voc{background:var(--voc-soft);color:var(--voc)}
+.prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.05rem;background:var(--card);min-height:52px;text-align:left}
+.choice:hover{border-color:var(--ink)}
+.choice.t-num{background:var(--num-soft)} .choice.t-cal{background:var(--cal-soft)} .choice.t-voc{background:var(--voc-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.num{background:var(--num-soft)} .result.cal{background:var(--cal-soft)} .result.voc{background:var(--voc-soft)}
+.result strong{font-weight:800;font-size:1.2rem}
+.answerline{font-weight:600}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+
+<script>
+const BANK=[
+ // NÚMEROS (numbers)
+ {t:'num',q:"How do you write 15 in Spanish?",a:"quince",o:["diecicinco","diez y cinco","cincuenta"],why:"11–15 are their own words: once, doce, trece, catorce, quince. 15 = quince (not a dieci- word)."},
+ {t:'num',q:"How do you write 13 in Spanish?",a:"trece",o:["diecitrés","diez y tres","treinta"],why:"13 is irregular: trece. The dieci- pattern doesn't start until 16."},
+ {t:'num',q:"Which number begins the 'dieci-' pattern?",a:"16 — dieciséis",o:["13 — trece","11 — once","20 — veinte"],why:"16–19 use dieci-: dieciséis, diecisiete, dieciocho, diecinueve. 11–15 are their own words."},
+ {t:'num',q:"What is 'once' in numbers?",a:"11",o:["1","12","110"],why:"once = 11. (uno = 1, doce = 12.)"},
+ {t:'num',q:"3 × 6 = ______ (en español)",a:"dieciocho",o:["ocho","sesenta","diez y ocho"],why:"3 × 6 = 18 = dieciocho (one word)."},
+ {t:'num',q:"What is 'veinte'?",a:"20",o:["2","12","200"],why:"veinte = 20. After it, veintiuno, veintidós… (21, 22)."},
+ // CALENDARIO Y CLIMA (calendar & weather)
+ {t:'cal',q:"What day is 'miércoles'?",a:"Wednesday",o:["Monday","Friday","a month"],why:"Days: lunes, martes, miércoles (Wednesday), jueves, viernes, sábado, domingo."},
+ {t:'cal',q:"Which word is a month (un mes)?",a:"abril",o:["jueves","lunes","sol"],why:"abril = April. (jueves and lunes are days; sol = sun.)"},
+ {t:'cal',q:"☀️ How do you say it's sunny?",a:"Hace sol",o:["Está lloviendo","Nieva","Hace frío"],why:"Sunny = Hace sol. (Está lloviendo = it's raining; nieva = it snows.)"},
+ {t:'cal',q:"What does 'Está lloviendo' mean?",a:"It's raining",o:["It's sunny","It's snowing","It's cloudy"],why:"llover = to rain. Está lloviendo = it is raining."},
+ {t:'cal',q:"What is 'diciembre'?",a:"December",o:["September","October","a day"],why:"diciembre = December, the 12th month."},
+ // VOCABULARIO (classroom + about me)
+ {t:'voc',q:"What is 'lápiz'?",a:"pencil",o:["pen","paper","eraser"],why:"lápiz = pencil. (bolígrafo = pen, papel = paper, goma = eraser.)"},
+ {t:'voc',q:"¿Qué es 'tijeras'?",a:"scissors",o:["glue","pencil sharpener","ruler"],why:"tijeras = scissors. (pegamento = glue, sacapuntas = pencil sharpener.)"},
+ {t:'voc',q:"¿Qué es 'sacapuntas'?",a:"pencil sharpener",o:["scissors","glue","backpack"],why:"sacapuntas = pencil sharpener (literally 'point-maker')."},
+ {t:'voc',q:"How do you say 'I like soccer'?",a:"Me gusta el fútbol",o:["No me gusta el fútbol","Yo gusta fútbol","Me gustan fútbol"],why:"Me gusta + one thing = I like it. Me gusta el fútbol."},
+ {t:'voc',q:"What does 'No me gusta' mean?",a:"I don't like it",o:["I like it","I have it","I am it"],why:"No me gusta = I don't like it. Add 'no' in front of 'me gusta'."},
+ {t:'voc',q:"How do you say 'I am 11 years old'?",a:"Tengo once años",o:["Soy once años","Tengo once","Yo es once"],why:"Age uses tener (to have): Tengo once años = 'I have 11 years'."},
+ {t:'voc',q:"'Mi cumpleaños es…' means…",a:"My birthday is…",o:["My name is…","I am from…","I like…"],why:"cumpleaños = birthday. Mi cumpleaños es el… = My birthday is on the…"}
+];
+const NAME={num:"Números",cal:"Calendario y Clima",voc:"Vocabulario"};
+const HINT={
+ num:"<b>Números:</b> 11–15 are their OWN words — once, doce, trece, catorce, quince. The 'dieci-' pattern only starts at 16 (dieciséis, diecisiete…).",
+ cal:"<b>Calendario y clima:</b> days — lunes, martes, miércoles, jueves, viernes. Weather uses 'Hace…' (Hace sol) or 'Está…' (Está lloviendo).",
+ voc:"<b>Vocabulario:</b> classroom words (lápiz, tijeras, pegamento, papel) and 'about me' phrases (Me gusta…, Tengo ___ años, Mi cumpleaños es…)."
+};
+const RULE={
+ num:"11–15 are irregular: once, doce, trece, catorce, quince. Dieci- starts at 16 (dieciséis…). veinte = 20.",
+ cal:"Days: lunes…domingo. Months: enero…diciembre. Weather: Hace sol / Está lloviendo / Nieva.",
+ voc:"lápiz = pencil, tijeras = scissors, sacapuntas = sharpener. Me gusta = I like; Tengo ___ años = I'm ___ years old."
+};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('esp-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('esp-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>(''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <p class="intro muted">Read it, pick the answer, and learn the why. Short rounds — about 3 minutes.</p>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick case<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one topic (6 questions)</span>
+    <div class="topics">
+      <button class="topic t-num" data-act="start" data-mode="num">Números<span>0 – 30</span></button>
+      <button class="topic t-cal" data-act="start" data-mode="cal">Calendario<span>días · meses · clima</span></button>
+      <button class="topic t-voc" data-act="start" data-mode="voc">Vocabulario<span>clase · sobre mí</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How a case works</span>
+    <ol class="steps">
+      <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
+      <li><span>Every answer gives you the <b>why</b> — the rule to remember.</span></li>
+      <li><span>In a quick case, <b>name the topic</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Cases closed: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  S={mode,qs:shuffle(pool).slice(0,n),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'answer',miss:0,typeMiss:0,msg:'',opts:shuffle([q.a,...q.o]),pts:0,oops:null});
+  S.max+=S.mode==='mix'?2:1;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  let body='';
+  if(ph==='answer'){
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: what topic was that question?</p>
+    <div class="choices">${['num','cal','voc'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?2:1;
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Case cracked!':S.pts>0?'Solved!':'Solved with help.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mystery topic</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function missHint(q){
+  S.miss++;
+  if(S.miss===1)S.msg="Not quite — read it again slowly. Say it out loud in Spanish.";
+  else S.msg=HINT[q.t];
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='answer'&&S.phase==='answer'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.a){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; missHint(q); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look again. Is it a number (Números), a day/month/weather word (Calendario), or classroom/about-me vocab (Vocabulario)?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Master detective!":pct>=.6?"Case closed!":"Case closed. Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another case<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+{% endraw %}

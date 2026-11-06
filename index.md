@@ -26,6 +26,12 @@ Forces, motion, and Newton's laws — answer it, then explain the why.
 Ratios, rates, and unit rates — name the move, then solve it.
 
 **[Study guide →](math/)**  ·  **[Play the quiz →](math/quiz.html)**
+
+### 💬 Spanish Detective
+
+Numbers, calendar, weather, and classroom words — say it out loud.
+
+**[Study guide →](spanish/)**  ·  **[Play the quiz →](spanish/quiz.html)**
 <!-- homework-intake:subjects:end -->
 
 ---
