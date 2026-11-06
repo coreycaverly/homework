@@ -2,11 +2,11 @@
 title: Science Detective — Answer Key
 ---
 
-[← Back to the study guide](./) · **Answer key (parents)**
+[← Back to the study guide](guide.html) · **Answer key (parents)**
 
 ## Answer key (for parents)
 
-For the practice section ("Answer it, explain it") in the [study guide](./).
+For the practice section ("Answer it, explain it") in the [study guide](guide.html).
 
 | # | Answer | Topic | Why |
 | --- | --- | --- | --- |

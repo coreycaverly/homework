@@ -1,94 +1,44 @@
 ---
-title: Writing Detective — Say it in full sentences
+title: Writing Detective
+layout: default
+slug: writing
 ---
+{%- assign me = nil -%}
+{%- for g in site.data.subjects -%}{%- for s in g.subjects -%}{%- if s.slug == page.slug -%}{%- assign me = s -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
 
-[← All subjects](../) · **Writing Detective**
+<p class="subj-blurb">{{ me.blurb }}</p>
 
-**[Play the Writing Detective quiz →](quiz.html)**
+<div class="launch">
+  <a class="launch-btn" href="guide.html">
+    <span class="launch-emoji" aria-hidden="true">📘</span>
+    <span class="launch-text"><b>Study guide</b><small>Learn the rules</small></span>
+  </a>
+  <a class="launch-btn" href="quiz.html">
+    <span class="launch-emoji" aria-hidden="true">🎯</span>
+    <span class="launch-text"><b>Quiz</b><small data-quiz-status>Practice &amp; check</small></span>
+  </a>
+</div>
 
-You already know the answers. This is about **writing them clearly and finishing the
-job** — the points you lose in *every* class. Slow down. Full sentences. Check it.
+<p class="subj-meta">Added {{ me.added | date: "%B %-d, %Y" }}</p>
 
-## The whole trick, in one line
+<style>
+  .subj-blurb{max-width:560px;margin:1.25rem auto 0;color:#4a5578;font-size:1.1rem;line-height:1.5}
+  .launch{max-width:560px;margin:1.5rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .launch-btn{display:flex;align-items:center;gap:14px;padding:22px 20px;border-radius:16px;background:#fff;border:1px solid rgba(20,30,60,.12);box-shadow:0 1px 3px rgba(20,30,60,.06);text-decoration:none;color:#16233b;min-height:92px;transition:transform .12s,border-color .12s}
+  .launch-btn:hover{transform:translateY(-2px);border-color:#0d9488}
+  .launch-emoji{font-size:2rem;line-height:1}
+  .launch-text{display:flex;flex-direction:column;gap:2px}
+  .launch-text b{font-size:1.2rem}
+  .launch-text small{color:#8b93b0;font-weight:400}
+  .launch-text small.is-done{color:#0d9488;font-weight:600}
+  .subj-meta{max-width:560px;margin:1.5rem auto 0;color:#8b93b0;font-size:.85rem}
+  @media(max-width:460px){.launch{grid-template-columns:1fr}}
+</style>
 
-> **Who + did what → whisper-read → check the box.**
-
-Say every answer as a complete sentence, read it back in a whisper, and don't say "done"
-until the STOP & CHECK box is ticked.
-
-## CUPS+E: the editing checklist
-
-Run every piece of writing through these before you turn it in.
-
-| | Check | |
-| --- | --- | --- |
-| **C** | **Capitals** | first word of each sentence, names, and the word **I** (also I'm, I'll, I've) |
-| **U** | **Usage** | does each sentence have a **WHO + DID WHAT**? Does it make sense? |
-| **P** | **Punctuation** | every sentence ends with **. ? !** — no run-ons |
-| **S** | **Spelling** | check homophones (to/too/two, there/their/they're) |
-| **+E** | **Expand** | add a detail — **when? where? how? why?** |
-
-## ARMS: make it better
-
-**A**dd a detail · **R**emove what repeats · **M**ove a sentence where it fits · **S**ubstitute a stronger word.
-
-## Sentences: complete, fragment, or run-on?
-
-- **Complete:** has a WHO and a DID WHAT. → *The ball rolled across the floor.*
-- **Fragment:** missing one. → *Because I forgot my notebook.* (fix: add who + did what)
-- **Run-on:** two sentences squished together. → *We did the lab it was fun.*
-  **Rescue it:** split with a period, or join with **, and / , but / , so**.
-
-> **Whisper-read tip:** where your voice naturally stops, that's where the period goes.
-
-## Homophones: the sound-alikes that cost points
-
-| Words | Trick to remember |
-| --- | --- |
-| **to / too / two** | *two* = 2 · *too* = also / very (too many o's) · *to* = toward |
-| **there / their / they're** | *there* has "here" (a place) · *their* = they own it · *they're* = they are |
-| **your / you're** | *you're* = you are |
-| **its / it's** | *it's* = it is · *its* = belongs to it |
-
-## Explain it with ACE (any subject)
-
-When a question wants a *why*, don't give a bare number or one word. Use **ACE**:
-
-- **A — Answer** in a complete sentence that **restates the question**.
-- **C — Calculate / show it** with labels (say "cups of rice," not just "8").
-- **E — Explain** why that proves your answer.
-
-| Weak | Strong |
-| --- | --- |
-| *Physics. because we do labs.* | *My favorite class is physics. We do hands-on labs, like testing how fast gum loses its flavor. I also like learning how forces move things.* |
-| *Yes. I did times 4.* | *Yes, 8 cups of rice to 12 cups of water is equivalent to 2:3. I multiplied both 2 and 3 by 4. Multiplying both amounts by the same number keeps the ratio the same.* |
-
-**Sentence starters to borrow:** *The answer is ___ because ___.* · *I know this because ___.*
-· *First I ___. Then I ___.* · *___ is greater/less than ___, so ___.*
-**Rule:** never start an answer with the word **"Because."** Restate the question first.
-
-## Practice: pick the stronger answer
-
-1. Sentence, fragment, or run-on? *Running down the hall after lunch.* \_\_\_\_\_\_\_\_
-2. Choose the word: *This homework is \_\_\_ hard.* (to / too / two) \_\_\_\_\_\_\_\_
-3. Choose the words: *\_\_\_ going to finish \_\_\_ project.* (they're/their) \_\_\_\_\_\_\_\_
-4. Rescue the run-on: *My team lost the game we still had fun.* \_\_\_\_\_\_\_\_
-5. A strong answer starts by doing what? \_\_\_\_\_\_\_\_
-6. What's missing? *"Store B is cheaper."* (Which is the better deal?) \_\_\_\_\_\_\_\_
-
-## STOP & CHECK (the finish box — this is the work)
-
-You're not done until **every box is ticked**:
-
-- ☐ Every sentence has a **WHO + DID WHAT**.
-- ☐ **Capitals** at the start of each sentence, on names, and on every **I**.
-- ☐ Every sentence ends with **. ? !** — I counted; there are no run-ons.
-- ☐ I checked my **homophones** (to/too/two, there/their/they're).
-- ☐ I **whisper-read** it out loud, and my voice stopped at every period.
-- ☐ If it asked *why*, I used **ACE** (answer, calculate, explain).
-
-**Done and checked beats long and rushed. Tick the last box, then turn it in on time.**
-
----
-
-<small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>
+<script>
+(function(){
+  var el=document.querySelector('[data-quiz-status]'); if(!el)return;
+  try{ var done=localStorage.getItem('hw-done-{{ page.slug }}');
+    if(done){el.textContent='✓ Done '+done;el.classList.add('is-done');} }catch(e){}
+})();
+</script>

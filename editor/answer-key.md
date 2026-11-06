@@ -2,11 +2,11 @@
 title: Editor Detective — Answer Key
 ---
 
-[← Back to the study guide](./) · **Answer key (parents)**
+[← Back to the study guide](guide.html) · **Answer key (parents)**
 
 ## Answer key (for parents)
 
-For the practice section ("Spot it, fix it") in the [study guide](./).
+For the practice section ("Spot it, fix it") in the [study guide](guide.html).
 
 | # | Fix | Type | Why |
 | --- | --- | --- | --- |

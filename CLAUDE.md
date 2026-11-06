@@ -47,10 +47,11 @@ Across every class, he **masters the content** (strong test scores) but loses po
 ## Repo layout
 
 ```
-index.md               Subject hub (landing page): subject cards live between the
-                       <!-- homework-intake:subjects:start/end --> markers
+index.md               Hub — a calm menu generated from _data/subjects.yml (areas → subjects)
+_data/subjects.yml     Subject registry (name, slug, emoji, area, added date, blurb)
 grammar/
-  index.md             Grammar study guide (Jekyll renders it; theme set in _config.yml)
+  index.md             Subject LANDING: Guide + Quiz buttons + date/progress (reads the registry)
+  guide.md             Grammar study guide → /grammar/guide.html (theme set in _config.yml)
   quiz.html            Quiz: a Jekyll page (layout: default) that renders inside the
                        site theme; inline CSS + JS wrapped in {% raw %}, no external deps
   answer-key.html      Parent answer key (rendered from answer-key.md), kept off the guide
@@ -64,9 +65,11 @@ _intake/               GITIGNORED: raw worksheet scans + diagnosis notes (never 
 .claude/skills/homework-intake/   The intake skill (autoloaded by Claude Code, excluded from the site)
 ```
 
-**Multiple subjects:** the site is a per-subject folder structure. Grammar lives in `grammar/`; a new subject is a new top-level folder (e.g. `math/`) with its own `index.md`, `quiz.html`, and `answer-key`, linked from the root `index.md` hub. The **homework-intake skill** creates and wires these up (see below). Navigation is a breadcrumb line on each page (`[← All subjects](../)`) plus the hub's marker block.
+**Multiple subjects:** the site is a per-subject folder structure. Each subject folder has a **landing** (`index.md`: Guide + Quiz buttons), a **guide** (`guide.md`), a **quiz**, and an **answer key**. The hub (`index.md`) is a calm area-grouped menu generated from `_data/subjects.yml`; each row links to a subject's landing. Every page's banner links home. The **homework-intake skill** creates and wires these up (see below).
 
-**URLs:** hub `/`, grammar guide `/grammar/`, quiz `/grammar/quiz.html`, answer key `/grammar/answer-key.html`.
+**URLs:** hub `/`, subject landing `/grammar/`, guide `/grammar/guide.html`, quiz `/grammar/quiz.html`, answer key `/grammar/answer-key.html`.
+
+**Progress:** each quiz writes `localStorage['hw-done-<slug>']` on finish; the hub and the subject landing read it to show a "done" check (per-device, client-only).
 
 **Hosting:** GitHub Pages, deployed from branch `main`, folder `/ (root)`, classic branch build (no GitHub Action). A push to main redeploys in about 1 minute.
 

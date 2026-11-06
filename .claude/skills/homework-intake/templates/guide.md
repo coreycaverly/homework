@@ -2,7 +2,7 @@
 title: SUBJECT_NAME Study Guide
 ---
 
-[← All subjects](../) · **SUBJECT_NAME**
+[← SUBJECT_NAME](./)
 
 **[Play the SUBJECT_NAME quiz →](quiz.html)**
 

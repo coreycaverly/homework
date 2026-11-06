@@ -106,7 +106,9 @@ just "what's the right answer?".
 index.md                         Hub — generated from _data/subjects.yml (don't hand-edit)
 _data/subjects.yml               Subject registry (name, slug, emoji, area, added date)
 <subject>/
-  index.md                       Study guide (cayman + base design)
+  index.md                       Subject LANDING: Guide + Quiz buttons (reads _data/subjects.yml
+                                 by slug). Uniform template — copy an existing one, set title+slug.
+  guide.md                       Study guide (cayman + base design) → /<subject>/guide.html
   quiz.html                      Self-contained quiz (no build step, no deps)
   answer-key.html                Parent answer key (rendered from answer-key.md)
   answer-key.md                  Source for the above
@@ -145,9 +147,14 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
 - **Existing subject:** add to the guide and quiz in place, additively.
 
 ### 4. Create / update the pages
-- **Guide** (`<subject>/index.md`): start from `templates/guide.md`. Keep the
-  breadcrumb, the 3-pass method framing, the Wrong / Right / Clue table format, the
-  cheat card, and the discreet parent link. Add only sections the worksheet justifies.
+- **Landing** (`<subject>/index.md`, new subject only): copy an existing subject's
+  `index.md` verbatim and change only the front-matter `title:` and `slug:`. It renders
+  the Guide + Quiz buttons and reads the blurb/date from `_data/subjects.yml`.
+- **Guide** (`<subject>/guide.md` → `/<subject>/guide.html`): start from
+  `templates/guide.md`. Keep the breadcrumb back to the landing (`[← <Name>](./)`), the
+  3-pass method framing, the Wrong / Right / Clue table format, the cheat card, the
+  STOP & CHECK finish box, and the discreet parent link. Add only sections the worksheet
+  justifies.
 - **Quiz** (`<subject>/quiz.html`): see `references/quiz-format.md`. For
   editing / find-the-error subjects, **copy `grammar/quiz.html`** and swap its data
   and labels — do not rewrite the engine. For other subjects, build the
@@ -164,9 +171,9 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
   subjects: …`). The `slug` must equal the folder name. Set `added` to today's date so the
   hub shows when it was added. Never remove existing entries.
 - Every page's banner already links home ("← Homework Helper") via `_layouts/default.html`,
-  so you don't add that. Still give each subject guide the breadcrumb `[← All subjects](../)`
-  at the top, link the guide to its quiz, and link the answer key back to the guide; the
-  quiz footer links to `./` (guide) and `../` (hub).
+  so you don't add that. Link pages within a subject: the **guide** breadcrumb is
+  `[← <Name>](./)` (back to the landing) and it links to `quiz.html`; the **quiz** footer
+  links to `guide.html` and `../` (hub); the **answer key** links back to `guide.html`.
 - **Progress:** every quiz, on finish, sets `localStorage['hw-done-<slug>']` to the date, and
   the hub shows a per-quiz "done" checkbox from it. New quizzes copied from an existing one
   must keep that line in `finish()` (swap the slug) so completion is tracked.
