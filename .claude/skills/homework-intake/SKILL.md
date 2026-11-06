@@ -120,6 +120,30 @@ _config.yml                      Jekyll config; excludes .claude and _intake
 .claude/skills/homework-intake/  This skill (autoloaded, excluded from the site)
 ```
 
+## Working on another computer (portability)
+
+This repo is shared and edited from **more than one computer**, so everything the skill
+needs is committed to the repo: this skill and its `references/` + `templates/`, `CLAUDE.md`,
+the registry `_data/subjects.yml`, the layout/includes, and every existing lesson (use them
+as examples). A fresh `git clone` has all of it. The only thing **not** in the repo is
+`_intake/` (gitignored, local-only) — the child's scans and diagnosis notes stay on the
+machine that made them; only the derived, original content is shared through git.
+
+**Tools the skill uses** (install if missing on this machine):
+- **git** with push access to the repo's `main` branch (required — see sync + commit steps).
+- **python3** — for reading PDFs the skill uses `pypdf` (`pip3 install pypdf`); image scans
+  are read directly with vision.
+- **node** — used to validate a quiz's `BANK` (answers aren't among the distractors, no
+  duplicate questions, the JS parses) before committing.
+- **gh** CLI (optional) — only for checking the GitHub Pages build after a push.
+
+## Sync FIRST, every session
+
+Because others may have pushed since you last worked, **always start from the latest code**:
+be on `main` and pull before editing — `git switch main` then `git pull --ff-only`. If the
+pull can't fast-forward, or there are uncommitted changes to **tracked** files (changes under
+`_intake/` are fine — it's gitignored), STOP and tell the user; don't guess or force.
+
 ## Workflow
 
 Follow these steps in order. Keep sessions short and the output focused.
@@ -195,19 +219,29 @@ the root or subject HTML — you edit the registry and copy templates.
 In your chat reply (not on the site): the score, the top gap, and one thing to
 practice tonight. Keep it to a few lines.
 
-### 7. Commit
-Once every worksheet in the batch is processed, stage the derived content only
-(guides, quizzes, answer keys, hub). Confirm `git status` shows nothing under
-`_intake/`. Commit **per subject** (not per worksheet) with a clear message, e.g.
-`Add 5 adverb items from a Passage 25 diagnosis` or
-`Add a Ratios & Rates lesson (Math)`. Do not push unless asked.
+### 7. Commit, push, and confirm it's fully checked in
+Because a collaborator on another computer needs to see this work, "done" means
+**committed AND pushed** — not just committed locally.
+1. Stage the derived content only (guides, quizzes, answer keys, hub, registry). Confirm
+   `git status` shows **nothing under `_intake/`** (if it does, you leaked private files —
+   unstage them; they must stay gitignored).
+2. Commit **per subject** (not per worksheet) with a clear message, e.g.
+   `Add 5 adverb items from a Passage 25 diagnosis` or `Add a Ratios & Rates lesson (Math)`.
+3. **Push to `main`:** `git push`. (If the push is rejected because the remote moved, the
+   working tree is committed so nothing is lost — `git pull --rebase` then push again.)
+4. **Verify fully checked in:** `git status` is clean except for gitignored `_intake/`, and
+   `git log --oneline origin/main..HEAD` is empty (nothing unpushed). Tell the user it's
+   pushed. A push to `main` redeploys the site in about a minute.
 
 ## Before you finish — checklist
+- [ ] I **synced first** (on `main`, pulled latest) before editing.
 - [ ] Every worksheet in the batch was processed, and each was reported with its subject.
 - [ ] Nothing from `_intake/` is staged or committed.
 - [ ] No worksheet text copied verbatim; items are original.
 - [ ] Answer key (if any) is linked only from the guide's parent note.
-- [ ] Hub card added between the markers; existing cards untouched.
+- [ ] Hub/registry updated correctly; existing lessons untouched.
 - [ ] Each page has correct breadcrumb/quiz/back links.
 - [ ] Quiz still self-contained (no new dependencies) and matches the color code.
 - [ ] You added, didn't remove.
+- [ ] **Committed AND pushed** to `main`; `git status` clean (except gitignored `_intake/`),
+      nothing left in `origin/main..HEAD`.
