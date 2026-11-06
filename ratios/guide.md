@@ -1,5 +1,5 @@
 ---
-title: Ratios & Rates — Study guide
+title: Ratios, Rates & Percentages — Study guide
 ---
 
 [← Back](./)
@@ -73,6 +73,18 @@ multiply the bottom by the same.
 dollars:  0    7.25   14.50   21.75
 hours:    0     1       2       3
 ```
+
+## Percentages (a rate out of 100)
+
+A **percent** means "per 100." It's a rate where the whole is 100.
+
+- **Percent → decimal:** move the point 2 places left. 20% = **0.20**.
+- **Percent of a number:** multiply. 20% of 50 = 0.20 × 50 = **10**.
+- **What percent is it?** part ÷ whole × 100. 15 out of 60 → 15 ÷ 60 = **25%**.
+
+> Percents, fractions, and decimals are three ways to say the same thing:
+> **½ = 0.5 = 50%.** (More percent work — tax, tips, discounts — is in the
+> *Percent Increase & Decrease* lesson.)
 
 ## Practice: name it, then solve it
 

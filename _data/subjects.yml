@@ -1,28 +1,34 @@
-# Site registry: SUBJECTS, each with its LESSONS. Drives the whole site:
-#   index.md (root)       -> lists the SUBJECTS below (one row each)
-#   <subject.slug>/index.md -> a subject page listing its lessons (only when >1 lesson;
-#                              single-lesson subjects link straight to the lesson landing)
-#   <lesson.slug>/index.md  -> the lesson landing (Guide + Quiz; reads its own entry by slug)
+# Site registry: SUBJECTS, each with its LESSONS. Drives root, subject pages, and landings.
+# quiz: true  -> the lesson has a quiz (landing shows the Quiz button + a "done" checkbox)
+# quiz: false (or omitted) -> guide-only lesson.
 # The homework-intake skill edits THIS file. slug = folder name; added = date added.
 - subject: English
   slug: english
   emoji: "📚"
   lessons:
-    - { name: "Adjectives, Adverbs & Articles", slug: grammar, emoji: "📝", added: 2026-11-03, blurb: "Find and fix adjective, adverb, and article errors on your own." }
-    - { name: "Conjunctions, Prepositions & Interjections", slug: editor, emoji: "🔗", added: 2026-11-05, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
-    - { name: "Writing", slug: writing, emoji: "✍️", added: 2026-11-05, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
+    - { name: "Adjectives, Adverbs & Articles", slug: grammar, emoji: "📝", added: 2026-11-03, quiz: true, blurb: "Find and fix adjective, adverb, and article errors on your own." }
+    - { name: "Conjunctions, Prepositions & Interjections", slug: editor, emoji: "🔗", added: 2026-11-05, quiz: true, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
+    - { name: "Writing", slug: writing, emoji: "✍️", added: 2026-11-05, quiz: true, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
 - subject: Math
   slug: math
   emoji: "🧮"
   lessons:
-    - { name: "Ratios & Rates", slug: math, emoji: "🔢", added: 2026-11-05, blurb: "Ratios, rates, and unit rates — name the move, then solve it." }
+    - { name: "Area & Surface Area", slug: area-surface, emoji: "📐", added: 2026-11-05, quiz: false, blurb: "Area of triangles and polygons, surface area, and nets. (Unit 1)" }
+    - { name: "Ratios, Rates & Percentages", slug: ratios, emoji: "🔢", added: 2026-11-05, quiz: true, blurb: "Equivalent ratios, unit rates, and percentages. (Unit 2)" }
+    - { name: "Fractions & Decimals", slug: fractions-decimals, emoji: "➗", added: 2026-11-05, quiz: false, blurb: "Dividing fractions and computing with decimals. (Unit 3)" }
+    - { name: "Expressions & Equations", slug: expressions-equations, emoji: "✳️", added: 2026-11-05, quiz: false, blurb: "Expressions, exponents, and solving one-step equations. (Unit 4)" }
+    - { name: "Proportional Relationships", slug: proportional, emoji: "📈", added: 2026-11-05, quiz: false, blurb: "Constant of proportionality, tables, graphs, and scale. (Unit 5)" }
+    - { name: "Percent Increase & Decrease", slug: percent-change, emoji: "📊", added: 2026-11-05, quiz: false, blurb: "Percent change, discounts, tax, and tips. (Unit 6)" }
+    - { name: "Rational Numbers", slug: rational-numbers, emoji: "➖", added: 2026-11-05, quiz: false, blurb: "Negatives, the number line, absolute value, and the coordinate plane. (Unit 7)" }
+    - { name: "Data Sets & Distributions", slug: data, emoji: "📉", added: 2026-11-05, quiz: false, blurb: "Mean, median, mode, range, and reading data. (Unit 8)" }
+    - { name: "Putting It All Together", slug: math-review, emoji: "🧩", added: 2026-11-05, quiz: false, blurb: "A mixed review across all the Grade 6 units. (Unit 9)" }
 - subject: Science
   slug: science
   emoji: "🧪"
   lessons:
-    - { name: "Forces & Motion", slug: science, emoji: "🔬", added: 2026-11-03, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
+    - { name: "Forces & Motion", slug: science, emoji: "🔬", added: 2026-11-03, quiz: true, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
 - subject: Spanish
   slug: spanish
   emoji: "🌎"
   lessons:
-    - { name: "Vocabulary", slug: spanish, emoji: "💬", added: 2026-11-05, blurb: "Numbers, calendar, weather, and classroom words — say it out loud." }
+    - { name: "Vocabulary", slug: spanish, emoji: "💬", added: 2026-11-05, quiz: true, blurb: "Numbers, calendar, weather, and classroom words — say it out loud." }

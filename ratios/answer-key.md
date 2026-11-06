@@ -1,5 +1,5 @@
 ---
-title: Ratios & Rates — Answer Key
+title: Ratios, Rates & Percentages — Answer Key
 ---
 
 [← Back to the study guide](guide.html) · **Answer key (parents)**

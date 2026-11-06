@@ -13,18 +13,18 @@ slug: science
     <span class="launch-emoji" aria-hidden="true">📘</span>
     <span class="launch-text"><b>Study guide</b><small>Learn the rules</small></span>
   </a>
-  <a class="launch-btn" href="quiz.html">
+  {% if me.quiz %}<a class="launch-btn" href="quiz.html">
     <span class="launch-emoji" aria-hidden="true">🎯</span>
     <span class="launch-text"><b>Quiz</b><small data-quiz-status>Practice &amp; check</small></span>
-  </a>
+  </a>{% endif %}
 </div>
 
-<p class="subj-meta">Added {{ me.added | date: "%B %-d, %Y" }}</p>
+<p class="subj-meta">Added {{ me.added | date: "%B %-d, %Y" }}{% unless me.quiz %} · guide only (quiz coming){% endunless %}</p>
 
 <style>
   .subj-blurb{max-width:560px;margin:1.25rem auto 0;color:#4a5578;font-size:1.1rem;line-height:1.5}
-  .launch{max-width:560px;margin:1.5rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .launch-btn{display:flex;align-items:center;gap:14px;padding:22px 20px;border-radius:16px;background:#fff;border:1px solid rgba(20,30,60,.12);box-shadow:0 1px 3px rgba(20,30,60,.06);text-decoration:none;color:#16233b;min-height:92px;transition:transform .12s,border-color .12s}
+  .launch{max-width:560px;margin:1.5rem auto 0;display:flex;flex-wrap:wrap;gap:14px}
+  .launch-btn{flex:1 1 220px;display:flex;align-items:center;gap:14px;padding:22px 20px;border-radius:16px;background:#fff;border:1px solid rgba(20,30,60,.12);box-shadow:0 1px 3px rgba(20,30,60,.06);text-decoration:none;color:#16233b;min-height:92px;transition:transform .12s,border-color .12s}
   .launch-btn:hover{transform:translateY(-2px);border-color:#0d9488}
   .launch-emoji{font-size:2rem;line-height:1}
   .launch-text{display:flex;flex-direction:column;gap:2px}
@@ -32,7 +32,6 @@ slug: science
   .launch-text small{color:#8b93b0;font-weight:400}
   .launch-text small.is-done{color:#0d9488;font-weight:600}
   .subj-meta{max-width:560px;margin:1.5rem auto 0;color:#8b93b0;font-size:.85rem}
-  @media(max-width:460px){.launch{grid-template-columns:1fr}}
 </style>
 
 <script>
