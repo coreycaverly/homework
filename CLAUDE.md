@@ -4,12 +4,15 @@ Context for anyone (human or Claude) working on this repo.
 
 ## What this is
 
-A GitHub Pages site that helps one 6th grader (age 11, ADHD) learn to **find and fix adjective, adverb, and article errors on his own**. It has two parts:
+A GitHub Pages homework site for one 6th grader (age 11, ADHD). It started as a single grammar unit and is now **multi-subject** (English, Math, Science, Spanish), each subject holding one or more **lessons**. Every lesson has:
 
-- **Study guide** (`index.md`): rules, traps, practice sentences, cheat card, parent answer key. Printable.
-- **Quiz** (`quiz.html`): an interactive tap-to-find quiz with short rounds, hints, and stars.
+- **Study guide** (`<lesson>/guide.html`): rules, traps, practice, cheat card, STOP & CHECK finish box. Printable.
+- **Quiz** (`<lesson>/quiz.html`): a short interactive quiz (find-and-fix for editing lessons, multiple-choice otherwise) with hints, stars, and `localStorage` progress.
+- **Answer key** (`<lesson>/answer-key.html`): kept off the student flow, linked only from the guide's parent note.
 
-**Planned:** a Claude skill that takes a photo of a new homework worksheet, diagnoses the errors he missed, and updates the guide and quiz bank to target those gaps.
+It's built so his real cross-class gaps — **written expression** and **completing/checking work** — are targeted, not just content recall (see "The bigger pattern" below). The **homework-intake skill** (`.claude/skills/homework-intake/`) turns a photo/scan of a worksheet into new lessons and quiz items.
+
+**No theme gimmick:** plain names and plain copy — an earlier "Detective" theme was removed because he found it lame.
 
 ## The homework this supports
 
