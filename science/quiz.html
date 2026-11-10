@@ -10,13 +10,13 @@ layout: default
 <style>
 /* Quiz UI, themed to sit inside the cayman page: the banner, background, fonts and
    footer come from the site theme; only the interactive quiz is styled here.
-   Color = topic: Motion purple, Newton's Laws teal, Calculations rose. */
+   Color = topic: Motion purple, Newton's Laws teal, Calculations rose, Explain It amber. */
 #app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
 #app *{box-sizing:border-box}
 .quiz-nav{text-align:center;margin-top:28px}
 :root{
   --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
-  --motion:#7C3AED; --motion-soft:#EDE4FD; --law:#0D9488; --law-soft:#D6F0EC; --calc:#E11D48; --calc-soft:#FCE1E8;
+  --motion:#7C3AED; --motion-soft:#EDE4FD; --law:#0D9488; --law-soft:#D6F0EC; --calc:#E11D48; --calc-soft:#FCE1E8; --explain:#C2410C; --explain-soft:#FFE8D6;
   --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#0D9488;
 }
 #app, #app button{font-family:inherit}
@@ -31,12 +31,12 @@ layout: default
   background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
 .big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
 .big-btn:hover{transform:translateY(-2px)}
-.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
 .topic:hover{transform:translateY(-2px)}
 .topic span{font-size:.72rem;font-weight:400}
-.t-motion{background:var(--motion-soft);color:var(--motion)} .t-law{background:var(--law-soft);color:var(--law)} .t-calc{background:var(--calc-soft);color:var(--calc)}
-.c-motion{color:var(--motion)} .c-law{color:var(--law)} .c-calc{color:var(--calc)}
+.t-motion{background:var(--motion-soft);color:var(--motion)} .t-law{background:var(--law-soft);color:var(--law)} .t-calc{background:var(--calc-soft);color:var(--calc)} .t-explain{background:var(--explain-soft);color:var(--explain)}
+.c-motion{color:var(--motion)} .c-law{color:var(--law)} .c-calc{color:var(--calc)} .c-explain{color:var(--explain)}
 .label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
 .steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
 .steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
@@ -51,18 +51,18 @@ layout: default
 .score{font-weight:600;font-variant-numeric:tabular-nums}
 .badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
 .badge.mystery{background:var(--hover);color:var(--muted)}
-.badge.t-motion{background:var(--motion-soft);color:var(--motion)} .badge.t-law{background:var(--law-soft);color:var(--law)} .badge.t-calc{background:var(--calc-soft);color:var(--calc)}
+.badge.t-motion{background:var(--motion-soft);color:var(--motion)} .badge.t-law{background:var(--law-soft);color:var(--law)} .badge.t-calc{background:var(--calc-soft);color:var(--calc)} .badge.t-explain{background:var(--explain-soft);color:var(--explain)}
 .prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
 .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
 .choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.05rem;background:var(--card);min-height:52px;text-align:left}
 .choice:hover{border-color:var(--ink)}
-.choice.t-motion{background:var(--motion-soft)} .choice.t-law{background:var(--law-soft)} .choice.t-calc{background:var(--calc-soft)}
+.choice.t-motion{background:var(--motion-soft)} .choice.t-law{background:var(--law-soft)} .choice.t-calc{background:var(--calc-soft)} .choice.t-explain{background:var(--explain-soft)}
 .choice.oops{border-color:var(--miss);animation:shake .35s}
 .choice.pick{border-color:var(--good);background:var(--law-soft)}
 .hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
 .hint b{font-weight:600}
 .result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
-.result.motion{background:var(--motion-soft)} .result.law{background:var(--law-soft)} .result.calc{background:var(--calc-soft)}
+.result.motion{background:var(--motion-soft)} .result.law{background:var(--law-soft)} .result.calc{background:var(--calc-soft)} .result.explain{background:var(--explain-soft)}
 .result strong{font-weight:800;font-size:1.2rem}
 .answerline{font-weight:600}
 .next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
@@ -123,18 +123,27 @@ const BANK=[
  {t:'calc',q:"A backpack has a mass of 8 kg. What is its weight on Earth? (W = m × g, g = 9.8)",a:"78.4 N",o:["8 N","0.82 N","78.4 kg"],why:"W = m × g = 8 × 9.8 = 78.4 N. Weight is a force, measured in newtons."},
  {t:'calc',q:"An astronaut travels to a planet with weaker gravity. What changes?",a:"Weight goes down; mass stays the same",o:["Both go down","Mass goes down; weight stays","Both stay the same"],why:"Mass is the amount of matter (same everywhere). Weight = m × g, and g is smaller there, so weight decreases."},
  {t:'calc',q:"A 0.5 kg ball moves at 12 m/s. What is its momentum? (p = m × v)",a:"6 kg·m/s",o:["12.5 kg·m/s","24 kg·m/s","6 N"],why:"p = m × v = 0.5 × 12 = 6 kg·m/s."},
- {t:'calc',q:"Does the HEAVIER object always have more momentum?",a:"No — a light, fast object can have more",o:["Yes, heavier always wins","Only if it is moving fast","Yes, mass is all that matters"],why:"Momentum p = m × v depends on both. A 0.5 kg ball at 12 m/s (6 kg·m/s) beats a 10 kg box at 0.2 m/s (2 kg·m/s)."}
+ {t:'calc',q:"Does the HEAVIER object always have more momentum?",a:"No — a light, fast object can have more",o:["Yes, heavier always wins","Only if it is moving fast","Yes, mass is all that matters"],why:"Momentum p = m × v depends on both. A 0.5 kg ball at 12 m/s (6 kg·m/s) beats a 10 kg box at 0.2 m/s (2 kg·m/s)."},
+ // EXPLAIN IT — say the WHY in a complete sentence (ACE), not a bare number or fragment
+ {t:'explain',q:"A strong written science answer should START by…",a:"Restating the question in a complete sentence",o:["Writing \"Because…\"","Giving just the number","Naming the formula only"],why:"ACE: Answer first — 'The net force is…'. Never open with 'Because' or a bare number."},
+ {t:'explain',q:"Q: Is the car accelerating as it rounds the curve at a steady 30 mph? Which answer is STRONGER?",a:"Yes. The car is accelerating because its direction is changing, and any change in velocity counts.",o:["Yes.","Yes because velocity.","It's accelerating."],why:"ACE: it restates the question, answers it, and explains WHY (direction change = acceleration). The others explain nothing."},
+ {t:'explain',q:"Which answer uses LABELS and units, not bare numbers? Q: net force if m = 6 kg, a = 4 m/s²?",a:"The net force is 24 N, because F = m × a = 6 kg × 4 m/s² = 24 N.",o:["24.","6 times 4.","It's 24, I multiplied."],why:"Keep the units (kg, m/s², N) and show the formula so a reader who didn't watch you work still follows it."},
+ {t:'explain',q:"Q: Same push on a full cart and an empty cart — which speeds up more, and why? Which is the ACE answer?",a:"The empty cart speeds up more, because with the same force a smaller mass gives a greater acceleration (a = F ÷ m).",o:["The empty one.","Empty, less mass.","a = F ÷ m."],why:"ACE: Answer (empty cart), state the rule (a = F÷m), Explain (less mass → more acceleration). A lone phrase or formula isn't enough."},
+ {t:'explain',q:"Q: Why aren't a book's weight and the table's normal force a 3rd-Law pair? What's MISSING from \"They aren't a pair.\"?",a:"The reason — they both act on the SAME object, so they're balanced forces, not a 3rd-Law pair.",o:["Nothing, that's a full answer","A capital letter","The formula F = m×a"],why:"ACE's Explain step: give the WHY. A 3rd-Law pair acts on two different objects; both of these act on the book."},
+ {t:'explain',q:"Trick — which is already a complete, strong explanation?",a:"The box stays still because the forces on it are balanced, so the net force is 0 N and its motion doesn't change.",o:["Balanced.","Net force 0.","Because it isn't moving."],why:"It states the result, gives the reason (balanced → 0 N net), and explains the effect. The others are fragments."}
 ];
-const NAME={motion:"Motion",law:"Forces & Laws",calc:"Calculations"};
+const NAME={motion:"Motion",law:"Forces & Laws",calc:"Calculations",explain:"Explain It"};
 const HINT={
  motion:"<b>Motion:</b> Velocity = speed + direction. Acceleration is ANY change in velocity (even turning). Motion is measured from a reference point; a steeper distance–time line means faster. Inertia depends on mass.",
  law:"<b>Forces & Laws:</b> Name the force — tension (rope), normal (surface push), friction (opposes sliding), drag (air), gravity (weight). Newton: 1st = inertia, 2nd = F = m×a, 3rd = equal & opposite on DIFFERENT objects. Net force 0 = balanced (still OR constant speed).",
- calc:"<b>Calculations:</b> Write the formula, plug in, add units. Speed s = d÷t. Acceleration a = (v₂−v₁)÷t and a = F÷m. Force F = m×a. Weight W = m×g (g ≈ 9.8). Momentum p = m×v. Net force: add same way, subtract opposite."
+ calc:"<b>Calculations:</b> Write the formula, plug in, add units. Speed s = d÷t. Acceleration a = (v₂−v₁)÷t and a = F÷m. Force F = m×a. Weight W = m×g (g ≈ 9.8). Momentum p = m×v. Net force: add same way, subtract opposite.",
+ explain:"<b>Explain It (ACE):</b> Answer in a full sentence that restates the question, state/Calculate it with labels and units, and Explain WHY. Never start with 'Because' or hand in a bare number."
 };
 const RULE={
  motion:"Velocity = speed AND direction. Acceleration = any change in velocity. Motion depends on a reference point. More mass = more inertia.",
  law:"Force types: tension, normal, friction, drag, applied, gravity. 1st Law = inertia; 2nd: F = m×a; 3rd: equal & opposite pairs on DIFFERENT objects. Net force 0 = balanced (no change in motion).",
- calc:"s = d÷t · a = (v₂−v₁)÷t · F = m×a · W = m×g (g ≈ 9.8) · p = m×v. Net force: add same-direction, subtract opposite."
+ calc:"s = d÷t · a = (v₂−v₁)÷t · F = m×a · W = m×g (g ≈ 9.8) · p = m×v. Net force: add same-direction, subtract opposite.",
+ explain:"ACE: Answer (restate the question) · state/Calculate with labels and units · Explain why. Start by restating; never start with 'Because'."
 };
 
 const app=document.getElementById('app');
@@ -150,7 +159,7 @@ function home(){
   app.innerHTML=`
   <p class="intro muted">Read the question, pick the answer, and learn the why. Short rounds — about 3 minutes.</p>
   <button class="big-btn" data-act="start" data-mode="mix">
-    <div>Quick round<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+    <div>Quick round<small>5 questions · all four topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
   </button>
   <div class="card">
     <span class="label">Practice one topic (6 questions)</span>
@@ -158,6 +167,7 @@ function home(){
       <button class="topic t-motion" data-act="start" data-mode="motion">Motion<span>speed · velocity · graphs</span></button>
       <button class="topic t-law" data-act="start" data-mode="law">Forces &amp; Laws<span>force types · net force · 1·2·3</span></button>
       <button class="topic t-calc" data-act="start" data-mode="calc">Calculations<span>speed · F=ma · weight</span></button>
+      <button class="topic t-explain" data-act="start" data-mode="explain">Explain It<span>ACE · say the why</span></button>
     </div>
   </div>
   <div class="card">
@@ -192,7 +202,7 @@ function render(){
     <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
   }else if(ph==='type'){
     body=`<p class="prompt">Bonus star: what topic was that question?</p>
-    <div class="choices">${['motion','law','calc'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+    <div class="choices">${['motion','law','calc','explain'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
   }else{
     const of=mix?2:1;
     body=`<p class="prompt">${esc(q.q)}</p>
@@ -225,7 +235,7 @@ app.addEventListener('click',e=>{
   }
   if(a==='type'&&S.phase==='type'){
     if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
-    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the question again. Is it describing motion, a force or a law, or a calculation?"; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look at the question again. Is it describing motion, a force or a law, a calculation, or explaining the why in a sentence (Explain It)?"; }
     return render();
   }
   if(a==='next'){

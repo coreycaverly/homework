@@ -20,7 +20,23 @@ read a section:
 4. **Then** try the practice question.
 
 **Brain tip:** finger under each line, a 30-second stretch between sections, and when
-you answer, always add *"because…"* with the law or the formula.
+you answer, always add your *"because…"* with the law or the formula.
+
+## Write a strong answer (ACE)
+
+On a test, a right idea still loses points if it's a bare number or a fragment. Write the
+answer the way every class wants it — with **ACE**:
+
+- **A — Answer** by restating the question in a complete sentence. *(Don't START with
+  "Because." Restate first, then give your "because.")*
+- **C — Calculate / state it** with **labels and units** — say "24 N," not just "24."
+- **E — Explain** the *why* with the law or formula.
+
+| Weak | Strong (ACE) |
+| --- | --- |
+| *24.* | *The net force is 24 N, because F = m × a = 6 kg × 4 m/s² = 24 N.* |
+| *Empty one.* | *The empty cart speeds up more, because the same force on less mass gives more acceleration (a = F ÷ m).* |
+| *Because it's not moving.* | *The net force is 0 N, because the forces are balanced, so the box's motion doesn't change.* |
 
 ## Describe motion first
 
