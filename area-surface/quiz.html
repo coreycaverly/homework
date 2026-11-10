@@ -14,7 +14,7 @@ layout: default
 :root{
   --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
   --one:#4F46E5; --one-soft:#E6E6FB; --two:#0E7490; --two-soft:#D7EEF4; --three:#B45309; --three-soft:#FBEAD2;
-  --hl:#FFE14D; --miss:#D93A4A; --good:#4F46E5;
+  --four:#BE185D; --four-soft:#FBE0EC; --hl:#FFE14D; --miss:#D93A4A; --good:#4F46E5;
 }
 #app, #app button{font-family:inherit}
 #app p{margin:0}
@@ -26,12 +26,12 @@ layout: default
 .big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
 .big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
 .big-btn:hover{transform:translateY(-2px)}
-.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;transition:transform .12s}
 .topic:hover{transform:translateY(-2px)}
 .topic span{font-size:.72rem;font-weight:400}
-.t-one{background:var(--one-soft);color:var(--one)} .t-two{background:var(--two-soft);color:var(--two)} .t-three{background:var(--three-soft);color:var(--three)}
-.c-one{color:var(--one)} .c-two{color:var(--two)} .c-three{color:var(--three)}
+.t-one{background:var(--one-soft);color:var(--one)} .t-two{background:var(--two-soft);color:var(--two)} .t-three{background:var(--three-soft);color:var(--three)} .t-four{background:var(--four-soft);color:var(--four)}
+.c-one{color:var(--one)} .c-two{color:var(--two)} .c-three{color:var(--three)} .c-four{color:var(--four)}
 .label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
 .steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
 .steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
@@ -46,17 +46,17 @@ layout: default
 .score{font-weight:600;font-variant-numeric:tabular-nums}
 .badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
 .badge.mystery{background:var(--hover);color:var(--muted)}
-.badge.t-one{background:var(--one-soft);color:var(--one)} .badge.t-two{background:var(--two-soft);color:var(--two)} .badge.t-three{background:var(--three-soft);color:var(--three)}
+.badge.t-one{background:var(--one-soft);color:var(--one)} .badge.t-two{background:var(--two-soft);color:var(--two)} .badge.t-three{background:var(--three-soft);color:var(--three)} .badge.t-four{background:var(--four-soft);color:var(--four)}
 .prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
 .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
 .choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.05rem;background:var(--card);min-height:52px;text-align:left}
 .choice:hover{border-color:var(--ink)}
-.choice.t-one{background:var(--one-soft)} .choice.t-two{background:var(--two-soft)} .choice.t-three{background:var(--three-soft)}
+.choice.t-one{background:var(--one-soft)} .choice.t-two{background:var(--two-soft)} .choice.t-three{background:var(--three-soft)} .choice.t-four{background:var(--four-soft)}
 .choice.oops{border-color:var(--miss);animation:shake .35s}
 .hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
 .hint b{font-weight:600}
 .result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
-.result.one{background:var(--one-soft)} .result.two{background:var(--two-soft)} .result.three{background:var(--three-soft)}
+.result.one{background:var(--one-soft)} .result.two{background:var(--two-soft)} .result.three{background:var(--three-soft)} .result.four{background:var(--four-soft)}
 .result strong{font-weight:800;font-size:1.2rem}
 .answerline{font-weight:600}
 .next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
@@ -104,7 +104,17 @@ const BANK=[
  {t:'three',q:"Surface area is measured in…",a:"square units",o:["cubic units","plain units","square roots"],why:"Surface area is an area, so it's in square units — cubic units are for volume."}
 ];
 /* ===== shared engine ===== */
-const KEYS=['one','two','three'];
+const KEYS=['one','two','three','four'];
+/* + Explain It (ACE) topic — added by homework-intake */
+NAME.four="Explain It"; SUB.four="ACE · say the why";
+HINT.four="<b>Explain It (ACE):</b> Answer in a full sentence that restates the question, show it with labels and units, and explain WHY with the rule or formula. Never start with ‘Because’ or hand in a bare number.";
+RULE.four="ACE: Answer (restate the question) · show it with labels & units · Explain why. Start by restating; never start with ‘Because’.";
+BANK.push(
+ {t:'four',q:"Which answer is STRONGER? Q: area of a triangle, base 10, height 6?",a:"The area is 30 square units, because ½ × 10 × 6 = 30.",o:["30.", "½ × 10 × 6.", "30 units."],why:"ACE: restate with the answer, show the formula, and use square units — not plain units."},
+ {t:'four',q:"What's MISSING? Q: surface area of a cube, 6 faces of 4 sq units. Answer: “24.”",a:"The units — it should be 24 square units.",o:["Nothing, 24 is fine.", "The number of faces.", "The volume."],why:"Area answers end in square units. Add them so the number means something."},
+ {t:'four',q:"Jay says a triangle with base 8, height 5 has area 40. Fix it, with the why.",a:"He forgot the ½ — a triangle is ½ × 8 × 5 = 20 square units.",o:["No mistake, 40 is right.", "He should add 8 + 5.", "Use base × base."],why:"A triangle is half of base × height. Explain the fix, don't just give 20."},
+ {t:'four',q:"A strong geometry answer STARTS by…",a:"Restating what you're finding in a complete sentence",o:["Writing “Because…”", "Giving just the number", "Drawing only"],why:"Say ‘The area is…’ first, then show ½ × b × h. Never open with ‘Because.’"}
+);
 const app=document.getElementById('app');
 let S=null;
 const stats=load();
@@ -116,7 +126,7 @@ function home(){
   S=null;
   app.innerHTML=`
   <p class="intro muted">Read the question, pick the answer, and learn the why. Short rounds — about 3 minutes.</p>
-  <button class="big-btn" data-act="start" data-mode="mix"><div>Quick round<small>5 questions · all three topics</small></div><span aria-hidden="true">→</span></button>
+  <button class="big-btn" data-act="start" data-mode="mix"><div>Quick round<small>5 questions · all four topics</small></div><span aria-hidden="true">→</span></button>
   <div class="card"><span class="label">Practice one topic (6 questions)</span>
     <div class="topics">${KEYS.map(t=>`<button class="topic t-${t}" data-act="start" data-mode="${t}">${NAME[t]}<span>${SUB[t]}</span></button>`).join('')}</div>
   </div>
@@ -146,7 +156,7 @@ app.addEventListener('click',e=>{
   if(a==='start')return start(b.dataset.mode);
   const q=S&&S.qs[S.i]; if(!q)return;
   if(a==='answer'&&S.phase==='answer'){const o=S.opts[+b.dataset.k];if(o===q.a){if(S.miss===0)S.pts++;else S.missed.add(q.t);S.msg='';S.phase=S.mode==='mix'?'type':'done';}else{S.oops='o'+b.dataset.k;missHint(q);}return render();}
-  if(a==='type'&&S.phase==='type'){if(b.dataset.t===q.t){if(S.typeMiss===0)S.pts++;S.msg='';S.phase='done';}else{S.oops='t'+b.dataset.t;S.typeMiss++;S.msg="Look again. Which topic — "+NAME.one+", "+NAME.two+", or "+NAME.three+"?";}return render();}
+  if(a==='type'&&S.phase==='type'){if(b.dataset.t===q.t){if(S.typeMiss===0)S.pts++;S.msg='';S.phase='done';}else{S.oops='t'+b.dataset.t;S.typeMiss++;S.msg="Look again. Which topic — "+NAME.one+", "+NAME.two+", "+NAME.three+", or "+NAME.four+"?";}return render();}
   if(a==='next'){S.stars+=S.pts;if(S.i<S.qs.length-1){S.i++;return setupQ()}return finish();}
 });
 function finish(){

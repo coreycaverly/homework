@@ -37,6 +37,26 @@ Turn the percent into a decimal (**÷ 100**, move the point 2 left), then **mult
 
 > Price goes $20 → $25. Change = $5. 5 ÷ 20 = 0.25 = **25% increase**.
 
+## Write a strong answer (ACE)
+
+Right answers still lose points when they're a bare number or a fragment. Show your
+thinking the way every teacher wants — with **ACE**:
+
+- **A — Answer** by restating the question in a complete sentence. *(Don't START with
+  "Because." Restate first, then give your "because.")*
+- **C — Calculate / show it** with **labels and units** — "$30," "20 square units,"
+  "$1.20 per box" — not just "30."
+- **E — Explain** the *why* with the rule or formula you used.
+
+| Weak | Strong (ACE) |
+| --- | --- |
+| *30.* | *The area is 30 square units, because ½ × 10 × 6 = 30.* |
+| *Yes.* | *Yes, 6:8 equals 3:4, because dividing both by 2 gives 3 and 4.* |
+| *$10.* | *The sale price is $30, because 25% of $40 is $10 off, and $40 − $10 = $30.* |
+
+> **Then check it:** reread the question and make sure you answered **what it actually
+> asked** — not just the first number you found.
+
 ## Cheat card
 
 |  | Do this |
