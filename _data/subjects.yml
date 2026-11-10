@@ -27,6 +27,11 @@
   emoji: "🧪"
   lessons:
     - { name: "Forces & Motion", slug: science, emoji: "🔬", added: 2026-11-03, quiz: true, blurb: "Forces, motion, and Newton's laws — answer it, then explain the why." }
+- subject: History
+  slug: history-area
+  emoji: "📜"
+  lessons:
+    - { name: "Research Responses", slug: history, emoji: "🗺️", added: 2026-11-09, quiz: true, blurb: "Turn a fact into a complete answer — what, when, where, and why it mattered — in your own words, then check it against the directions." }
 - subject: Spanish
   slug: spanish
   emoji: "🌎"
