@@ -25,7 +25,7 @@ window.HW_FIREBASE_CONFIG = {
  * Get yours from Firebase console → Authentication → Users AFTER your first
  * sign-in, then paste it here (and into firestore.rules). */
 window.HW_ADMIN_UIDS = [
-  // "pasteYourAdminUidHere"
+   "UnV9SrcUQBgnP3tObnyHMvV6Ol43"
 ];
 
 /* Derived flag — do not edit. Auth turns on only when apiKey is really set. */
