@@ -12,10 +12,12 @@
  * Fill these from: Firebase console → Project settings → "Your apps" (Web app).
  */
 window.HW_FIREBASE_CONFIG = {
-  apiKey: "REPLACE_ME",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  appId: "REPLACE_ME"
+  apiKey: "AIzaSyAKGxYD4lykbP4DorcH6BuBMdrnbncfew0",
+  authDomain: "homework-1f388.firebaseapp.com",
+  projectId: "homework-1f388",
+  messagingSenderId: "1044597967850",
+  appId: "1:1044597967850:web:5d4d1dad41a78cc90e4093",
+  measurementId: "G-HW1PRRPRRR"
   // storageBucket / messagingSenderId are not needed for auth + Firestore.
 };
 
