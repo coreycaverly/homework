@@ -26,7 +26,7 @@ service cloud.firestore {
 
     match /users/{uid} {
       // Admins can do anything (grant/revoke parent, read the user list).
-      allow read, write: if isAdmin();
+      allow read, write: if isAdmin(UnV9SrcUQBgnP3tObnyHMvV6Ol43);
 
       // Owner can read their own doc.
       allow read: if request.auth != null && request.auth.uid == uid;
