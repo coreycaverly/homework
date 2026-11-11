@@ -6,3 +6,5 @@ exclude:
   - .claude
   - _intake
   - README.md
+  - FIREBASE-SETUP.md
+  - firestore.rules

@@ -1,0 +1,48 @@
+rules_version = '2';
+
+// Homework Helper — Firestore security rules.
+// Deploy these in: Firebase console → Firestore Database → Rules → Publish.
+//
+// Model:
+//   users/{uid} = { progress: {..}, displayName, email, role?, updatedAt }
+//   - A signed-in user may read and write ONLY their own doc.
+//   - A user may NOT set or change their own `role` (so nobody self-grants parent).
+//   - Admins (UID allowlist below) may read every user and set/clear roles.
+//
+// After your first sign-in, copy your UID from
+// Authentication → Users into BOTH the list below and assets/firebase-config.js.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.uid in [
+        // "pasteYourAdminUidHere",
+      ];
+    }
+    function roleOf(d) {
+      return ('role' in d) ? d.role : null;
+    }
+
+    match /users/{uid} {
+      // Admins can do anything (grant/revoke parent, read the user list).
+      allow read, write: if isAdmin();
+
+      // Owner can read their own doc.
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      // Owner can create their own doc but may not include a role.
+      allow create: if request.auth != null && request.auth.uid == uid
+                    && !('role' in request.resource.data);
+
+      // Owner can update their own doc (progress/profile) but may not change role.
+      allow update: if request.auth != null && request.auth.uid == uid
+                    && roleOf(request.resource.data) == roleOf(resource.data);
+    }
+
+    // Everything else is closed by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

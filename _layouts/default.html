@@ -11,12 +11,24 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
+    <script src="{{ '/assets/firebase-config.js' | relative_url }}"></script>
+    <script>
+      /* Hide answer-key content up front ONLY when auth is enabled, until the
+         viewer's role is verified. No-op (site unchanged) when not configured. */
+      (function () {
+        if (window.HW_FIREBASE_READY && /answer-key/.test(location.pathname)) {
+          document.documentElement.classList.add("hw-gated");
+        }
+      })();
+    </script>
+    <script defer src="{{ '/assets/auth.js' | relative_url }}"></script>
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
 
     <header class="page-header" role="banner">
       {% unless page.url == '/' %}<a class="site-home" href="{{ '/' | relative_url }}">← {{ site.title | default: "Home" }}</a>{% endunless %}
+      <div id="hw-auth" class="hw-auth" aria-live="polite"></div>
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
     </header>

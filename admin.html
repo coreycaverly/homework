@@ -1,0 +1,72 @@
+---
+title: Admin
+description: Manage parent access
+layout: default
+---
+
+<div id="admin-app"><p class="hw-muted">Checking access…</p></div>
+
+<style>
+  #admin-app{max-width:620px;margin:1.25rem auto 0}
+  .admin-grant{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .admin-grant input{flex:1 1 240px;padding:10px 12px;border:1px solid #cdd3e4;border-radius:10px;font:inherit}
+  #userlist{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .urow{padding:10px 12px;border:1px solid #e2e6f0;border-radius:10px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+  .urow code{font-size:.8rem;color:#5b6386}
+  .urow .role{margin-left:auto;font-weight:700}
+  .urow .role.parent{color:#15803d}.urow .role.admin{color:#be185d}
+</style>
+
+{% raw %}
+<script>
+(function () {
+  var app = document.getElementById("admin-app");
+  function esc(s){return(""+(s==null?"":s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  function render() {
+    if (!window.HW_FIREBASE_READY) { app.innerHTML = "<p>Sign-in isn’t set up yet. Add your Firebase config first.</p>"; return; }
+    var A = window.hwAuth;
+    if (!A || !A.ready) { app.innerHTML = '<p class="hw-muted">Loading…</p>'; return setTimeout(render, 300); }
+    if (!A.user) { app.innerHTML = '<p>Please sign in to continue.</p><p><button class="hw-btn" data-hw="signin">Sign in with Google</button></p>'; return; }
+    if (!A.isAdmin()) {
+      app.innerHTML = "<h2>Admins only</h2><p>This account isn’t an admin.</p>" +
+        '<p class="hw-muted">Your id: <code>' + esc(A.user.uid) + "</code></p>";
+      return;
+    }
+    app.innerHTML =
+      "<h2>Manage parent access</h2>" +
+      '<p class="hw-muted">Paste a user’s id (they can copy it from the answer-key screen) and grant or remove parent access.</p>' +
+      '<div class="admin-grant"><input id="uid-in" placeholder="user id (uid)" autocapitalize="off" autocorrect="off" spellcheck="false">' +
+      '<button class="hw-btn" id="mk">Make parent</button><button class="hw-btn" id="rm">Remove</button></div>' +
+      '<p id="msg" class="hw-muted"></p>' +
+      "<h3>Users</h3><div id='userlist' class='hw-muted'>loading…</div>";
+
+    function msg(t){ document.getElementById("msg").textContent = t; }
+    function act(fn, word){
+      var el = document.getElementById("uid-in"), u = el.value.trim();
+      if (!u) { msg("Enter a user id first."); return; }
+      fn(u).then(function(){ msg("Parent " + word + " for " + u); el.value=""; list(); })
+           .catch(function(e){ msg("Error: " + (e && e.message)); });
+    }
+    document.getElementById("mk").onclick = function(){ act(A.grantParent, "granted"); };
+    document.getElementById("rm").onclick = function(){ act(A.revokeParent, "removed"); };
+
+    function list(){
+      A.listUsers().then(function(us){
+        var box = document.getElementById("userlist");
+        if (!us.length) { box.textContent = "No users yet."; return; }
+        box.classList.remove("hw-muted");
+        box.innerHTML = us.map(function(u){
+          var r = u.role || "";
+          return '<div class="urow"><code>' + esc(u.uid) + "</code> " +
+            "<span>" + esc(u.displayName || "") + (u.email ? " (" + esc(u.email) + ")" : "") + "</span>" +
+            '<span class="role ' + esc(r) + '">' + esc(r) + "</span></div>";
+        }).join("");
+      }).catch(function(e){ document.getElementById("userlist").textContent = "Couldn’t load users: " + (e && e.message); });
+    }
+    list();
+  }
+  render();
+})();
+</script>
+{% endraw %}
