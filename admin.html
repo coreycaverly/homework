@@ -7,14 +7,20 @@ layout: default
 <div id="admin-app"><p class="hw-muted">Checking access…</p></div>
 
 <style>
-  #admin-app{max-width:620px;margin:1.25rem auto 0}
-  .admin-grant{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-  .admin-grant input{flex:1 1 240px;padding:10px 12px;border:1px solid #cdd3e4;border-radius:10px;font:inherit}
-  #userlist{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-  .urow{padding:10px 12px;border:1px solid #e2e6f0;border-radius:10px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
-  .urow code{font-size:.8rem;color:#5b6386}
-  .urow .role{margin-left:auto;font-weight:700}
+  #admin-app{max-width:640px;margin:1.25rem auto 0}
+  #userlist{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .urow{padding:10px 12px;border:1px solid #e2e6f0;border-radius:12px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+  .uinfo{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1 1 180px}
+  .uname{font-weight:600}
+  .uemail{font-size:.8rem;color:#5b6386}
+  .urow code{font-size:.72rem;color:#9aa0b8;word-break:break-all}
+  .urow .role{font-weight:700;text-transform:capitalize}
   .urow .role.parent{color:#15803d}.urow .role.admin{color:#be185d}
+  .urow .hw-btn{margin-left:auto}
+  .admin-extra{margin-top:18px}
+  .admin-extra summary{cursor:pointer;color:#5b6386;font-size:.9rem;min-height:44px;display:flex;align-items:center}
+  .admin-grant{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .admin-grant input{flex:1 1 240px;padding:10px 12px;border:1px solid #cdd3e4;border-radius:10px;font:inherit}
 </style>
 
 {% raw %}
@@ -33,37 +39,69 @@ layout: default
         '<p class="hw-muted">Your id: <code>' + esc(A.user.uid) + "</code></p>";
       return;
     }
+
+    var ADMINS = window.HW_ADMIN_UIDS || [];
+    function isAdminUser(u){ return ADMINS.indexOf(u.uid) > -1 || u.role === "admin"; }
+
     app.innerHTML =
       "<h2>Manage parent access</h2>" +
-      '<p class="hw-muted">Paste a user’s id (they can copy it from the answer-key screen) and grant or remove parent access.</p>' +
+      '<p class="hw-muted">Click a user to grant or remove parent access. Everyone who has signed in appears here.</p>' +
+      '<p id="msg" class="hw-muted" role="status"></p>' +
+      "<div id='userlist' class='hw-muted'>loading…</div>" +
+      '<details class="admin-extra"><summary>Grant by id (optional — for someone who hasn’t signed in yet)</summary>' +
       '<div class="admin-grant"><input id="uid-in" placeholder="user id (uid)" autocapitalize="off" autocorrect="off" spellcheck="false">' +
-      '<button class="hw-btn" id="mk">Make parent</button><button class="hw-btn" id="rm">Remove</button></div>' +
-      '<p id="msg" class="hw-muted"></p>' +
-      "<h3>Users</h3><div id='userlist' class='hw-muted'>loading…</div>";
+      '<button class="hw-btn" id="mk">Make parent</button></div></details>';
 
     function msg(t){ document.getElementById("msg").textContent = t; }
-    function act(fn, word){
-      var el = document.getElementById("uid-in"), u = el.value.trim();
-      if (!u) { msg("Enter a user id first."); return; }
-      fn(u).then(function(){ msg("Parent " + word + " for " + u); el.value=""; list(); })
-           .catch(function(e){ msg("Error: " + (e && e.message)); });
+
+    function roleLabel(u){
+      var r = isAdminUser(u) ? "admin" : (u.role || "—");
+      return '<span class="role ' + esc(isAdminUser(u) ? "admin" : (u.role||"")) + '">' + esc(r) + "</span>";
     }
-    document.getElementById("mk").onclick = function(){ act(A.grantParent, "granted"); };
-    document.getElementById("rm").onclick = function(){ act(A.revokeParent, "removed"); };
+    function rowButton(u){
+      if (isAdminUser(u)) return "";                 // admins aren't managed here
+      if (u.role === "parent") return '<button class="hw-btn" data-act="revoke" data-uid="' + esc(u.uid) + '">Remove parent</button>';
+      return '<button class="hw-btn" data-act="grant" data-uid="' + esc(u.uid) + '">Make parent</button>';
+    }
+    function rank(u){ return isAdminUser(u) ? 0 : (u.role === "parent" ? 1 : 2); }
 
     function list(){
       A.listUsers().then(function(us){
         var box = document.getElementById("userlist");
-        if (!us.length) { box.textContent = "No users yet."; return; }
+        if (!us.length) { box.textContent = "No users have signed in yet."; return; }
         box.classList.remove("hw-muted");
+        us.sort(function(a,b){ return rank(a) - rank(b) || (a.displayName||"").localeCompare(b.displayName||""); });
         box.innerHTML = us.map(function(u){
-          var r = u.role || "";
-          return '<div class="urow"><code>' + esc(u.uid) + "</code> " +
-            "<span>" + esc(u.displayName || "") + (u.email ? " (" + esc(u.email) + ")" : "") + "</span>" +
-            '<span class="role ' + esc(r) + '">' + esc(r) + "</span></div>";
+          var you = (u.uid === A.user.uid) ? ' <span class="hw-badge">you</span>' : "";
+          return '<div class="urow"><div class="uinfo">' +
+            '<span class="uname">' + esc(u.displayName || "(no name)") + you + "</span>" +
+            (u.email ? '<span class="uemail">' + esc(u.email) + "</span>" : "") +
+            "<code>" + esc(u.uid) + "</code></div>" +
+            roleLabel(u) + rowButton(u) + "</div>";
         }).join("");
       }).catch(function(e){ document.getElementById("userlist").textContent = "Couldn’t load users: " + (e && e.message); });
     }
+
+    // Click a row button to grant/revoke (delegated; survives list re-renders).
+    document.getElementById("userlist").addEventListener("click", function(e){
+      var b = e.target.closest("button[data-act]"); if (!b) return;
+      var uid = b.getAttribute("data-uid");
+      var grant = b.getAttribute("data-act") === "grant";
+      b.disabled = true; msg("Saving…");
+      (grant ? A.grantParent(uid) : A.revokeParent(uid))
+        .then(function(){ msg((grant ? "Granted" : "Removed") + " parent access."); list(); })
+        .catch(function(err){ b.disabled = false; msg("Error: " + (err && err.message)); });
+    });
+
+    // Optional: grant by pasted id.
+    var mk = document.getElementById("mk");
+    if (mk) mk.onclick = function(){
+      var el = document.getElementById("uid-in"), u = el.value.trim();
+      if (!u) { msg("Enter a user id first."); return; }
+      A.grantParent(u).then(function(){ msg("Granted parent for " + u); el.value = ""; list(); })
+                      .catch(function(e){ msg("Error: " + (e && e.message)); });
+    };
+
     list();
   }
   render();
