@@ -19,6 +19,8 @@
   var ADMIN_UIDS = window.HW_ADMIN_UIDS || [];
   var SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
   var FILES = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
+  // Analytics is loaded too when a measurementId is present (usage telemetry / insights).
+  if (CFG.measurementId) FILES.push("firebase-analytics-compat.js");
   var IS_ANSWER_KEY = /answer-key/.test(location.pathname);
 
   var state = { user: null, role: null, db: null, ready: false };
@@ -188,6 +190,9 @@
     FILES.forEach(function (f) { chain = chain.then(function () { return loadScript(SDK + f); }); });
     chain.then(function () {
       firebase.initializeApp(CFG);
+      // Firebase Analytics (telemetry / insights). Guarded so it can never break a page.
+      try { if (CFG.measurementId && firebase.analytics) firebase.analytics(); }
+      catch (e) { console.warn("[hwAuth] analytics:", e && e.message); }
       state.db = firebase.firestore();
       installMirror();
       firebase.auth().onAuthStateChanged(onUser);
