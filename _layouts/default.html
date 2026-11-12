@@ -12,13 +12,19 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
     <script src="{{ '/assets/firebase-config.js' | relative_url }}"></script>
+    <script>window.HW_LOCKED = [{%- for g in site.data.subjects -%}{%- for s in g.lessons -%}{%- if s.locked -%}"{{ s.slug }}",{%- endif -%}{%- endfor -%}{%- endfor -%}];</script>
     <script>
-      /* Hide answer-key content up front ONLY when auth is enabled, until the
-         viewer's role is verified. No-op (site unchanged) when not configured. */
+      /* When auth is enabled: hide answer-key / locked-lesson content up front
+         (until the viewer's role is verified) and hide locked lessons in nav.
+         No-op (site unchanged) when not configured. */
       (function () {
-        if (window.HW_FIREBASE_READY && /answer-key/.test(location.pathname)) {
+        if (!window.HW_FIREBASE_READY) return;
+        var seg = location.pathname.replace(/^\/+/, "").split("/")[0] || "";
+        var lockedLesson = (window.HW_LOCKED || []).indexOf(seg) > -1;
+        if (/answer-key/.test(location.pathname) || lockedLesson) {
           document.documentElement.classList.add("hw-gated");
         }
+        document.documentElement.classList.add("hw-lock-nav");
       })();
     </script>
     <script defer src="{{ '/assets/auth.js' | relative_url }}"></script>

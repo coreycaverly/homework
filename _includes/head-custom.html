@@ -64,8 +64,13 @@
     .hw-auth { position: static; justify-content: flex-end; margin: 0 0 .25rem; }
   }
 
-  /* answer-key gating: hide content until a parent/admin is verified */
+  /* gating: hide content (answer keys + locked lessons) until a parent/admin is verified */
   html.hw-gated #content { visibility: hidden; }
+  /* locked lessons are hidden in nav by default; auth.js reveals them for parents */
+  html.hw-lock-nav [data-locked] { display: none !important; }
+  .lock-badge { display: inline-flex; align-items: center; gap: .2rem; font-size: .7rem;
+    font-weight: 600; color: #be185d; background: #fbe0ec; border-radius: 99px;
+    padding: 1px 8px; white-space: nowrap; vertical-align: middle; }
   .hw-lock { max-width: 520px; margin: 1.5rem auto; padding: 1.5rem 1.25rem; text-align: center;
     background: #fff; border: 1px solid rgba(20,30,60,.12); border-radius: 16px;
     box-shadow: 0 1px 3px rgba(20,30,60,.06); }

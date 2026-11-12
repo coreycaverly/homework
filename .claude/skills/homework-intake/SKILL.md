@@ -199,7 +199,9 @@ is one folder with a landing + guide + quiz + answer key. The nav is:
 it has >1 lesson) → **lesson landing** (`<slug>/index.md`, Guide + Quiz). You don't hand-edit
 the root or subject HTML — you edit the registry and copy templates.
 - **Add a lesson to an existing subject:** append `{ name, slug, emoji, added: <today>, quiz: true/false, blurb }` (quiz: false or omitted = guide-only; the landing hides the Quiz button)
-  under that subject's `lessons:`. `name` is the lesson's real topic (not a theme name); `slug`
+  under that subject's `lessons:`. Add `locked: true` to withhold a lesson from the learner
+  (hidden from nav + all its pages gated to parents/admins via the Firebase auth; see CLAUDE.md
+  "Locked lessons"). Use it when building content that isn't ready for him yet. `name` is the lesson's real topic (not a theme name); `slug`
   = folder name. If the subject had only ONE lesson before (no subject page; root linked
   straight to it), now create its subject page `<subject.slug>/index.md` by copying
   `english/index.md` (set `title:` and `area:` to the subject), and make sure `subject.slug`

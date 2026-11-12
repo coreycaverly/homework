@@ -1,6 +1,9 @@
 # Site registry: SUBJECTS, each with its LESSONS. Drives root, subject pages, and landings.
 # quiz: true  -> the lesson has a quiz (landing shows the Quiz button + a "done" checkbox)
 # quiz: false (or omitted) -> guide-only lesson.
+# locked: true -> parents/admins only: hidden from nav for the learner, and every page
+#   of the lesson is gated (requires sign-in with a parent/admin account). Omit = visible.
+#   (Requires Firebase auth configured; see FIREBASE-SETUP.md.)
 # The homework-intake skill edits THIS file. slug = folder name; added = date added.
 - subject: English
   slug: english

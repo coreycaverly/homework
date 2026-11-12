@@ -20,6 +20,10 @@
   var SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
   var FILES = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
   var IS_ANSWER_KEY = /answer-key/.test(location.pathname);
+  var LOCKED = window.HW_LOCKED || [];
+  var CUR_SLUG = location.pathname.replace(/^\/+/, "").split("/")[0] || "";
+  var IS_LOCKED_LESSON = LOCKED.indexOf(CUR_SLUG) > -1;
+  var IS_GATED = IS_ANSWER_KEY || IS_LOCKED_LESSON;
 
   var state = { user: null, role: null, db: null, ready: false };
   window.hwAuth = state;
@@ -126,22 +130,31 @@
     firebase.auth().signInWithPopup(p).catch(function (err) { console.warn("[hwAuth] sign-in:", err && err.message); });
   }
 
-  /* ---------- answer-key gating ---------- */
+  /* ---------- gating: answer keys + locked lessons ---------- */
+  function applyNavLocks() {
+    // Locked lessons are hidden in nav by CSS (html.hw-lock-nav); reveal for parents.
+    document.documentElement.classList.toggle("hw-lock-nav", !state.isParent());
+  }
   function gate() {
-    if (!IS_ANSWER_KEY) return;
+    applyNavLocks();
+    if (!IS_GATED) return;
     var html = document.documentElement;
     if (state.isParent()) { html.classList.remove("hw-gated"); return; }
     var main = document.getElementById("content");
     if (main) main.innerHTML = lockPanel();
-    html.classList.remove("hw-gated"); // reveal the lock message
+    html.classList.remove("hw-gated"); // reveal the lock message (not the real content)
   }
   function lockPanel() {
+    var lesson = IS_LOCKED_LESSON && !IS_ANSWER_KEY;
+    var heading = lesson ? "Not available yet" : "Parents only";
     if (!state.user) {
-      return '<div class="hw-lock"><h2>Parents only</h2>' +
-        "<p>This answer key is for parents. Sign in with the family Google account to view it.</p>" +
+      var line = lesson
+        ? "This lesson isn't available yet. It's visible to parents — sign in with the family Google account to preview it."
+        : "This answer key is for parents. Sign in with the family Google account to view it.";
+      return '<div class="hw-lock"><h2>' + heading + "</h2><p>" + line + "</p>" +
         '<p><button class="hw-btn big" data-hw="signin">Sign in with Google</button></p></div>';
     }
-    return '<div class="hw-lock"><h2>Parents only</h2>' +
+    return '<div class="hw-lock"><h2>' + heading + "</h2>" +
       "<p>You're signed in, but this account doesn't have parent access yet. Ask the site admin to grant it.</p>" +
       '<p class="hw-muted">Your account id (give this to the admin): <code>' + esc(state.user.uid) + "</code></p></div>";
   }
@@ -194,8 +207,15 @@
       state.ready = true;
       renderButton();
     }).catch(function (e) {
-      console.warn("[hwAuth] init failed, running without auth:", e && e.message);
-      document.documentElement.classList.remove("hw-gated"); // fail open so content isn't stuck hidden
+      console.warn("[hwAuth] init failed:", e && e.message);
+      // Fail CLOSED on gated pages: show a message, never the real content, and
+      // leave locked lessons hidden in nav.
+      if (IS_GATED) {
+        var main = document.getElementById("content");
+        if (main) main.innerHTML = '<div class="hw-lock"><h2>Can’t verify access</h2>' +
+          "<p>We couldn’t check your access just now. Check your connection and reload the page.</p></div>";
+      }
+      document.documentElement.classList.remove("hw-gated");
     });
   })();
 })();
