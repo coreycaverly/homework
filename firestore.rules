@@ -17,7 +17,8 @@ service cloud.firestore {
 
     function isAdmin() {
       return request.auth != null && request.auth.uid in [
-        "UnV9SrcUQBgnP3tObnyHMvV6Ol43"
+        "UnV9SrcUQBgnP3tObnyHMvV6Ol43",
+        "mzsQ7kcc1JdWi4Z5LdjS7Yw7xDj2"
       ];
     }
     function roleOf(d) {
