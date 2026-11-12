@@ -32,6 +32,7 @@
   emoji: "📜"
   lessons:
     - { name: "Research Responses", slug: history, emoji: "🗺️", added: 2026-11-09, quiz: true, blurb: "Turn a fact into a complete answer — what, when, where, and why it mattered — in your own words, then check it against the directions." }
+    - { name: "Neolithic Age", slug: neolithic, emoji: "🌾", added: 2026-11-11, quiz: true, blurb: "Farming changed everything: jobs, tools, leaders, and the first writing. One station a day, answered in complete sentences." }
 - subject: Spanish
   slug: spanish
   emoji: "🌎"

@@ -1,0 +1,235 @@
+---
+title: Neolithic Age
+layout: default
+---
+
+{% raw %}
+<div id="app"></div>
+<p class="quiz-nav"><a href="guide.html">Study guide</a> · <a href="../">All subjects</a></p>
+
+<style>
+/* Quiz UI, themed to sit inside the cayman page. Color = topic:
+   Farming & Food green, Jobs & Government blue, Tools, Homes & Writing orange. */
+#app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
+#app *{box-sizing:border-box}
+.quiz-nav{text-align:center;margin-top:28px}
+:root{
+  --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
+  --farm:#15803D; --farm-soft:#DCFCE7; --people:#2563EB; --people-soft:#E1EAFC; --tools:#C2410C; --tools-soft:#FFE8D6;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#15803D;
+}
+#app, #app button{font-family:inherit}
+#app p{margin:0}
+#app button{color:inherit;cursor:pointer;border:0;background:none}
+#app button:focus-visible{outline:3px solid var(--farm);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.intro{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.72rem;font-weight:400}
+.t-farm{background:var(--farm-soft);color:var(--farm)} .t-people{background:var(--people-soft);color:var(--people)} .t-tools{background:var(--tools-soft);color:var(--tools)}
+.c-farm{color:var(--farm)} .c-people{color:var(--people)} .c-tools{color:var(--tools)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.badge.t-farm{background:var(--farm-soft);color:var(--farm)} .badge.t-people{background:var(--people-soft);color:var(--people)} .badge.t-tools{background:var(--tools-soft);color:var(--tools)}
+.prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.02rem;background:var(--card);min-height:52px;text-align:left}
+.choice:hover{border-color:var(--ink)}
+.choice.t-farm{background:var(--farm-soft)} .choice.t-people{background:var(--people-soft)} .choice.t-tools{background:var(--tools-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.farm{background:var(--farm-soft)} .result.people{background:var(--people-soft)} .result.tools{background:var(--tools-soft)}
+.result strong{font-weight:800;font-size:1.2rem}
+.answerline{font-weight:600}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+
+<script>
+const BANK=[
+ // FARMING & FOOD — Station 1 + vocabulary
+ {t:'farm',q:"What does domesticate mean?",a:"To tame plants or animals so they live and work with people",o:["To hunt wild animals for food","To move from place to place","To trade goods with another town"],why:"Domestic means home. Domesticated animals were tamed and brought into people's lives, like dogs, goats, and cattle."},
+ {t:'farm',q:"What does cultivate mean?",a:"To grow plants carefully, saving seeds from the best ones",o:["To tame wild animals","To build a house from mud bricks","To collect taxes from people"],why:"Cultivating is growing on purpose. Early farmers kept the seeds from the plants that gave the most grain."},
+ {t:'farm',q:"Agriculture means…",a:"Growing crops AND raising animals",o:["Only hunting animals","Only gathering wild berries","Building walls around a town"],why:"Agriculture is farming: both the plants (crops) and the animals."},
+ {t:'farm',q:"Which crop matches the place where it was first farmed?",a:"Rice in China",o:["Rice in Mexico","Corn in China","Wheat in Mexico"],why:"Corn came from Mexico, rice from China, and wheat and barley from the Middle East."},
+ {t:'farm',q:"Why could Neolithic people stop wandering and settle down?",a:"Farming gave them a steady food supply in one place",o:["A king ordered them to stop","They ran out of land to explore","Wild animals stopped existing"],why:"With a reliable food supply from farming, people didn't have to follow the animals anymore."},
+ {t:'farm',q:"Which answer about early farm animals is STRONGEST?",a:"Some of the earliest tamed animals were sheep, goats, dogs, and cattle. People used them to carry heavy loads and to get milk and meat.",o:["Sheep, goats, dogs.","They used them for stuff.","Because they were tame."],why:"The strong one restates the question in a complete sentence and answers BOTH parts: which animals, and what they were used for."},
+ {t:'farm',q:"How are farmed crops different from the wild plants they came from?",a:"They're bigger and give more food, because farmers kept planting the best seeds",o:["They're smaller and give less food","They look exactly the same","They can only grow in the winter"],why:"Choosing the best seeds year after year made crops like corn grow much bigger than their wild ancestors."},
+ // JOBS & GOVERNMENT — Stations 2 and 4
+ {t:'people',q:"What is specialization of labor?",a:"People doing different jobs instead of everyone finding food",o:["Everyone doing the exact same job","Working only during special holidays","A tool used for farming"],why:"Special job for each person: weaver, builder, toolmaker, farmer."},
+ {t:'people',q:"Why did different jobs appear in the Neolithic Age?",a:"Farming made extra food, so some people had time to learn other skills",o:["Hunting became easier than ever","Kings made everyone pick a job at birth","People stopped needing food"],why:"Extra food meant not everyone had to farm. That freed time for new skills."},
+ {t:'people',q:"Which one was a real Neolithic job?",a:"A weaver spinning wool into cloth",o:["A computer programmer","An airplane pilot","A car factory worker"],why:"Neolithic jobs included weaving, building, toolmaking, mining flint and obsidian, and making jewelry."},
+ {t:'people',q:"What are taxes (also called tribute)?",a:"Money or goods people give their ruler to pay for community projects",o:["Gifts friends give on birthdays","Tools made from obsidian","Walls built around a town"],why:"Taxes paid for things everyone used, like walls and public buildings."},
+ {t:'people',q:"How did Neolithic leaders keep their people safe?",a:"They built walls, made laws, and led soldiers",o:["They moved the town every week","They banned all trade","They let everyone settle fights alone"],why:"Walls (later forts and citadels), laws, punishments, and soldiers all provided security."},
+ {t:'people',q:"Why did the first kings rise to power?",a:"Bigger towns had more crime, fights, and outside threats, so people needed strong leaders",o:["Kings were chosen by a coin toss","There were fewer people than before","Nobody wanted any rules"],why:"More people meant more problems. Leaders used advisors and myths to keep power in their families, and those families became kings and queens."},
+ {t:'people',q:"Which answer about the Standard of Ur is STRONGEST? (Were some people valued more?)",a:"Yes, I think some people were valued more. The king is drawn bigger than everyone else, which shows he was the most important.",o:["Yes.","The king.","Because it is old art."],why:"ACE: answer in a complete sentence, point to evidence in the art (the king's size), and explain what it shows."},
+ {t:'people',q:"What can you notice about punishments in Hammurabi's Code?",a:"They were harsh, and they could depend on whether you were rich or poor",o:["There were no punishments at all","Everyone got the exact same punishment","The laws were never written down"],why:"It was one of the first written law codes. Punishments were strict (\"an eye for an eye\") and could change based on social class."},
+ // TOOLS, HOMES & WRITING — Stations 3 and 5
+ {t:'tools',q:"Tool sort: which one is PALEOLITHIC?",a:"A rough stone chopper",o:["A sharp obsidian knife","A copper tool","A clay cooking pot"],why:"Rough and chipped means Old Stone Age. Sharp, polished, metal, or clay means Neolithic."},
+ {t:'tools',q:"Which one was a NEOLITHIC improvement?",a:"Clay pots for cooking and storing food",o:["Rough stone choppers","Clothes made only of raw animal skins","Tents moved every season to follow herds"],why:"Clay pots were stronger and lasted longer than baskets or skins."},
+ {t:'tools',q:"How did shelters change in the Neolithic Age?",a:"People built permanent mud-brick houses in villages",o:["People moved into tents that they carried","People lived only under rock ledges","People stopped building homes at all"],why:"Farmers stayed in one place, so they built lasting homes from mud bricks, stone, and branches."},
+ {t:'tools',q:"How did people get into their houses in Çatal Höyük?",a:"By climbing down a ladder through the roof",o:["Through a big front door","Through a tunnel under the street","By swimming across a moat"],why:"Houses were packed together, so the entrance was a hole in the roof with a ladder."},
+ {t:'tools',q:"Besides honoring gods, what were Sumerian temples used for?",a:"Storing food to share when farmers didn't have enough",o:["Training soldiers for war","Making clay pots to sell","Holding races and games"],why:"People gave food to the temple in good years, and the temple shared it in hard times."},
+ {t:'tools',q:"What are pictograms?",a:"Picture symbols that stand for things",o:["Wedge-shaped letters for sounds","Laws carved on a stone pillar","Maps of farm fields"],why:"A drawing of grain meant grain. Pictograms came before cuneiform."},
+ {t:'tools',q:"What is cuneiform?",a:"Writing made of wedge-shaped marks pressed into clay",o:["A kind of farm tool","A type of mud-brick house","A Neolithic job"],why:"Cuneiform means wedge-shaped. Scribes pressed a reed into wet clay tablets."},
+ {t:'tools',q:"Which answer about how cuneiform changed is STRONGEST?",a:"Cuneiform changed from detailed pictures into simple wedge marks. I think this happened because simple marks were faster to press into clay.",o:["It changed.","Wedges.","Because of the Sumerians."],why:"The question asks what you notice AND why. The strong one answers both parts in complete sentences."}
+];
+const NAME={farm:"Farming & Food",people:"Jobs & Government",tools:"Tools, Homes & Writing"};
+const HINT={
+ farm:"<b>Farming &amp; Food:</b> think about the big change: from hunting and gathering to growing crops and taming animals. Farming gave a steady food supply, so people could settle down.",
+ people:"<b>Jobs &amp; Government:</b> follow the chain: farming → extra food → time for new jobs → bigger towns → more problems → leaders, laws, and taxes.",
+ tools:"<b>Tools, Homes &amp; Writing:</b> compare old and new. Rough stone and tents = Paleolithic. Sharp or metal tools, clay pots, mud-brick houses = Neolithic. Writing began as lists of food: pictograms first, then cuneiform."
+};
+const RULE={
+ farm:"Farming (agriculture) = crops + tamed animals → a reliable food supply → people settle down.",
+ people:"Extra food → specialization of labor → social classes. Bigger towns → leaders, laws, walls, soldiers, and taxes → the first kings.",
+ tools:"Neolithic = sharper tools, metal, cloth, clay pots, permanent mud-brick homes. Temples kept food lists → pictograms → cuneiform."
+};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('neo-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('neo-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>(''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <p class="intro muted">Farming changed everything. Pick the answer, read the why. Short rounds — about 3 minutes.</p>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick round<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one topic (6 questions)</span>
+    <div class="topics">
+      <button class="topic t-farm" data-act="start" data-mode="farm">Farming &amp; Food<span>Station 1 · vocab</span></button>
+      <button class="topic t-people" data-act="start" data-mode="people">Jobs &amp; Government<span>Stations 2 &amp; 4</span></button>
+      <button class="topic t-tools" data-act="start" data-mode="tools">Tools, Homes &amp; Writing<span>Stations 3 &amp; 5</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How it works</span>
+    <ol class="steps">
+      <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
+      <li><span>Every answer gives you the <b>why</b> — the rule to remember.</span></li>
+      <li><span>In a quick round, <b>name the topic</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Rounds done: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  S={mode,qs:shuffle(pool).slice(0,n),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'answer',miss:0,typeMiss:0,msg:'',opts:shuffle([q.a,...q.o]),pts:0,oops:null});
+  S.max+=S.mode==='mix'?2:1;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  let body='';
+  if(ph==='answer'){
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: which topic was that question?</p>
+    <div class="choices">${['farm','people','tools'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?2:1;
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Perfect!':S.pts>0?'Nice!':'Got it.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mixed</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function missHint(q){
+  S.miss++;
+  if(S.miss===1)S.msg="Not quite — read it again slowly, out loud in a whisper.";
+  else S.msg=HINT[q.t];
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='answer'&&S.phase==='answer'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.a){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; missHint(q); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look again. Is it about food and farming (Farming &amp; Food), jobs and leaders (Jobs &amp; Government), or tools, houses, and writing (Tools, Homes &amp; Writing)?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  try{localStorage.setItem('hw-done-neolithic',new Date().toISOString().slice(0,10))}catch(e){}
+  const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Amazing!":pct>=.6?"Nice work!":"Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another round<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+{% endraw %}
