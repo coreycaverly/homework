@@ -78,6 +78,28 @@ where the first part ends**.
 | We stayed inside **unless** the storm passed. | We stayed inside **until** the storm passed. | up to that time → **until** |
 | **Although** I was hungry, I ate a snack. | **Because** I was hungry, I ate a snack. | it's the reason, not a surprise → **because** |
 
+### Trap 4: result or reason? (so vs. for / because)
+
+**so** points **forward** to a result. **for** and **because** point **back** to a reason.
+Ask: *does the second part happen BECAUSE of the first (so), or does it EXPLAIN the first (for/because)?*
+
+| Wrong | Right | Clue |
+| --- | --- | --- |
+| I forgot my umbrella, **for** I got soaked. | I forgot my umbrella, **so** I got soaked. | getting soaked is the result → **so** |
+| We stayed in, **so** it was storming. | We stayed in **because** it was storming. | the storm is the reason → **because** (or **, for**) |
+
+### Trap 5: the wrong time or "what if" word
+
+Words like *why, whether, while, before, although* sneak in where you need **when** or **if**.
+
+| Wrong | Right | Clue |
+| --- | --- | --- |
+| Text me **why** you get home. | Text me **when** you get home. | it's a time → **when** |
+| You'll get a rash **whether** you touch it. | You'll get a rash **if** you touch it. | it's a condition ("what if") → **if** |
+
+**Not only … but also has three pieces.** Keep all of them:
+~~not Spanish, also French~~ → **not only** Spanish **but also** French.
+
 ## Prepositions: little position words
 
 Prepositions show **where, when, or direction**: *in, on, at, to, from, under, over*.
@@ -107,6 +129,19 @@ little word. If it still makes sense, cross it out.
 
 - **between** = **2** things (between the two trees)
 - **among** = **3 or more** (among all the kids)
+
+### Verbs that come with their own preposition
+
+Some verbs always travel with the same little word. If it sounds odd, try the usual partner.
+
+| Say this | Not this |
+| --- | --- |
+| fell **off** the ledge | ~~fell for the ledge~~ |
+| covered **in** (or **with**) mud | ~~covered over mud~~ |
+| made up **of** threads | ~~made up from threads~~ |
+| caught a cold **from** my sister | ~~caught a cold of my sister~~ |
+| landed **on** the ground | ~~landed inside the ground~~ |
+| found **out** the hard way | ~~found from the hard way~~ |
 
 ## Interjections: feeling words
 
@@ -144,6 +179,10 @@ Circle the wrong word and write the fix. One sentence is a trick with no mistake
 8. **\[PREPOSITION\]** The cat jumped off of the kitchen counter. Fix: \_\_\_\_\_\_\_\_
 9. **\[PREPOSITION\]** The coach split the snacks between all six players. Fix: \_\_\_\_\_\_\_\_
 10. **\[INTERJECTION\]** Hey watch out for that puddle. Fix: \_\_\_\_\_\_\_\_
+11. **\[CONJUNCTION\]** I forgot my umbrella, for I got soaked on the walk home. Fix: \_\_\_\_\_\_\_\_
+12. **\[CONJUNCTION\]** Text me why you get to the station. Fix: \_\_\_\_\_\_\_\_
+13. **\[PREPOSITION\]** The book slid for the shelf and hit the floor. Fix: \_\_\_\_\_\_\_\_
+14. **\[TRICK\]** We stayed inside, for the roads were covered in ice. Fix: \_\_\_\_\_\_\_\_
 
 ## Cheat card (cut out and keep by the homework)
 
@@ -155,6 +194,7 @@ Circle the wrong word and write the fix. One sentence is a trick with no mistake
 
 **Also watch for:** extra words to cross out (off ~~of~~, where … ~~at~~, met ~~up with~~) ·
 between = 2, among = 3+ · starter words (although, until, unless) need the right meaning and a comma.
+so = result, for/because = reason · when = time, if = condition · verb partners: fell **off**, covered **in**, made up **of**.
 
 **Read it out loud at the end. Not done until every circle is crossed off.**
 

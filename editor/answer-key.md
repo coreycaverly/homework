@@ -20,6 +20,10 @@ For the practice section ("Spot it, fix it") in the [study guide](guide.html).
 | 8 | cross out **of** | Preposition | "Off" already does the job: jumped off the counter. |
 | 9 | between → **among** | Preposition | Six players is more than two, so use among. |
 | 10 | **Hey!** Watch out… (or **Hey,** watch out…) | Interjection | An interjection needs a ! or a comma after it. |
+| 11 | for → **so** | Conjunction | Getting soaked is the result, so use so. |
+| 12 | why → **when** | Conjunction | It's about time, so use when. |
+| 13 | for → **off** | Preposition | Things slide or fall **off** a shelf. |
+| 14 | **No mistake!** | Conjunction | Here "for" means "because": icy roads are the reason. |
 
 **Coaching tip:** When he misses one, don't give the answer. Ask the cheat-card question —
 "What does the join mean?" or "Is that the right set phrase?" — and let him find it.

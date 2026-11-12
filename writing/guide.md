@@ -84,6 +84,25 @@ When a question wants a *why*, don't give a bare number or one word. Use **ACE**
 · *First I ___. Then I ___.* · *___ is greater/less than ___, so ___.*
 **Rule:** never start an answer with the word **"Because."** Restate the question first.
 
+## Book review answers (the weekly "pick one" question)
+
+The weekly sheet says **pick ONE question**. One means you get to choose, **not** that a
+one-line answer is enough. Pick the question you have the most to say about, then:
+
+1. **Restate** the question in your first sentence (title + author help here).
+2. Give **one specific detail** from the book: a character, a scene, or a moment.
+3. Explain **why** (your reason), then add one more detail or reason.
+
+**Aim for 3+ complete sentences.** Sentence starters: *I chose ___ by ___ because ___.* ·
+*The story takes place in ___, which makes it feel ___.* · *I would rate it ___ out of 5
+stars because ___. One part that ___ was ___.* · *If you like ___, you'll want to read
+this because ___.*
+
+| Weak | Strong | Clue |
+| --- | --- | --- |
+| *4 stars. It was good.* | *I would rate this book 4 out of 5 stars. The mystery kept me guessing until the last chapter, but the middle felt slow, so it isn't a 5.* | a rating needs **specific reasons** |
+| *Alaska.* | *The story takes place in a small fishing town in Alaska during a long, dark winter. The cold and darkness make everything feel lonely and dangerous.* | setting = **where + when**, and how it feels |
+
 ## Practice: pick the stronger answer
 
 1. Sentence, fragment, or run-on? *Running down the hall after lunch.* \_\_\_\_\_\_\_\_
@@ -94,6 +113,7 @@ When a question wants a *why*, don't give a bare number or one word. Use **ACE**
 6. What's missing? *"Store B is cheaper."* (Which is the better deal?) \_\_\_\_\_\_\_\_
 7. Fix the capitals: *on friday, my cousin and i went to the denver zoo.* \_\_\_\_\_\_\_\_
 8. Add the commas: *Hey Leo can you come over on May 2 2027?* \_\_\_\_\_\_\_\_
+9. Make it stronger (book review): *"I liked it. It was funny."* \_\_\_\_\_\_\_\_
 
 ## STOP & CHECK (the finish box — this is the work)
 

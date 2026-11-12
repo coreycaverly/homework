@@ -100,6 +100,11 @@ const BANK=[
  {t:'conj',s:"The coach wants both speed or teamwork from us.",w:"or",fix:"and",o:["nor","but"],why:"Both pairs with and: both speed and teamwork."},
  {t:'conj',s:"Not only did we finish early, and we also got an A.",w:"and",fix:"but",o:["or","so"],why:"Not only pairs with but also: not only… but we also got an A."},
  {t:'conj',s:"After the movie ended, we walked home.",w:null,why:"No mistake! After fits the time, and the comma comes right where the first part ends."},
+ {t:'conj',s:"I forgot my umbrella, for I got soaked on the walk home.",w:"for",fix:"so",o:["nor","or"],why:"Getting soaked is the RESULT of forgetting the umbrella. Results use so; reasons use for or because."},
+ {t:'conj',s:"We canceled the picnic, so the forecast called for thunderstorms.",w:"so",fix:"because",o:["nor","or"],why:"The storm forecast is the REASON for canceling, so use because. So would point to a result."},
+ {t:'conj',s:"Text me why you get to the station.",w:"why",fix:"when",o:["whether","although"],why:"It's about a time, so use when: text me when you get there."},
+ {t:'conj',s:"She speaks not only Spanish and also French.",w:"and",fix:"but",o:["or","nor"],why:"Not only always teams up with but also: not only Spanish but also French."},
+ {t:'conj',s:"We stayed inside, for the roads were covered in ice.",w:null,why:"No mistake! Here for means because: the icy roads are the reason you stayed in."},
  // PREPOSITIONS
  {t:'prep',s:"She is really good in math.",w:"in",fix:"at",o:["on","to"],why:"We say good AT something: good at math."},
  {t:'prep',s:"We arrived to the school early.",w:"to",fix:"at",o:["in","on"],why:"You arrive AT a place: arrived at school."},
@@ -111,6 +116,10 @@ const BANK=[
  {t:'prep',s:"Where did you leave your shoes at?",w:"at",fix:DEL,o:["in","to"],why:"Where already asks for the place. The at at the end is extra, so cross it out."},
  {t:'prep',s:"The coach handed out snacks between all six players.",w:"between",fix:"among",o:["across","beside"],why:"Six players is more than two. Between is for 2; among is for 3 or more."},
  {t:'prep',s:"We hung the banner among the two doors.",w:"among",fix:"between",o:["during","of"],why:"Only two doors, so use between. Among is for 3 or more."},
+ {t:'prep',s:"The book slid for the shelf and hit the floor.",w:"for",fix:"off",o:["about","of"],why:"Things slide or fall OFF a shelf. Off shows moving away from a surface."},
+ {t:'prep',s:"A spider web is made up from thin silk threads.",w:"from",fix:"of",o:["at","on"],why:"The set phrase is made up OF: a web is made up of threads."},
+ {t:'prep',s:"My shoes were covered over mud after the hike.",w:"over",fix:"in",o:["at","off"],why:"We say covered IN (or with) mud."},
+ {t:'prep',s:"I caught a cold of my little sister.",w:"of",fix:"from",o:["at","on"],why:"You catch something FROM someone: the cold came from your sister."},
  // INTERJECTIONS
  {t:'interj',s:"Hooray, I lost my homework!",w:"Hooray",fix:"Oh no",o:["Yippee","Yay"],why:"Hooray shows joy, but losing homework is bad news — use Oh no."},
  {t:'interj',s:"Ouch, we won the big game!",w:"Ouch",fix:"Hooray",o:["Oops","Ow"],why:"Ouch means pain; winning is exciting, so Hooray fits the feeling."},

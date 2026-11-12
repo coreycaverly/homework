@@ -9,6 +9,7 @@
     - { name: "Adjectives, Adverbs & Articles", slug: grammar, emoji: "📝", added: 2026-11-03, quiz: true, blurb: "Find and fix adjective, adverb, and article errors on your own." }
     - { name: "Conjunctions, Prepositions & Interjections", slug: editor, emoji: "🔗", added: 2026-11-05, quiz: true, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
     - { name: "Writing", slug: writing, emoji: "✍️", added: 2026-11-05, quiz: true, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
+    - { name: "Vocabulary", slug: vocab, emoji: "📖", added: 2026-11-11, quiz: true, blurb: "This week's word list: say it in your own words, pick the right meaning, and use it in a sentence." }
 - subject: Math
   slug: math
   emoji: "🧮"

@@ -1,0 +1,232 @@
+---
+title: Vocabulary
+layout: default
+---
+
+{% raw %}
+<div id="app"></div>
+<p class="quiz-nav"><a href="guide.html">Study guide</a> · <a href="../">All subjects</a></p>
+
+<style>
+/* Quiz UI, themed to sit inside the cayman page. Color = topic:
+   Meaning green, Which Meaning? blue, Use It orange. */
+#app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
+#app *{box-sizing:border-box}
+.quiz-nav{text-align:center;margin-top:28px}
+:root{
+  --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
+  --meaning:#15803D; --meaning-soft:#DCFCE7; --multi:#2563EB; --multi-soft:#E1EAFC; --use:#C2410C; --use-soft:#FFE8D6;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#15803D;
+}
+#app, #app button{font-family:inherit}
+#app p{margin:0}
+#app button{color:inherit;cursor:pointer;border:0;background:none}
+#app button:focus-visible{outline:3px solid var(--meaning);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.intro{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.72rem;font-weight:400}
+.t-meaning{background:var(--meaning-soft);color:var(--meaning)} .t-multi{background:var(--multi-soft);color:var(--multi)} .t-use{background:var(--use-soft);color:var(--use)}
+.c-meaning{color:var(--meaning)} .c-multi{color:var(--multi)} .c-use{color:var(--use)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.badge.t-meaning{background:var(--meaning-soft);color:var(--meaning)} .badge.t-multi{background:var(--multi-soft);color:var(--multi)} .badge.t-use{background:var(--use-soft);color:var(--use)}
+.prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.02rem;background:var(--card);min-height:52px;text-align:left}
+.choice:hover{border-color:var(--ink)}
+.choice.t-meaning{background:var(--meaning-soft)} .choice.t-multi{background:var(--multi-soft)} .choice.t-use{background:var(--use-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.meaning{background:var(--meaning-soft)} .result.multi{background:var(--multi-soft)} .result.use{background:var(--use-soft)}
+.result strong{font-weight:800;font-size:1.2rem}
+.answerline{font-weight:600}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+
+<script>
+const BANK=[
+ // MEANING — what does it mean?
+ {t:'meaning',q:"What does apparel mean?",a:"Clothing; what people wear",o:["A tool for cooking","A kind of fruit","A loud noise"],why:"Apparel is clothing: jerseys, jackets, shoes. A store's 'apparel' section sells clothes."},
+ {t:'meaning',q:"What does continuous mean?",a:"Going on without stopping",o:["Happening only once","Very tiny","Moving backward"],why:"Continuous = no breaks. A continuous beep keeps going and going."},
+ {t:'meaning',q:"What does inhibit mean?",a:"To hold back or stop something from happening",o:["To help something grow faster","To live in a place","To cover with a coat"],why:"Paint inhibits rust: it stops rust from forming."},
+ {t:'meaning',q:"What does emerge mean?",a:"To come out into view",o:["To sink out of sight","To fall asleep","To break into pieces"],why:"A turtle emerges from the water: it comes out where you can see it."},
+ {t:'meaning',q:"What does motionless mean?",a:"Not moving at all",o:["Moving very fast","Moving in circles","Full of feelings"],why:"-less means 'without.' Motionless = without motion."},
+ {t:'meaning',q:"What does sheathe mean?",a:"To cover with something that protects",o:["To cut into thin strips","To fold in half","To throw away"],why:"A sheath is a case for a blade. To sheathe something is to put it in a protective cover."},
+ {t:'meaning',q:"What does domesticate mean?",a:"To tame a plant or animal so it lives with people",o:["To travel to another country","To dig up old bones","To make a law"],why:"Early farmers domesticated goats, sheep, and dogs. Domestic means 'of the home.'"},
+ // WHICH MEANING? — multiple-meaning words in context
+ {t:'multi',q:"“Our dog sheds all over the couch every spring.” Shed means…",a:"To lose or drop (hair)",o:["To give off light","To let water run off","To let tears flow"],why:"Dogs lose hair in spring. That's the 'lose or drop' meaning of shed."},
+ {t:'multi',q:"“The twins hatched a plan to surprise their dad.” Hatched means…",a:"Thought up",o:["Came out of an egg","Closed a small door","Covered with a lid"],why:"You can't come out of an egg with a plan! Hatch can also mean think up a plan."},
+ {t:'multi',q:"“Only a minute amount of salt is needed.” Minute means…",a:"Very tiny",o:["Sixty seconds","Very important","Very late"],why:"Here minute is a describing word (say it my-NOOT) meaning very small."},
+ {t:'multi',q:"“The club voted on the motion to meet on Fridays.” Motion means…",a:"An idea a group votes on",o:["Movement","Signaling with your hand","Feeling seasick"],why:"Groups vote on a motion: a suggestion made at a meeting."},
+ {t:'multi',q:"“Grandpa's old coins have appreciated a lot.” Appreciated means…",a:"Gone up in value",o:["Been thankful for","Been cleaned","Been lost"],why:"Coins can't feel thankful. Appreciate also means increase in value."},
+ {t:'multi',q:"“Everyone wore fancy apparel to the museum's evening function.” Function means…",a:"A formal event",o:["A purpose or job","To work properly","A math rule"],why:"People dress up for a function: a formal gathering or ceremony."},
+ {t:'multi',q:"“Beans are a good source of fiber.” Fiber means…",a:"The part of plant food that helps you digest",o:["A thread used to make cloth","Muscle cells","A kind of sugar"],why:"In food, fiber is the part that helps digestion. Beans and whole grains have lots."},
+ // USE IT — word forms and strong sentences
+ {t:'use',q:"Fill in: “The rabbit froze, ___, hoping the hawk wouldn't spot it.”",a:"motionless",o:["motion","continuous","emerged"],why:"Freezing in place = not moving at all = motionless."},
+ {t:'use',q:"Fill in: “Stir the cocoa until the powder ___.”",a:"dissolves",o:["emerges","hatches","sheds"],why:"Powder mixes into the milk until you can't see it: it dissolves."},
+ {t:'use',q:"Fill in: “The driver gave me a ___ so I could switch to the train.”",a:"transfer",o:["function","fiber","motion"],why:"A transfer is a ticket for switching from one bus or train to another."},
+ {t:'use',q:"Fill in: “Shy, ___ kids may need extra time to make friends.”",a:"inhibited",o:["inhibit","domesticate","appreciate"],why:"It describes the kids, so use the describing form: inhibited (held back by shyness)."},
+ {t:'use',q:"Which sentence best SHOWS what continuous means?",a:"The continuous beeping of the alarm went on all night without a break.",o:["The alarm was continuous.","I like continuous.","Continuous is an adjective."],why:"The strong one gives a clue (all night, without a break) so a reader can tell what the word means."},
+ {t:'use',q:"Which sentence best SHOWS what emerge means?",a:"After the storm passed, the sun began to emerge from behind the clouds.",o:["The sun did emerge.","Emerge is a verb.","I emerge."],why:"It's a complete sentence with clues (from behind the clouds) that show 'come into view.'"}
+];
+const NAME={meaning:"Meaning",multi:"Which Meaning?",use:"Use It"};
+const HINT={
+ meaning:"<b>Meaning:</b> say the word out loud and picture one real thing it describes. Then pick the choice that matches that picture.",
+ multi:"<b>Which meaning?</b> read the whole sentence. Try each choice in place of the word. Only one makes sense there.",
+ use:"<b>Use it:</b> does the blank need an action word or a describing word? Read the sentence with your choice and listen for what fits. A strong sentence gives clues that SHOW the meaning."
+};
+const RULE={
+ meaning:"Know each word in your own words, and picture one real example of it.",
+ multi:"Many words have several meanings. The rest of the sentence tells you which one fits.",
+ use:"Match the form to the job (domesticate vs. domesticated, motion vs. motionless), and write sentences whose clues show the meaning."
+};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('vocab-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('vocab-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>(''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <p class="intro muted">Know it, pick the right meaning, use it. Short rounds — about 3 minutes.</p>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick round<small>5 questions · all three topics · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one topic (6 questions)</span>
+    <div class="topics">
+      <button class="topic t-meaning" data-act="start" data-mode="meaning">Meaning<span>in your own words</span></button>
+      <button class="topic t-multi" data-act="start" data-mode="multi">Which Meaning?<span>shed · hatch · minute</span></button>
+      <button class="topic t-use" data-act="start" data-mode="use">Use It<span>word forms · sentences</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How it works</span>
+    <ol class="steps">
+      <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
+      <li><span>Every answer gives you the <b>why</b> — the rule to remember.</span></li>
+      <li><span>In a quick round, <b>name the topic</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Rounds done: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  S={mode,qs:shuffle(pool).slice(0,n),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'answer',miss:0,typeMiss:0,msg:'',opts:shuffle([q.a,...q.o]),pts:0,oops:null});
+  S.max+=S.mode==='mix'?2:1;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  let body='';
+  if(ph==='answer'){
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: which topic was that question?</p>
+    <div class="choices">${['meaning','multi','use'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?2:1;
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Perfect!':S.pts>0?'Nice!':'Got it.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mixed</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function missHint(q){
+  S.miss++;
+  if(S.miss===1)S.msg="Not quite — read it again slowly, out loud in a whisper.";
+  else S.msg=HINT[q.t];
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='answer'&&S.phase==='answer'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.a){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; missHint(q); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look again. Did it ask what a word means (Meaning), which meaning fits a sentence (Which Meaning?), or which word or sentence fits best (Use It)?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  try{localStorage.setItem('hw-done-vocab',new Date().toISOString().slice(0,10))}catch(e){}
+  const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Amazing!":pct>=.6?"Nice work!":"Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another round<small>Same topic, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+{% endraw %}

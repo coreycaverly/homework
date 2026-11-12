@@ -18,6 +18,7 @@ For the practice section ("Pick the stronger answer") in the [study guide](guide
 | 6 | **The math and the why** | Explain It | ACE needs Calculate + Explain: "$1.50 vs $1.40 per notebook, so B costs less." |
 | 7 | **On Friday, my cousin and I went to the Denver Zoo.** | Capitals | First word, day, I, and the place name. "cousin" stays lowercase. |
 | 8 | **Hey, Leo, can you come over on May 2, 2027?** | Commas | After an intro word, around a name you're talking to, and in a date. |
+| 9 | e.g. *I liked* (title) *by* (author) *because it was funny. My favorite part was when ___, which made me laugh out loud.* | Book review | Restate with the title, give one specific scene, explain why. Any version with a real detail works. |
 
 **Coaching tip (point to the checklist, not the mistake):** instead of "you forgot a
 capital," say "check your **C** and **P** again," and let him find it. Praise the
