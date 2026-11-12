@@ -11,10 +11,10 @@ area: math
 <nav class="hub">
   <ul class="subj-list">
   {% for s in me.lessons %}
-    <li class="subj"{% if s.locked %} data-locked{% endif %}>
+    <li class="subj" data-lesson="{{ s.slug }}">
       <a class="subj-link" href="{{ s.slug | append: '/' | relative_url }}">
         <span class="subj-emoji" aria-hidden="true">{{ s.emoji }}</span>
-        <span class="subj-name">{{ s.name }}{% if s.locked %} <span class="lock-badge">🔒 parents</span>{% endif %}</span>
+        <span class="subj-name">{{ s.name }}</span>
       </a>
       <span class="subj-date">added {{ s.added | date: "%b&nbsp;%-d" }}</span>
       {% if s.quiz %}<label class="subj-check"><input type="checkbox" data-quiz="{{ s.slug }}"><span>quiz done</span></label>{% else %}<span class="subj-check guide-only">guide</span>{% endif %}

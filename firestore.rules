@@ -40,6 +40,15 @@ service cloud.firestore {
                     && roleOf(request.resource.data) == roleOf(resource.data);
     }
 
+    // Lesson lock state, toggled by admins on /admin.html.
+    //   config/lessons = { locks: { "<slug>": true|false } }
+    // Public read (the lock list isn't secret; it only hides lessons in the UI);
+    // only admins can change it.
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // Everything else is closed by default.
     match /{document=**} {
       allow read, write: if false;

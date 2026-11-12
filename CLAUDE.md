@@ -74,7 +74,7 @@ _intake/               GITIGNORED: raw worksheet scans + diagnosis notes (never 
 
 **Progress:** each quiz writes `localStorage['hw-done-<slug>']` on finish; the hub and the subject landing read it to show a "done" check (per-device, client-only).
 
-**Locked lessons (parents/admins only):** set `locked: true` on a lesson in `_data/subjects.yml` to withhold it from the learner — it's hidden from nav and every page under `/<slug>/` is gated behind a parent/admin sign-in (same mechanism as answer keys, via `assets/auth.js` + the optional Firebase auth; see FIREBASE-SETUP.md). Omit the flag to make it visible. Like the answer-key gate, this is obscurity for normal use, not repo-level secrecy.
+**Locked lessons (parents/admins only):** a locked lesson is hidden from the learner's nav and every page under `/<slug>/` is gated behind a parent/admin sign-in (same mechanism as answer keys, via `assets/auth.js` + the optional Firebase auth; see FIREBASE-SETUP.md). Two ways to set it: `locked: true` on the lesson in `_data/subjects.yml` (a build-time baseline), **or** an admin toggles it live on `/admin.html` (stored in Firestore `config/lessons`, which overrides the registry — no redeploy; takes effect on the learner's next page load). Like the answer-key gate, this is obscurity for normal use, not repo-level secrecy.
 
 **Hosting:** GitHub Pages, deployed from branch `main`, folder `/ (root)`, classic branch build (no GitHub Action). A push to main redeploys in about 1 minute.
 

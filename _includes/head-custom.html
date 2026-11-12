@@ -66,8 +66,8 @@
 
   /* gating: hide content (answer keys + locked lessons) until a parent/admin is verified */
   html.hw-gated #content { visibility: hidden; }
-  /* locked lessons are hidden in nav by default; auth.js reveals them for parents */
-  html.hw-lock-nav [data-locked] { display: none !important; }
+  /* locked lessons are hidden in nav via a per-slug style injected in <head>
+     (html.hw-lock-nav [data-lesson="…"]); auth.js reveals them for parents. */
   .lock-badge { display: inline-flex; align-items: center; gap: .2rem; font-size: .7rem;
     font-weight: 600; color: #be185d; background: #fbe0ec; border-radius: 99px;
     padding: 1px 8px; white-space: nowrap; vertical-align: middle; }

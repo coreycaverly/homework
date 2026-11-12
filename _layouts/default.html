@@ -12,19 +12,33 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
     <script src="{{ '/assets/firebase-config.js' | relative_url }}"></script>
-    <script>window.HW_LOCKED = [{%- for g in site.data.subjects -%}{%- for s in g.lessons -%}{%- if s.locked -%}"{{ s.slug }}",{%- endif -%}{%- endfor -%}{%- endfor -%}];</script>
+    <script>
+      /* Registry baseline locks + the full lesson list (for the admin toggles). */
+      window.HW_LOCKED = [{%- for g in site.data.subjects -%}{%- for s in g.lessons -%}{%- if s.locked -%}"{{ s.slug }}",{%- endif -%}{%- endfor -%}{%- endfor -%}];
+      window.HW_LESSONS = [{%- for g in site.data.subjects -%}{%- for s in g.lessons -%}{"slug":"{{ s.slug }}","name":{{ s.name | jsonify }},"subject":{{ g.subject | jsonify }}},{%- endfor -%}{%- endfor -%}];
+    </script>
     <script>
       /* When auth is enabled: hide answer-key / locked-lesson content up front
-         (until the viewer's role is verified) and hide locked lessons in nav.
-         No-op (site unchanged) when not configured. */
+         (until role is verified) and hide locked lessons in nav. The effective
+         lock set is the admin-managed cache if present, else the registry
+         baseline. No-op (site unchanged) when auth isn't configured. */
       (function () {
         if (!window.HW_FIREBASE_READY) return;
+        var eff;
+        try { eff = JSON.parse(localStorage.getItem("hw-locks")); } catch (e) {}
+        if (!Array.isArray(eff)) eff = window.HW_LOCKED || [];
+        window.__HW_EFF_LOCKS = eff;
         var seg = location.pathname.replace(/^\/+/, "").split("/")[0] || "";
-        var lockedLesson = (window.HW_LOCKED || []).indexOf(seg) > -1;
-        if (/answer-key/.test(location.pathname) || lockedLesson) {
+        if (/answer-key/.test(location.pathname) || eff.indexOf(seg) > -1) {
           document.documentElement.classList.add("hw-gated");
         }
         document.documentElement.classList.add("hw-lock-nav");
+        var css = eff.map(function (s) {
+          return 'html.hw-lock-nav [data-lesson="' + s + '"]{display:none!important}';
+        }).join("");
+        var st = document.createElement("style");
+        st.id = "hw-lock-style"; st.textContent = css;
+        document.head.appendChild(st);
       })();
     </script>
     <script defer src="{{ '/assets/auth.js' | relative_url }}"></script>

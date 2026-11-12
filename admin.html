@@ -8,6 +8,7 @@ layout: default
 
 <style>
   #admin-app{max-width:640px;margin:1.25rem auto 0}
+  .admin-section{margin-top:1.75rem}
   #userlist{margin-top:10px;display:flex;flex-direction:column;gap:8px}
   .urow{padding:10px 12px;border:1px solid #e2e6f0;border-radius:12px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
   .uinfo{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1 1 180px}
@@ -50,7 +51,10 @@ layout: default
       "<div id='userlist' class='hw-muted'>loading…</div>" +
       '<details class="admin-extra"><summary>Grant by id (optional — for someone who hasn’t signed in yet)</summary>' +
       '<div class="admin-grant"><input id="uid-in" placeholder="user id (uid)" autocapitalize="off" autocorrect="off" spellcheck="false">' +
-      '<button class="hw-btn" id="mk">Make parent</button></div></details>';
+      '<button class="hw-btn" id="mk">Make parent</button></div></details>' +
+      '<h2 class="admin-section">Lessons</h2>' +
+      '<p class="hw-muted">Lock a lesson to hide it from the learner (it stays visible to parents/admins). Changes take effect on their next page load.</p>' +
+      "<div id='lesslist' class='hw-muted'>loading…</div>";
 
     function msg(t){ document.getElementById("msg").textContent = t; }
 
@@ -103,6 +107,35 @@ layout: default
     };
 
     list();
+
+    // ----- lesson locks -----
+    var REG = {}; (window.HW_LOCKED || []).forEach(function (s) { REG[s] = 1; });
+    function effLocked(slug, runtime) { return (slug in runtime) ? !!runtime[slug] : !!REG[slug]; }
+    function renderLessons() {
+      var box = document.getElementById("lesslist");
+      var lessons = window.HW_LESSONS || [];
+      A.getRuntimeLocks().then(function (runtime) {
+        if (!lessons.length) { box.textContent = "No lessons found."; return; }
+        box.classList.remove("hw-muted");
+        box.innerHTML = lessons.map(function (L) {
+          var locked = effLocked(L.slug, runtime);
+          return '<div class="urow"><div class="uinfo"><span class="uname">' + esc(L.name) + "</span>" +
+            '<span class="uemail">' + esc(L.subject) + " · " + esc(L.slug) + "</span></div>" +
+            '<span class="role ' + (locked ? "parent" : "") + '">' + (locked ? "locked" : "visible") + "</span>" +
+            '<button class="hw-btn" data-lock="' + esc(L.slug) + '" data-to="' + (locked ? "0" : "1") + '">' +
+            (locked ? "Unlock" : "Lock") + "</button></div>";
+        }).join("");
+      }).catch(function (e) { box.textContent = "Couldn’t load locks: " + (e && e.message); });
+    }
+    document.getElementById("lesslist").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-lock]"); if (!b) return;
+      var slug = b.getAttribute("data-lock"), to = b.getAttribute("data-to") === "1";
+      b.disabled = true; msg(to ? "Locking…" : "Unlocking…");
+      A.setLessonLock(slug, to)
+        .then(function () { msg((to ? "Locked " : "Unlocked ") + slug + " — takes effect on the learner’s next page load."); renderLessons(); })
+        .catch(function (err) { b.disabled = false; msg("Error: " + (err && err.message)); });
+    });
+    renderLessons();
   }
   render();
 })();

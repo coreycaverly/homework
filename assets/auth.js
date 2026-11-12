@@ -50,7 +50,7 @@
     var o = {};
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
-      if (k === "hw-reloaded") continue; // session-only UI guard, don't sync
+      if (k === "hw-reloaded" || k === "hw-locks") continue; // UI/cache keys, don't sync
       o[k] = localStorage.getItem(k);
     }
     return o;
@@ -182,7 +182,59 @@
     });
   }
 
+  /* ---------- runtime lesson locks (admin-toggleable) ---------- */
+  function effectiveLocks(runtime) {
+    var set = {};
+    (window.HW_LOCKED || []).forEach(function (s) { set[s] = true; });      // registry baseline
+    Object.keys(runtime || {}).forEach(function (s) {                        // admin overrides
+      if (runtime[s]) set[s] = true; else delete set[s];
+    });
+    return Object.keys(set);
+  }
+  function updateLockStyle(eff) {
+    var st = document.getElementById("hw-lock-style");
+    if (!st) { st = document.createElement("style"); st.id = "hw-lock-style"; document.head.appendChild(st); }
+    st.textContent = eff.map(function (s) {
+      return 'html.hw-lock-nav [data-lesson="' + s + '"]{display:none!important}';
+    }).join("");
+  }
+  function applyBadges(eff) {
+    var set = {}; eff.forEach(function (s) { set[s] = 1; });
+    var items = document.querySelectorAll("[data-lesson]");
+    for (var i = 0; i < items.length; i++) {
+      var li = items[i], name = li.querySelector(".subj-name");
+      if (!name) continue;
+      var badge = name.querySelector(".lock-badge");
+      if (set[li.getAttribute("data-lesson")]) {
+        if (!badge) { name.appendChild(document.createTextNode(" "));
+          var b = document.createElement("span"); b.className = "lock-badge"; b.textContent = "🔒 parents"; name.appendChild(b); }
+      } else if (badge) { badge.remove(); }
+    }
+  }
+  function refreshLocks() {
+    return state.db.collection("config").doc("lessons").get().then(function (snap) {
+      var runtime = (snap.exists && snap.data().locks) || {};
+      var eff = effectiveLocks(runtime);
+      try { rawSet("hw-locks", JSON.stringify(eff)); } catch (e) {}
+      window.__HW_EFF_LOCKS = eff;
+      IS_LOCKED_LESSON = eff.indexOf(CUR_SLUG) > -1;
+      IS_GATED = IS_ANSWER_KEY || IS_LOCKED_LESSON;
+      updateLockStyle(eff);
+      applyBadges(eff);
+      gate(); // re-apply page gate with fresh locks + current role
+      return eff;
+    }).catch(function (e) { console.warn("[hwAuth] locks:", e && e.message); });
+  }
+
   /* ---------- admin helpers (used by /admin.html) ---------- */
+  state.getRuntimeLocks = function () {
+    return state.db.collection("config").doc("lessons").get()
+      .then(function (s) { return (s.exists && s.data().locks) || {}; });
+  };
+  state.setLessonLock = function (slug, locked) {
+    var m = { locks: {} }; m.locks[slug] = !!locked;
+    return state.db.collection("config").doc("lessons").set(m, { merge: true });
+  };
   state.grantParent = function (uid) {
     return state.db.collection("users").doc(uid).set({ role: "parent" }, { merge: true });
   };
@@ -204,6 +256,7 @@
       state.db = firebase.firestore();
       installMirror();
       firebase.auth().onAuthStateChanged(onUser);
+      refreshLocks(); // load admin-set locks (works signed-out too; public read)
       state.ready = true;
       renderButton();
     }).catch(function (e) {
