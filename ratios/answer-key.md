@@ -16,6 +16,9 @@ For the practice section ("Name it, then solve it") in the [study guide](guide.h
 | 4 | **$7.25** | Rate | 58 ÷ 8 = $7.25 per hour. |
 | 5 | **$2.00** | Unit Rate | $6 ÷ 3 lb = $2.00 per pound. |
 | 6 | **4 lb for $8** ($2.00/lb vs $2.50/lb) | Unit Rate | Lower price per pound wins. |
+| 7 | **84 inches** | Conversion | 7 × 12 = 84. Smaller unit → bigger number. |
+| 8 | **4.5 feet** | Conversion | 54 ÷ 12 = 4.5. Bigger unit → smaller number. |
+| 9 | **$3** | Unit price + conversion | 8 oz is half of 16 oz (1 lb), so half of $6. |
 
 **Coaching tip:** When he's stuck, don't give the number. Ask "is this a ratio, a rate,
 or a per-one problem?" and "what should the answer be labeled with?" Let him name the

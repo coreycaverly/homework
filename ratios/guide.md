@@ -64,6 +64,42 @@ pound** (or per item). **Divide price ÷ amount.**
 **Watch the units.** "How many seconds?" means your answer must be in seconds — convert
 minutes to seconds (× 60) if you worked in minutes.
 
+## Converting units with ratios
+
+A conversion fact **is a ratio**: 12 inches : 1 foot. So you can use a ratio table
+(or a unit rate) to switch units.
+
+| Fact | Ratio |
+| --- | --- |
+| 1 foot = **12** inches · 1 yard = **3** feet · 1 mile = **5,280** feet | length (customary) |
+| 1 meter = **100** centimeters · 1 kilometer = **1,000** meters | length (metric) |
+| 1 pound = **16** ounces · 1 kilogram = **1,000** grams | weight / mass |
+| 1 inch ≈ **2.54** cm · 1 meter ≈ **3.28** feet | between systems |
+
+| feet | 1 | 5 | 7 |
+| --- | --- | --- | --- |
+| **inches** | 12 | 60 | **84** |
+
+> 7 feet = 7 × 12 = **84 inches**. Going the other way, 54 inches ÷ 12 = **4.5 feet**.
+
+### Trap: multiply or divide? Do the size check
+
+**Bigger unit → smaller number. Smaller unit → bigger number.**
+Converting 3 meters to centimeters? Centimeters are tiny, so you need **more** of them:
+3 × 100 = **300 cm**. If your answer got smaller, you divided by mistake.
+
+### Unit price with a unit conversion: convert FIRST, then divide
+
+To compare prices in different units, put them in the **same unit** first.
+
+| Deal | Same unit | Per ounce |
+| --- | --- | --- |
+| 1 lb of trail mix for $8 | 1 lb = 16 oz → $8 ÷ 16 | **$0.50** |
+| 12 oz for $5.40 | already ounces → $5.40 ÷ 12 | **$0.45** ← cheaper |
+
+> **Say it back:** "I changed pounds to ounces so both are per ounce. $0.45 is less than
+> $0.50, so the 12-ounce bag is the better deal."
+
 ## Double number line
 
 Line up the two amounts and move them together. Whatever you multiply the top by,
@@ -96,6 +132,9 @@ Say "ratio / rate / unit rate" first, then answer.
 4. A cashier earns $58 in 8 hours. How much per hour? \_\_\_\_\_\_\_\_
 5. 3 lb of oranges cost $6. What is the price per pound? \_\_\_\_\_\_\_\_
 6. Which is cheaper per pound: 2 lb for $5, or 4 lb for $8? \_\_\_\_\_\_\_\_
+7. How many inches are in 7 feet? \_\_\_\_\_\_\_\_
+8. A ribbon is 54 inches long. How many feet is that? \_\_\_\_\_\_\_\_
+9. Cheese costs $6 per pound. What do 8 ounces cost? \_\_\_\_\_\_\_\_
 
 ## Write a strong answer (ACE)
 

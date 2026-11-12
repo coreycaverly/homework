@@ -96,13 +96,19 @@ const BANK=[
  {t:'unit',q:"Which is cheaper per pound: 2 lb for $5, or 4 lb for $8?",a:"4 lb for $8",o:["2 lb for $5","They're equal","Can't tell"],why:"$5÷2 = $2.50 per pound vs $8÷4 = $2.00 per pound. The 4-lb bag is cheaper per pound."},
  {t:'unit',q:"A store sells 6 apples for $3. What is the price for one apple?",a:"$0.50",o:["$2","$3","$6"],why:"$3 ÷ 6 = $0.50 per apple (the unit price)."},
  {t:'unit',q:"Mai uses 10 oz of cheese for 4 pizzas. How much cheese per pizza?",a:"2.5 oz",o:["10 oz","40 oz","4 oz"],why:"10 ÷ 4 = 2.5 oz of cheese per pizza (the unit rate)."},
- {t:'unit',q:"At 2.5 oz of cheese per pizza, how much for 15 pizzas?",a:"37.5 oz",o:["17.5 oz","6 oz","25 oz"],why:"15 × 2.5 = 37.5 oz."}
+ {t:'unit',q:"At 2.5 oz of cheese per pizza, how much for 15 pizzas?",a:"37.5 oz",o:["17.5 oz","6 oz","25 oz"],why:"15 × 2.5 = 37.5 oz."},
+ {t:'unit',q:"There are 12 inches in 1 foot. How many inches are in 7 feet?",a:"84 inches",o:["19 inches","7 inches","12 inches"],why:"Feet are bigger, so you need MORE inches: 7 × 12 = 84 inches."},
+ {t:'unit',q:"A ribbon is 54 inches long. How many feet is that? (12 in = 1 ft)",a:"4.5 feet",o:["648 feet","42 feet","66 feet"],why:"Feet are bigger, so the number gets SMALLER: 54 ÷ 12 = 4.5 feet."},
+ {t:'unit',q:"Size check: you convert 3 meters into centimeters. Your answer should be…",a:"A bigger number, because centimeters are smaller units",o:["A smaller number, because centimeters are smaller units","The same number","Impossible to tell"],why:"Smaller unit → more of them. 3 m = 3 × 100 = 300 cm."},
+ {t:'unit',q:"Cheese costs $6 per pound. What do 8 ounces cost? (16 oz = 1 lb)",a:"$3",o:["$48","$12","$0.75"],why:"8 oz is half of 16 oz (one pound), so it costs half of $6: $3."},
+ {t:'unit',q:"Better deal: 1 pound of trail mix for $8, or 12 ounces for $5.40? (16 oz = 1 lb)",a:"12 oz for $5.40 ($0.45 per oz vs. $0.50)",o:["1 lb for $8","They cost the same","You can't compare different units"],why:"Convert first: $8 ÷ 16 oz = $0.50 per oz; $5.40 ÷ 12 oz = $0.45 per oz. Lower wins."},
+ {t:'unit',q:"A tower is 400 meters tall. About how many feet is that? (1 m ≈ 3.28 ft)",a:"About 1,312 feet",o:["About 122 feet","About 403 feet","About 400 feet"],why:"Feet are smaller than meters, so the number gets bigger: 400 × 3.28 ≈ 1,312 feet."}
 ];
 const NAME={ratio:"Ratios",rate:"Rates",unit:"Unit Rate"};
 const HINT={
  ratio:"<b>Ratios:</b> a ratio compares two amounts, and order matters (yellow : red). To make an equivalent ratio, multiply or divide BOTH parts by the same number.",
  rate:"<b>Rates:</b> a rate is an amount 'per' something. Divide to find the rate for ONE (per mile, per hour), then multiply up.",
- unit:"<b>Unit rate / price:</b> divide the total by the amount to get the cost (or amount) for ONE. For 'better deal', the LOWER price per pound wins."
+ unit:"<b>Unit rate / price:</b> divide the total by the amount to get the cost (or amount) for ONE. For 'better deal', the LOWER price per pound wins. Converting units? A bigger unit means a smaller number. Get both prices into the SAME unit first."
 };
 const RULE={
  ratio:"A ratio compares two amounts in order. Make equivalent ratios by multiplying or dividing both parts by the same number.",
@@ -118,6 +124,7 @@ BANK.push(
  {t:'explain',q:"Which answer is STRONGER? Q: is 6:8 equivalent to 3:4?",a:"Yes. 6:8 is equivalent to 3:4, because dividing both 6 and 8 by 2 gives 3 and 4.",o:["Yes.", "Yes, divide.", "6:8 = 3:4."],why:"ACE: restate + answer, show the ÷2 step, and explain why it stays equal."},
  {t:'explain',q:"Which answer uses LABELS, not a bare number? Q: 3 juice boxes cost $3.60 — price per box?",a:"Each juice box costs $1.20, because $3.60 ÷ 3 = $1.20 per box.",o:["1.2.", "$3.60 ÷ 3.", "It's 1.20."],why:"Say the units — dollars per box — so the number means something."},
  {t:'explain',q:"Jordan says 4 tacos cost $10, so 6 cost $12 (he added 2). Real cost + why?",a:"$15, because each taco is $10 ÷ 4 = $2.50, so 6 × $2.50 = $15.",o:["$12 — add 2 since 6 is 2 more.", "$15.", "$13.50."],why:"Ratios multiply, not add. Unit rate $2.50 × 6 = $15 — and show that work."},
+ {t:'explain',q:"Which answer is STRONGER? Q: How many feet are in 30 yards? (3 ft = 1 yd)",a:"There are 90 feet in 30 yards, because each yard is 3 feet and 30 × 3 = 90.",o:["90.","30 × 3.","It's 90."],why:"ACE: restate the question with units, show the × 3 step, and explain why (each yard is 3 feet)."},
  {t:'explain',q:"A strong answer to a rate problem STARTS by…",a:"Restating the question in a complete sentence",o:["Writing “Because…”", "Giving just the number", "Listing the steps only"],why:"Say ‘The unit rate is…’ first. Never open with ‘Because’ or a lone number."}
 );
 const app=document.getElementById('app');
