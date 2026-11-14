@@ -19,7 +19,7 @@ const admin = require("firebase-admin");
 const KEY_PATH = process.env.GOOGLE_APPLICATION_CREDENTIALS
   || path.join(__dirname, "service-account.json");
 const OLLAMA_URL = (process.env.OLLAMA_URL || "http://127.0.0.1:11434").replace(/\/$/, "");
-const MODEL = process.env.OLLAMA_MODEL || "qwen3.6:35b-mlx";
+const MODEL = process.env.OLLAMA_MODEL || "gemma4:12b-mlx";
 const GEN_TIMEOUT_MS = Number(process.env.GEN_TIMEOUT_MS || 180000);
 const MAX_INPUT = Number(process.env.MAX_INPUT_CHARS || 4000);
 
@@ -73,7 +73,9 @@ async function runModel(prompt) {
     const res = await fetch(`${OLLAMA_URL}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: MODEL, prompt, stream: false }),
+      // think:false → Gemma/Qwen "thinking" models answer directly instead of
+      // spending the token budget on hidden reasoning (which leaves response empty).
+      body: JSON.stringify({ model: MODEL, prompt, stream: false, think: false, options: { num_predict: 512 } }),
       signal: ctrl.signal,
     });
     if (!res.ok) throw new Error(`Ollama HTTP ${res.status}: ${await res.text()}`);
