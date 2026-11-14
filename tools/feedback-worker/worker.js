@@ -44,7 +44,9 @@ function modelFor(kind) {
 // Math needs to REASON to catch wrong answers, so thinking is on with a big enough
 // token budget that it finishes thinking and still emits the coaching.
 const KIND_OPTS = {
-  // (per-kind generation tweaks; writing + math all answer directly now)
+  // Math reasons first to catch wrong answers; big token budget so it finishes
+  // thinking AND still writes the feedback (small caps make it come back empty).
+  math: { think: true, num_predict: 8000 },
 };
 function optsFor(kind) {
   return KIND_OPTS[kind] || { think: false, num_predict: 512 };
@@ -89,7 +91,24 @@ const FOCUS = {
     "the correct answer, and never show worked-out numbers (no lines like '40 - 10 = 30') — the thinking " +
     "stays theirs.",
 };
+// Math gets its own lean, self-contained prompt (the writing rules make the model
+// over-think and empty out, and we need it to actually verify the math).
+const COACH_RULES_MATH =
+  "You are a warm, encouraging math coach for an 11-year-old student. " +
+  "FIRST, silently work the problem out yourself and check whether the student's answer and each step are correct. " +
+  "THEN write short feedback in simple words a 6th grader understands, under 150 words, in this shape: " +
+  "(1) ONE specific thing they did well. " +
+  "(2) A dash list of 2-3 friendly tips to improve their EXPLANATION — restate the question, show each step with a label and units, explain why. " +
+  "(3) If their answer OR any step is actually wrong, add a gentle line naming the exact step to re-check and saying that number doesn't look right. " +
+  "If everything is correct, say so warmly and do NOT invent an error. " +
+  "(4) ONE encouraging closing sentence. " +
+  "HARD RULES: never tell them the correct answer; never show a corrected calculation or any worked-out numbers " +
+  "(no lines like '40 - 10 = 30'); never say 'wrong'; never be harsh.";
+
 function buildPrompt(kind, input) {
+  if (kind === "math") {
+    return `${COACH_RULES_MATH}\n\nHere is the student's math explanation:\n"""\n${input}\n"""\n\nYour feedback:`;
+  }
   const focus = FOCUS[kind] || FOCUS.paragraph;
   return `${COACH_RULES}\n\n${focus}\n\nHere is what the student wrote:\n"""\n${input}\n"""\n\nYour feedback:`;
 }
