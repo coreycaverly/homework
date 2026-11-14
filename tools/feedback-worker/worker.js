@@ -44,8 +44,7 @@ function modelFor(kind) {
 // Math needs to REASON to catch wrong answers, so thinking is on with a big enough
 // token budget that it finishes thinking and still emits the coaching.
 const KIND_OPTS = {
-  // gpt-oss reasons compactly and still emits the answer within this budget.
-  math: { think: true, num_predict: 1500 },
+  // (per-kind generation tweaks; writing + math all answer directly now)
 };
 function optsFor(kind) {
   return KIND_OPTS[kind] || { think: false, num_predict: 512 };
@@ -83,13 +82,12 @@ const FOCUS = {
     "Focus your suggestions on: restating the question in the first sentence; covering WHAT happened, WHEN, WHERE, " +
     "and WHY it mattered; using their own words (not copied); and complete sentences.",
   math:
-    "The student is EXPLAINING a math answer. First work the problem yourself SILENTLY to check " +
-    "whether their answer is right — but keep that work to yourself. Then coach their EXPLANATION: " +
-    "suggest they restate the question in a sentence, show each of THEIR OWN steps with labels and units " +
-    "(not a bare number), and explain WHY. CRITICAL: do NOT solve it for them in your feedback — never " +
-    "write the correct answer, a corrected calculation, or the worked-out steps (no lines like '40 - 10 = 30'). " +
-    "If a number looks wrong, gently say it doesn't look right, name the exact step to re-check, and stop " +
-    "there so they find it themselves.",
+    "The student is EXPLAINING a math answer. Coach the QUALITY of their EXPLANATION — do NOT grade, " +
+    "solve, or re-calculate the problem. Suggest they: restate the question in a sentence; show each of " +
+    "THEIR OWN steps with labels and units (not a bare number); and explain WHY their answer makes sense. " +
+    "Add a gentle reminder to slow down and re-check their own math. CRITICAL: never solve it, never write " +
+    "the correct answer, and never show worked-out numbers (no lines like '40 - 10 = 30') — the thinking " +
+    "stays theirs.",
 };
 function buildPrompt(kind, input) {
   const focus = FOCUS[kind] || FOCUS.paragraph;

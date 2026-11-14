@@ -5,6 +5,6 @@
     "paragraph": "gemma4:12b-mlx",
     "paraphrase": "gemma4:12b-mlx",
     "research": "gemma4:12b-mlx",
-    "math": "gpt-oss:20b"
+    "math": "gemma4:12b-mlx"
   }
 }
