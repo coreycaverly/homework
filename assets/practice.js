@@ -76,11 +76,12 @@
   }
 
   function norm(s) {
-    return (s || "").toString().toLowerCase()
+    return (s || "").toString().toLowerCase().trim()
       .replace(/−/g, "-").replace(/½/g, ".5").replace(/¼/g, ".25").replace(/¾/g, ".75")
       .replace(/[$%]/g, "")
       .replace(/\b(square units|units|km|cm|mm|quadrant)\b/g, "")
-      .replace(/[a-z]\s*=\s*/g, "")
+      .replace(/^(the|a|an)\s+/, "")        // leading article: "the mean" ↔ "mean"
+      .replace(/[a-z]\s*=\s*/g, "")         // "x = 6" ↔ "6"
       .replace(/[,\s]/g, "");
   }
   function isCorrect(his, key) {
