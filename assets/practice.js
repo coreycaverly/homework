@@ -18,6 +18,17 @@
   while (el) { if (el.tagName === "OL") { ol = el; break; } el = el.previousElementSibling; }
   if (!ol) return;
 
+  // Shared problem context: a <p> right before the list (e.g. "Data: 5, 8, 8, 9, 20.").
+  // Keep it only if it carries data (has a digit) so plain instruction text is skipped.
+  var CONTEXT = "";
+  (function () {
+    var pv = ol.previousElementSibling;
+    if (pv && pv.tagName === "P") {
+      var t = (pv.textContent || "").replace(/\s+/g, " ").trim();
+      if (/\d/.test(t) && t.length < 160) CONTEXT = t;
+    }
+  })();
+
   injectStyles();
   var items = ol.querySelectorAll(":scope > li");
   for (var i = 0; i < items.length; i++) enhance(items[i], i);
@@ -60,7 +71,7 @@
     function doFeedback(btn) {
       if (btn) btn.disabled = true;
       res.className = "hw-pr-res"; res.innerHTML = '<span class="hw-pr-spin" aria-hidden="true"></span> coach is thinking…';
-      sendCoach(qtext(li), inp.value.trim(), res, function () { if (btn) btn.disabled = false; });
+      sendCoach(qtext(li), inp.value.trim(), res, function () { if (btn) btn.disabled = false; }, hasAns ? ANSWERS[i] : null);
     }
   }
 
@@ -89,12 +100,18 @@
     if (n > 60) return cb(null);
     setTimeout(function () { ready(cb, n + 1); }, 250);
   }
-  function sendCoach(question, answer, res, done) {
+  function sendCoach(question, answer, res, done, knownAnswer) {
     if (!window.HW_FIREBASE_READY) { fail(res, "feedback isn't set up"); return done && done(); }
     ready(function (A) {
       if (!A) { fail(res, "coach unavailable"); return done && done(); }
       if (!A.user) { res.className = "hw-pr-res"; res.innerHTML = '<button class="hw-pr-link" data-hw="signin">sign in</button> for feedback'; return done && done(); }
-      var input = "Practice question: " + question + "\n\nMy answer:\n" + (answer || "(left blank)");
+      var parts = [];
+      if (CONTEXT) parts.push("Problem context: " + CONTEXT);
+      parts.push("Practice question: " + question);
+      if (knownAnswer != null && knownAnswer !== "")
+        parts.push("The correct answer is: " + knownAnswer + "  (ground truth — use it to judge the student; do NOT reveal it to them)");
+      parts.push("My answer:\n" + (answer || "(left blank)"));
+      var input = parts.join("\n\n");
       var ref, un;
       var to = setTimeout(function () { if (un) un(); if (ref) ref.delete().catch(function () {}); fail(res, "coach offline — try later"); done && done(); }, 150000);
       A.db.collection("feedbackRequests").add({
