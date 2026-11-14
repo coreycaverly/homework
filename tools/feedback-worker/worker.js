@@ -88,10 +88,10 @@ const seen = new Set();
 function enqueue(doc) {
   if (seen.has(doc.id)) return;
   seen.add(doc.id);
-  busy = busy.then(() => process(doc.ref)).catch((e) => console.error("[worker]", e));
+  busy = busy.then(() => handleRequest(doc.ref)).catch((e) => console.error("[worker]", e));
 }
 
-async function process(ref) {
+async function handleRequest(ref) {
   // Claim atomically: only proceed if still pending.
   const claimed = await db.runTransaction(async (tx) => {
     const snap = await tx.get(ref);
