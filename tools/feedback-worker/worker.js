@@ -83,11 +83,13 @@ const FOCUS = {
     "Focus your suggestions on: restating the question in the first sentence; covering WHAT happened, WHEN, WHERE, " +
     "and WHY it mattered; using their own words (not copied); and complete sentences.",
   math:
-    "The student is EXPLAINING a math answer (not just giving a number). First work the " +
-    "problem yourself to check it. Focus your suggestions on: restating the question in a sentence; " +
-    "showing the steps with LABELS and units (not a bare number); and explaining WHY the answer is right. " +
-    "IMPORTANT: if a number or the answer is actually wrong, gently say that number doesn't look right and " +
-    "point them to the exact step to re-check — but NEVER tell them the correct answer; let them find it.",
+    "The student is EXPLAINING a math answer. First work the problem yourself SILENTLY to check " +
+    "whether their answer is right — but keep that work to yourself. Then coach their EXPLANATION: " +
+    "suggest they restate the question in a sentence, show each of THEIR OWN steps with labels and units " +
+    "(not a bare number), and explain WHY. CRITICAL: do NOT solve it for them in your feedback — never " +
+    "write the correct answer, a corrected calculation, or the worked-out steps (no lines like '40 - 10 = 30'). " +
+    "If a number looks wrong, gently say it doesn't look right, name the exact step to re-check, and stop " +
+    "there so they find it themselves.",
 };
 function buildPrompt(kind, input) {
   const focus = FOCUS[kind] || FOCUS.paragraph;
