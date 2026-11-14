@@ -74,10 +74,12 @@ different model, mapped in `models.json`:
 ```json
 { "default": "gemma4:12b-mlx",
   "byKind": { "paragraph": "gemma4:12b-mlx", "paraphrase": "gemma4:12b-mlx",
-              "research": "gemma4:12b-mlx", "math": "qwen3.6:35b-mlx" } }
+              "research": "gemma4:12b-mlx", "math": "gemma4:12b-mlx" } }
 ```
 Add a kind here (and a matching `FOCUS` prompt in `worker.js`) to support a new feedback
-type with its own model — e.g. point `math` at a math-tuned model. Setting `OLLAMA_MODEL`
+type with its own model. Generation behavior is per-kind too (`KIND_OPTS` in `worker.js`):
+writing kinds use `think:false` (direct, fast); **math uses `think:true`** with a larger
+token budget so the model reasons through the problem and catches wrong answers. Setting `OLLAMA_MODEL`
 in the environment overrides **all** kinds (handy for testing); leave it unset to use the
 per-kind map, so **don't set `OLLAMA_MODEL` in the launchd plist** if you want routing.
 

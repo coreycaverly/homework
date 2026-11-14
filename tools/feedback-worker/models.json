@@ -5,6 +5,6 @@
     "paragraph": "gemma4:12b-mlx",
     "paraphrase": "gemma4:12b-mlx",
     "research": "gemma4:12b-mlx",
-    "math": "qwen3.6:35b-mlx"
+    "math": "gemma4:12b-mlx"
   }
 }

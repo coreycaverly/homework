@@ -40,6 +40,15 @@ catch (e) { console.warn("[worker] no models.json — using default model only")
 function modelFor(kind) {
   return MODEL_OVERRIDE || (MODEL_MAP.byKind && MODEL_MAP.byKind[kind]) || MODEL_MAP.default;
 }
+// Per-kind generation options. Writing kinds answer directly (think:false, fast).
+// Math needs to REASON to catch wrong answers, so thinking is on with a big enough
+// token budget that it finishes thinking and still emits the coaching.
+const KIND_OPTS = {
+  math: { think: true, num_predict: 3000 },
+};
+function optsFor(kind) {
+  return KIND_OPTS[kind] || { think: false, num_predict: 512 };
+}
 
 // ---- coaching prompts (kid-appropriate; coach, don't rewrite) ----
 const COACH_RULES =
@@ -73,9 +82,11 @@ const FOCUS = {
     "Focus your suggestions on: restating the question in the first sentence; covering WHAT happened, WHEN, WHERE, " +
     "and WHY it mattered; using their own words (not copied); and complete sentences.",
   math:
-    "The student is EXPLAINING a math answer (not just giving a number). " +
-    "Focus your suggestions on: restating the question in a sentence; showing the steps with LABELS and units (not a bare number); " +
-    "and explaining WHY the answer is right. If a step looks off, gently point them to recheck it — do NOT give them the final answer.",
+    "The student is EXPLAINING a math answer (not just giving a number). First work the " +
+    "problem yourself to check it. Focus your suggestions on: restating the question in a sentence; " +
+    "showing the steps with LABELS and units (not a bare number); and explaining WHY the answer is right. " +
+    "IMPORTANT: if a number or the answer is actually wrong, gently say that number doesn't look right and " +
+    "point them to the exact step to re-check — but NEVER tell them the correct answer; let them find it.",
 };
 function buildPrompt(kind, input) {
   const focus = FOCUS[kind] || FOCUS.paragraph;
@@ -83,16 +94,17 @@ function buildPrompt(kind, input) {
 }
 
 // ---- Ollama call ----
-async function runModel(prompt, model) {
+async function runModel(prompt, model, opts) {
+  opts = opts || { think: false, num_predict: 512 };
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), GEN_TIMEOUT_MS);
   try {
     const res = await fetch(`${OLLAMA_URL}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // think:false → Gemma/Qwen "thinking" models answer directly instead of
-      // spending the token budget on hidden reasoning (which leaves response empty).
-      body: JSON.stringify({ model, prompt, stream: false, think: false, options: { num_predict: 512 } }),
+      // think is per-kind: false for writing (direct, fast); true for math (reason
+      // first so wrong answers get caught), with enough num_predict to still answer.
+      body: JSON.stringify({ model, prompt, stream: false, think: !!opts.think, options: { num_predict: opts.num_predict || 512 } }),
       signal: ctrl.signal,
     });
     if (!res.ok) throw new Error(`Ollama HTTP ${res.status}: ${await res.text()}`);
@@ -135,7 +147,7 @@ async function handleRequest(ref) {
     const model = modelFor(kind);
     console.log(`[worker] ${id} (${kind}) → ${model}`);
     const started = Date.now();
-    const response = await runModel(buildPrompt(kind, input), model);
+    const response = await runModel(buildPrompt(kind, input), model, optsFor(kind));
     console.log(`[worker] ${id} done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
     await ref.update({
       status: "done",
