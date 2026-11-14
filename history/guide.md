@@ -90,12 +90,8 @@ Short answers below. One is already complete (a trick!). Write the fix.
 7. **\[Check it\]** You spot *"INSERT WORKS CITED HERE"* in your doc. What does it mean? \_\_\_\_\_\_\_\_
 8. **\[Details\]** Which answers *"how did it matter"*: *"The bridge was long"* or *"The bridge cut the trip to the hospital from an hour to 10 minutes"*? \_\_\_\_\_\_\_\_
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="research"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+<div class="hw-practice" data-kind="research"></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## Cheat card (cut out and keep by the homework)
 

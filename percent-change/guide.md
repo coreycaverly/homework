@@ -57,13 +57,6 @@ thinking the way every teacher wants — with **ACE**:
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
-
 ## Cheat card
 
 |  | Do this |
@@ -76,8 +69,13 @@ Pick a practice question above and type your answer. A coach gives you friendly 
 
 ## Practice
 
-1. 30% of 90?   2. A $60 jacket is 20% off — final price?   3. A $25 bill with 8% tax — total?
+1. 30% of 90?
+2. A $60 jacket is 20% off — final price?
+3. A $25 bill with 8% tax — total?
 4. A plant grows from 40 cm to 50 cm — what percent increase?
+
+<div class="hw-practice" data-kind="math" data-answers='["27", "$48", "$27", "25%"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 

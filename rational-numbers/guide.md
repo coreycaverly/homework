@@ -65,13 +65,6 @@ thinking the way every teacher wants — with **ACE**:
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
-
 ## Cheat card
 
 |  | Remember |
@@ -84,8 +77,14 @@ Pick a practice question above and type your answer. A coach gives you friendly 
 
 ## Practice
 
-1. Which is less, −6 or −2?   2. |−9| = ?   3. The opposite of −4?
-4. Order: 0, −2, 3, −5.   5. Which quadrant is (4, −1)?
+1. Which is less, −6 or −2?
+2. |−9| = ?
+3. The opposite of −4?
+4. Order: 0, −2, 3, −5.
+5. Which quadrant is (4, −1)?
+
+<div class="hw-practice" data-kind="math" data-answers='["−6", "9", "4", "−5, −2, 0, 3", "Quadrant IV"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 

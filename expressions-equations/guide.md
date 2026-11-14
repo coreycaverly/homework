@@ -68,13 +68,6 @@ thinking the way every teacher wants — with **ACE**:
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
-
 ## Cheat card
 
 |  | Do this |
@@ -87,8 +80,15 @@ Pick a practice question above and type your answer. A coach gives you friendly 
 
 ## Practice
 
-1. 2⁴ = ?   2. Evaluate 5n − 3 when n = 4.   3. Simplify 2x + 7x.   4. Distribute 3(n + 5).
-5. Solve x + 9 = 15.   6. Solve 6x = 42.
+1. 2⁴ = ?
+2. Evaluate 5n − 3 when n = 4.
+3. Simplify 2x + 7x.
+4. Distribute 3(n + 5).
+5. Solve x + 9 = 15.
+6. Solve 6x = 42.
+
+<div class="hw-practice" data-kind="math" data-answers='["16", "17", "9x", "3n + 15", "x = 6", "x = 7"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 

@@ -136,6 +136,9 @@ Say "ratio / rate / unit rate" first, then answer.
 8. A ribbon is 54 inches long. How many feet is that? \_\_\_\_\_\_\_\_
 9. Cheese costs $6 per pound. What do 8 ounces cost? \_\_\_\_\_\_\_\_
 
+<div class="hw-practice" data-kind="math"></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
+
 ## Write a strong answer (ACE)
 
 Right answers still lose points when they're a bare number or a fragment. Show your
@@ -155,13 +158,6 @@ thinking the way every teacher wants — with **ACE**:
 
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
-
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
 
 ## Cheat card (cut out and keep by the homework)
 

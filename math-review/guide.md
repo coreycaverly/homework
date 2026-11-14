@@ -59,12 +59,8 @@ thinking the way every teacher wants — with **ACE**:
 7. Median of 4, 9, 2, 9, 6.
 8. A $50 game is 30% off — final price?
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+<div class="hw-practice" data-kind="math" data-answers='["30", "20", "1½", "x = 7", "60 km", "−7, −3, 0, 2", "6", "$35"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 

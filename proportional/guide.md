@@ -60,13 +60,6 @@ thinking the way every teacher wants — with **ACE**:
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
-
 ## Cheat card
 
 |  | Do this |
@@ -78,8 +71,13 @@ Pick a practice question above and type your answer. A coach gives you friendly 
 
 ## Practice
 
-1. A table: 2 → 10, 3 → 15, 5 → 25. What is k?   2. With that k, what is y when x = 8?
-3. Is y = 4x + 1 proportional? Why?   4. A map scale is 1 cm = 20 km. How far is 4 cm?
+1. A table: 2 → 10, 3 → 15, 5 → 25. What is k?
+2. With that k, what is y when x = 8?
+3. Is y = 4x + 1 proportional? Why?
+4. A map scale is 1 cm = 20 km. How far is 4 cm?
+
+<div class="hw-practice" data-kind="math" data-answers='["k = 5", "y = 40", "No", "80 km"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 

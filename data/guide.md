@@ -61,13 +61,6 @@ thinking the way every teacher wants — with **ACE**:
 > **Then check it:** reread the question and make sure you answered **what it actually
 > asked** — not just the first number you found.
 
-## Try it: get feedback
-
-Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
-
 ## Cheat card
 
 |  | Do this |
@@ -81,8 +74,15 @@ Pick a practice question above and type your answer. A coach gives you friendly 
 ## Practice
 
 Data: 5, 8, 8, 9, 20.
-1. Mean?   2. Median?   3. Mode?   4. Range?
+
+1. Mean?
+2. Median?
+3. Mode?
+4. Range?
 5. Which measure of center does the 20 pull up the most — mean or median?
+
+<div class="hw-practice" data-kind="math" data-answers='["10", "8", "8", "15", "The mean"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## STOP & CHECK
 
