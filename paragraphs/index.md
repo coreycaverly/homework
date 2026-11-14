@@ -41,3 +41,6 @@ slug: paragraphs
     if(done){el.textContent='✓ Done '+done;el.classList.add('is-done');} }catch(e){}
 })();
 </script>
+
+<div id="hw-coach" data-kind="paragraph"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>

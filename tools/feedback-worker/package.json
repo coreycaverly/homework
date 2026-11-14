@@ -1,0 +1,14 @@
+{
+  "name": "homework-feedback-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Watches Firestore for writing-feedback requests and answers them with a local Ollama model (runs on Dune).",
+  "type": "commonjs",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node worker.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}

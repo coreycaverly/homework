@@ -50,6 +50,22 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Writing-feedback queue. The site writes a request; the local worker on
+    // "Dune" (Firebase Admin SDK, which bypasses these rules) runs the model and
+    // writes the response back.
+    //   feedbackRequests/{id} = { uid, kind, input, status, response?, model?, createdAt }
+    match /feedbackRequests/{id} {
+      // A signed-in user may create ONLY their own request, as "pending", with no response.
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.status == 'pending'
+                    && !('response' in request.resource.data);
+      // They may read and delete only their own request (delete = cleanup after reading).
+      allow read, delete: if request.auth != null && request.auth.uid == resource.data.uid;
+      // Only the worker (Admin SDK) updates — it fills in the response.
+      allow update: if false;
+    }
+
     // Everything else is closed by default.
     match /{document=**} {
       allow read, write: if false;

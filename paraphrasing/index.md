@@ -41,3 +41,6 @@ slug: paraphrasing
     if(done){el.textContent='✓ Done '+done;el.classList.add('is-done');} }catch(e){}
 })();
 </script>
+
+<div id="hw-coach" data-kind="paraphrase"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>

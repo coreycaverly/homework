@@ -1,0 +1,5 @@
+# Secrets and local junk — never commit these.
+service-account.json
+*.key.json
+.env
+node_modules/

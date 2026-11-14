@@ -74,6 +74,8 @@ _intake/               GITIGNORED: raw worksheet scans + diagnosis notes (never 
 
 **Progress:** each quiz writes `localStorage['hw-done-<slug>']` on finish; the hub and the subject landing read it to show a "done" check (per-device, client-only).
 
+**Writing feedback (local AI coach):** the Paraphrasing and Paragraph Writing landings have a "Get writing feedback" box (`assets/feedback.js`, container `#hw-coach`). It writes the learner's text to Firestore `feedbackRequests` (gated by rules); a local worker on **Dune** (`tools/feedback-worker/`, excluded from the site) watches the queue, runs a local **Ollama** model, and writes the coaching back, which the page shows live and then deletes. The browser never contacts Ollama — only Firestore. Offline-safe (shows "coach is offline" if Dune/worker is down). Setup: `tools/feedback-worker/README.md`.
+
 **Locked lessons (parents/admins only):** a locked lesson is hidden from the learner's nav and every page under `/<slug>/` is gated behind a parent/admin sign-in (same mechanism as answer keys, via `assets/auth.js` + the optional Firebase auth; see FIREBASE-SETUP.md). Two ways to set it: `locked: true` on the lesson in `_data/subjects.yml` (a build-time baseline), **or** an admin toggles it live on `/admin.html` (stored in Firestore `config/lessons`, which overrides the registry — no redeploy; takes effect on the learner's next page load). Like the answer-key gate, this is obscurity for normal use, not repo-level secrecy.
 
 **Hosting:** GitHub Pages, deployed from branch `main`, folder `/ (root)`, classic branch build (no GitHub Action). A push to main redeploys in about 1 minute.
