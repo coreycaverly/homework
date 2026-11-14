@@ -74,6 +74,41 @@ engine for these.
 - Last line: a small parent note linking the answer key:
   `<small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>`
 
+## Practice answers + AI coach (every guide's practice list is interactive)
+
+Each guide's practice list becomes on-page answer boxes via `assets/practice.js`. The
+learner types an answer and either **Check**s it (instant ✓/✗) or taps **💬** for AI
+coaching on that one question (a local model on the "Dune" box, through a Firestore
+queue — the full backend is in `CLAUDE.md` under "Inline practice answers + AI coach").
+When you write a guide, do these three things:
+
+1. **One question per line.** Each practice item must be its own list line (`1.`, `2.`, …
+   on separate lines) so it renders as its own `<li>` and gets its own box. Do **not**
+   pack several questions onto one line — that renders as a single item with one box.
+2. **Add the marker right after the practice `<ol>`** (before the Cheat card):
+
+   ```
+   <div class="hw-practice" data-kind="KIND" data-answers='["ANS_1","ANS_2"]'></div>
+   <script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
+   ```
+3. **Pick `data-kind` and `data-answers`:**
+   - `data-kind` chooses the coaching prompt + model: **`paragraph`** or **`paraphrase`**
+     (editing/writing), **`research`** (restate + what/when/where/why, in own words),
+     **`math`** (reasons to catch a wrong answer, never reveals it). Default to `math`
+     for any subject with equations/computation; use the writing kinds for English.
+   - `data-answers` is a JSON array with **one answer per question, in the same order**.
+     Include it when each question has a definite answer (adds the instant ✓/✗ Check).
+     **Omit it** for open/free-response practice (💬 AI feedback only) — e.g. "explain
+     it", paraphrasing, research answers. Keep answers in the canonical form a 6th grader
+     would type (`"30 square units"`, `"$48"`, `"x = 6"`, `"−6"`); the matcher is lenient
+     (strips `$ %`, units, `x =`, normalizes `−`/`½`, numeric-compares) but keep them simple.
+
+To add a **new feedback kind + model** (e.g. a dedicated science or history model), add a
+`FOCUS` prompt in `tools/feedback-worker/worker.js` and a kind→model entry in
+`tools/feedback-worker/models.json` — no site change beyond the new `data-kind`.
+
+## Color code quick reference (CSS tokens used in grammar/quiz.html)
+
 ## Color code quick reference (CSS tokens used in grammar/quiz.html)
 
 - Adjective `--adj:#2563D9`, Adverb `--adv:#11875A`, Article `--art:#C9630F`

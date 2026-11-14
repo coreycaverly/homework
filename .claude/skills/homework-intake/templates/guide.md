@@ -34,9 +34,19 @@ Explain the rule in one or two plain sentences. Then teach the traps:
 
 ## Practice: spot it, fix it
 
-Circle the wrong word and write the fix. One has no mistake (a trick!).
+Write **one question per line** — each line becomes its own on-page answer box. One item
+has no mistake (a trick!).
 
 1. **\[TYPE\]** ORIGINAL SENTENCE. Fix: \_\_\_\_\_\_\_\_
+2. **\[TYPE\]** ORIGINAL SENTENCE. Fix: \_\_\_\_\_\_\_\_
+
+<!-- Inline practice answers + AI coach (see design-system.md "Practice answers + AI coach").
+     data-kind picks the coaching prompt + model: paragraph | paraphrase | research | math.
+     data-answers is a JSON array with ONE answer per question, in order — include it when
+     questions have a definite answer (adds an instant ✓/✗ Check button); OMIT it for
+     free-response practice (💬 AI feedback only). Place this right after the practice list. -->
+<div class="hw-practice" data-kind="KIND" data-answers='["ANSWER_1","ANSWER_2"]'></div>
+<script src="{{ '/assets/practice.js' | relative_url }}" defer></script>
 
 ## Cheat card (cut out and keep by the homework)
 

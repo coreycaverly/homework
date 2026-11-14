@@ -181,7 +181,11 @@ new trap to add. Write the diagnosis to `_intake/<subject>/diagnosis-<date>.md` 
   `templates/guide.md`. Keep the breadcrumb back to the landing (`[← <Name>](./)`), the
   3-pass method framing, the Wrong / Right / Clue table format, the cheat card, the
   STOP & CHECK finish box, and the discreet parent link. Add only sections the worksheet
-  justifies.
+  justifies. **Write the practice list one question per line**, and right after it add the
+  interactive answer-box marker (`<div class="hw-practice" data-kind="…" data-answers='…'>`
+  + the `practice.js` script) so each question gets an on-page answer box with instant
+  ✓/✗ Check + 💬 AI feedback — see `references/design-system.md` "Practice answers + AI
+  coach" for `data-kind` and `data-answers`.
 - **Quiz** (`<subject>/quiz.html`): see `references/quiz-format.md`. For
   editing / find-the-error subjects, **copy `grammar/quiz.html`** and swap its data
   and labels — do not rewrite the engine. For other subjects, build the
@@ -243,6 +247,8 @@ Because a collaborator on another computer needs to see this work, "done" means
 - [ ] Answer key (if any) is linked only from the guide's parent note.
 - [ ] Hub/registry updated correctly; existing lessons untouched.
 - [ ] Each page has correct breadcrumb/quiz/back links.
+- [ ] Guide practice is **one question per line** with the `hw-practice` marker + `practice.js`
+      right after it (`data-answers` included where answers are definite; correct `data-kind`).
 - [ ] Quiz still self-contained (no new dependencies) and matches the color code.
 - [ ] You added, didn't remove.
 - [ ] **Committed AND pushed** to `main`; `git status` clean (except gitignored `_intake/`),
