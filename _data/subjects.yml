@@ -13,6 +13,8 @@
     - { name: "Conjunctions, Prepositions & Interjections", slug: editor, emoji: "🔗", added: 2026-11-05, quiz: true, blurb: "Conjunctions, prepositions, and interjections — find the mistake, fix it." }
     - { name: "Writing", slug: writing, emoji: "✍️", added: 2026-11-05, quiz: true, blurb: "Full sentences, homophones, and explaining your answer — the points you lose in every class." }
     - { name: "Vocabulary", slug: vocab, emoji: "📖", added: 2026-11-11, quiz: true, blurb: "This week's word list: say it in your own words, pick the right meaning, and use it in a sentence." }
+    - { name: "Paraphrasing", slug: paraphrasing, emoji: "🔁", added: 2026-11-13, quiz: true, blurb: "Put it in your own words — new words, new order — without copying or changing the meaning." }
+    - { name: "Paragraph Writing", slug: paragraphs, emoji: "🧱", added: 2026-11-13, quiz: true, blurb: "Build a full paragraph: topic sentence, evidence you actually explain, transitions, and a conclusion." }
 - subject: Math
   slug: math
   emoji: "🧮"

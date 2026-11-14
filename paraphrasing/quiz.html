@@ -1,0 +1,229 @@
+---
+title: Paraphrasing
+layout: default
+---
+
+{% raw %}
+<div id="app"></div>
+<p class="quiz-nav"><a href="guide.html">Study guide</a> · <a href="../english/">All English lessons</a></p>
+
+<style>
+/* Quiz UI, themed to sit inside the cayman page. Color = skill:
+   Own Words purple, Switch the Order teal, Keep & Check amber. */
+#app{max-width:640px;margin:1.25rem auto 0;display:flex;flex-direction:column;gap:20px}
+#app *{box-sizing:border-box}
+.quiz-nav{text-align:center;margin-top:28px}
+:root{
+  --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A2042; --muted:#5B6386; --line:#DCE0EC; --hover:#EEF1F8;
+  --words:#7C3AED; --words-soft:#EDE4FD; --order:#0D9488; --order-soft:#D6F0EC; --check:#C2410C; --check-soft:#FFE8D6;
+  --hl:#FFE14D; --hl-ink:#1A2042; --miss:#D93A4A; --miss-soft:#FCE4E7; --good:#0D9488;
+}
+#app, #app button{font-family:inherit}
+#app p{margin:0}
+#app button{color:inherit;cursor:pointer;border:0;background:none}
+#app button:focus-visible{outline:3px solid var(--words);outline-offset:2px}
+.muted{color:var(--muted)}
+.mark{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .1em}
+.intro{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
+.big-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--ink);color:var(--bg);border-radius:16px;padding:18px 20px;font-weight:600;font-size:1.15rem;transition:transform .12s}
+.big-btn small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.big-btn:hover{transform:translateY(-2px)}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.topic{border-radius:14px;padding:14px 10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;transition:transform .12s}
+.topic:hover{transform:translateY(-2px)}
+.topic span{font-size:.72rem;font-weight:400}
+.t-words{background:var(--words-soft);color:var(--words)} .t-order{background:var(--order-soft);color:var(--order)} .t-check{background:var(--check-soft);color:var(--check)}
+.c-words{color:var(--words)} .c-order{color:var(--order)} .c-check{color:var(--check)}
+.label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--hover);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;font-variant-numeric:tabular-nums}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.95rem}
+.back:hover{background:var(--hover)}
+.dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)} .dot.now{background:var(--ink)}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{align-self:flex-start;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.badge.mystery{background:var(--hover);color:var(--muted)}
+.badge.t-words{background:var(--words-soft);color:var(--words)} .badge.t-order{background:var(--order-soft);color:var(--order)} .badge.t-check{background:var(--check-soft);color:var(--check)}
+.prompt{font-weight:600;font-size:1.2rem;line-height:1.35}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.choice{border:2px solid var(--line);border-radius:12px;padding:14px;font-weight:600;font-size:1.02rem;background:var(--card);min-height:52px;text-align:left}
+.choice:hover{border-color:var(--ink)}
+.choice.t-words{background:var(--words-soft)} .choice.t-order{background:var(--order-soft)} .choice.t-check{background:var(--check-soft)}
+.choice.oops{border-color:var(--miss);animation:shake .35s}
+.hint{background:var(--hover);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.hint b{font-weight:600}
+.result{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.result.words{background:var(--words-soft)} .result.order{background:var(--order-soft)} .result.check{background:var(--check-soft)}
+.result strong{font-weight:800;font-size:1.2rem}
+.answerline{font-weight:600}
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px;font-weight:600;font-size:1.1rem}
+.stars{font-size:2.2rem;letter-spacing:4px;color:#E8B400}
+.stars .off{color:var(--line)}
+.pop{animation:pop .4s}
+.rules{margin:0;padding-left:20px;display:grid;gap:6px}
+.center{align-items:center;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:440px){.topics{grid-template-columns:1fr}.topic{flex-direction:row;justify-content:space-between;padding:14px 16px}}
+</style>
+
+<script>
+const BANK=[
+ // OWN WORDS — swap key words for synonyms, don't copy
+ {t:'words',q:"Paraphrasing means…",a:"Putting the idea in your own words",o:["Copying it with quote marks","Shortening it by deleting words","Translating it to another language"],why:"A paraphrase says the same idea a new way, in words that sound like you."},
+ {t:'words',q:"Which is a real paraphrase of “The ancient bridge collapsed during the storm”?",a:"An old bridge fell down in the storm.",o:["The ancient bridge collapsed during the storm.","The ancient bridge collapsed in the storm.","“The ancient bridge collapsed during the storm.”"],why:"Swap the key words (ancient→old, collapsed→fell down). Changing one word, or adding quotes, is still copying."},
+ {t:'words',q:"Changing only ONE word (big → large) and keeping the rest is…",a:"Still copying",o:["A perfect paraphrase","Allowed if you add quotes","Switching the order"],why:"A real paraphrase swaps the key words, not just one. Say the whole idea your own way."},
+ {t:'words',q:"Which copies too much? Original: “Scientists discovered a new species of frog.”",a:"Scientists discovered a new species of frog.",o:["Researchers found a new kind of frog.","A new type of frog was found by scientists.","Scientists found a frog nobody had seen before."],why:"The first just repeats the original. The others use their own words."},
+ {t:'words',q:"Pick the paraphrase that uses its own words. Original: “The journey was difficult.”",a:"The trip was hard.",o:["The journey was difficult.","The journey was very difficult.","The difficult journey."],why:"trip = journey, hard = difficult. The others reuse the original's words."},
+ {t:'words',q:"Trick — is this a good paraphrase? “Bees help plants grow by moving pollen.” → “Bees carry pollen, which helps plants grow.”",a:"Yes — new words and new order, same meaning",o:["No, it changed the meaning","No, it's too short","No, it must use the word 'pollen' only once"],why:"It swaps words (help→carry) and flips the order, but keeps the meaning. That's a strong paraphrase."},
+ // SWITCH THE ORDER — rearrange the ideas / sentence shape
+ {t:'order',q:"Besides using your own words, a strong paraphrase also…",a:"Changes the order of the ideas or the sentence shape",o:["Keeps the exact same order","Starts with the same first word","Is always longer than the original"],why:"New words AND new order — that's what makes it truly yours, not a copy with synonyms."},
+ {t:'order',q:"Which SWITCHES the structure? Original: “Because it rained, the game was canceled.”",a:"The game was called off, since it had rained.",o:["Because it rained, the game was canceled.","Because it rained, the game was called off.","Because of the rain, the game was canceled."],why:"It flips the order (result first, reason second) and swaps words. The others keep the 'Because…' order."},
+ {t:'order',q:"Reorder this: “First the dough rises, then you bake it.”",a:"You bake the dough after it has risen.",o:["First the dough rises, then you bake it.","First the dough rises, then you cook it.","The dough rises first, then you bake it."],why:"Putting the baking first and the rising second changes the order — a real rephrase."},
+ {t:'order',q:"Why switch the order of the ideas?",a:"So it's truly your own, not the original with a few words swapped",o:["To make the paragraph longer","To confuse the reader","Because teachers like it backwards"],why:"Same order plus a few synonyms still reads as a copy. New order proves you reworded it."},
+ {t:'order',q:"Trick — does this need reordering? “The storm knocked out the power all night.” → “All night, the town had no electricity because of the storm.”",a:"No — it already reordered and reworded it",o:["Yes, keep the original order","Yes, it changed the meaning","Yes, it's too long"],why:"It moved 'all night' to the front and reworded the rest, same meaning. Already strong."},
+ // KEEP & CHECK — same meaning, complete sentences, homophones
+ {t:'check',q:"A good paraphrase must still…",a:"Mean the same thing as the original",o:["Add your own opinion","Be longer than the original","Use the fanciest words you can find"],why:"New words and new order — but the meaning stays the same."},
+ {t:'check',q:"“You don't have to include every tiny detail” means…",a:"Keep the main idea; you can trim small details",o:["Delete half the words at random","Change what it means","Only copy the first sentence"],why:"Trim little details, keep the important parts and the meaning."},
+ {t:'check',q:"What's wrong with this paraphrase? “Because the volcano erupted.”",a:"It's a fragment — no who + did what",o:["Nothing, it's complete","It needs an exclamation point","It should be a question"],why:"A 'because' piece alone can't stand. Add the rest: 'People fled because the volcano erupted.'"},
+ {t:'check',q:"Fix the run-on paraphrase: “The team practiced hard they won the game.”",a:"The team practiced hard, so they won the game.",o:["The team practiced hard they, won the game.","The team practiced hard they won the game!","The team, practiced hard they won the game."],why:"Two complete ideas squished together — split with a period or join with ', so'."},
+ {t:'check',q:"Choose the right word: “The cats chased ___ toy.”",a:"their",o:["there","they're","thair"],why:"their = they own it. (there = a place; they're = they are.)"},
+ {t:'check',q:"Last step before you turn in a paraphrase?",a:"Reread it: my own words, new order, same meaning, complete sentences",o:["Make it as long as possible","Add a quote from the original","Change the meaning to be interesting"],why:"STOP & CHECK: reread for own words, new order, same meaning, and complete sentences."}
+];
+const NAME={words:"Own Words",order:"Switch the Order",check:"Keep & Check"};
+const HINT={
+ words:"<b>Own words:</b> read it, look away, and say the idea your way. Swap the KEY words for synonyms — changing just one word (or adding quotes) is still copying.",
+ order:"<b>Switch the order:</b> don't leave the ideas in the same order. Flip the sentence around (result first, reason second), so it's truly yours — not a copy with a few synonyms.",
+ check:"<b>Keep & check:</b> it has to mean the same thing, with the important parts kept. Then check it's complete sentences — no fragments, no run-ons — and watch homophones (there/their)."
+};
+const RULE={
+ words:"Paraphrase = your own words. Swap the key words for synonyms; one changed word is still copying.",
+ order:"Change the order of the ideas or the sentence shape — new words AND new order.",
+ check:"Keep the meaning and the important parts. Complete sentences only (no fragments/run-ons); check homophones."
+};
+
+const app=document.getElementById('app');
+let S=null;
+const stats=load();
+function load(){try{return JSON.parse(localStorage.getItem('para-stats'))||{cases:0,stars:0}}catch(e){return{cases:0,stars:0}}}
+function save(){try{localStorage.setItem('para-stats',JSON.stringify(stats))}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>(''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function home(){
+  S=null;
+  app.innerHTML=`
+  <p class="intro muted">New words, new order, same meaning. Short rounds — about 3 minutes.</p>
+  <button class="big-btn" data-act="start" data-mode="mix">
+    <div>Quick round<small>5 questions · all three skills · about 3 minutes</small></div><span aria-hidden="true">→</span>
+  </button>
+  <div class="card">
+    <span class="label">Practice one skill (6 questions)</span>
+    <div class="topics">
+      <button class="topic t-words" data-act="start" data-mode="words">Own Words<span>swap in synonyms</span></button>
+      <button class="topic t-order" data-act="start" data-mode="order">Switch the Order<span>rearrange ideas</span></button>
+      <button class="topic t-check" data-act="start" data-mode="check">Keep &amp; Check<span>same meaning</span></button>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">How it works</span>
+    <ol class="steps">
+      <li><span><b>Read</b> the question and <b>pick</b> the answer.</span></li>
+      <li><span>Every answer gives you the <b>why</b> — the rule to remember.</span></li>
+      <li><span>In a quick round, <b>name the skill</b> for a bonus star.</span></li>
+    </ol>
+    <div class="stats muted"><span>Rounds done: <b>${stats.cases}</b></span><span>Stars earned: <b>${stats.stars}</b> ★</span></div>
+  </div>`;
+}
+
+function start(mode){
+  const pool=mode==='mix'?BANK:BANK.filter(q=>q.t===mode);
+  const n=mode==='mix'?5:6;
+  S={mode,qs:shuffle(pool).slice(0,n),i:0,stars:0,max:0,missed:new Set()};
+  setupQ();
+}
+function setupQ(){
+  const q=S.qs[S.i];
+  Object.assign(S,{phase:'answer',miss:0,typeMiss:0,msg:'',opts:shuffle([q.a,...q.o]),pts:0,oops:null});
+  S.max+=S.mode==='mix'?2:1;
+  render();
+}
+function render(){
+  const q=S.qs[S.i], mix=S.mode==='mix', ph=S.phase;
+  const dots=S.qs.map((_,k)=>`<span class="dot ${k<S.i?'done':k===S.i?'now':''}"></span>`).join('');
+  let body='';
+  if(ph==='answer'){
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <div class="choices">${S.opts.map((o,k)=>`<button class="choice ${S.oops==='o'+k?'oops':''}" data-act="answer" data-k="${k}">${esc(o)}</button>`).join('')}</div>`;
+  }else if(ph==='type'){
+    body=`<p class="prompt">Bonus star: what skill was that question?</p>
+    <div class="choices">${['words','order','check'].map(t=>`<button class="choice t-${t} ${S.oops==='t'+t?'oops':''}" data-act="type" data-t="${t}">${NAME[t]}</button>`).join('')}</div>`;
+  }else{
+    const of=mix?2:1;
+    body=`<p class="prompt">${esc(q.q)}</p>
+    <p class="answerline c-${q.t}">✓ ${esc(q.a)}</p>
+    <div class="result ${q.t}"><strong class="pop">${S.pts===of?'Perfect!':S.pts>0?'Nice!':'Got it.'} ${'★'.repeat(S.pts)}</strong><p>${esc(q.why)}</p></div>
+    <button class="next" data-act="next">${S.i<S.qs.length-1?'Next question →':'See my results →'}</button>`;
+  }
+  const badge=(!mix||ph==='done')?`<span class="badge t-${q.t}">${NAME[q.t]}</span>`:`<span class="badge mystery">Mixed</span>`;
+  app.innerHTML=`
+  <div class="topbar"><button class="back" data-act="home">← Home</button><div class="dots" role="img" aria-label="Question ${S.i+1} of ${S.qs.length}">${dots}</div><span class="score">★ ${S.stars}</span></div>
+  <section class="card">${badge}${body}${S.msg?`<div class="hint" role="status">${S.msg}</div>`:''}</section>`;
+  S.oops=null;
+}
+function missHint(q){
+  S.miss++;
+  if(S.miss===1)S.msg="Not quite — read it again slowly, out loud in a whisper.";
+  else S.msg=HINT[q.t];
+}
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const a=b.dataset.act;
+  if(a==='home')return home();
+  if(a==='start')return start(b.dataset.mode);
+  const q=S&&S.qs[S.i]; if(!q)return;
+  if(a==='answer'&&S.phase==='answer'){
+    const o=S.opts[+b.dataset.k];
+    if(o===q.a){ if(S.miss===0)S.pts++; else S.missed.add(q.t); S.msg=''; S.phase=S.mode==='mix'?'type':'done'; }
+    else{ S.oops='o'+b.dataset.k; missHint(q); }
+    return render();
+  }
+  if(a==='type'&&S.phase==='type'){
+    if(b.dataset.t===q.t){ if(S.typeMiss===0)S.pts++; S.msg=''; S.phase='done'; }
+    else{ S.oops='t'+b.dataset.t; S.typeMiss++; S.msg="Look again. Is it about using your own words (Own Words), rearranging (Switch the Order), or keeping the meaning (Keep & Check)?"; }
+    return render();
+  }
+  if(a==='next'){
+    S.stars+=S.pts;
+    if(S.i<S.qs.length-1){S.i++;return setupQ()}
+    return finish();
+  }
+});
+function finish(){
+  stats.cases++; stats.stars+=S.stars; save();
+  try{localStorage.setItem('hw-done-paraphrasing',new Date().toISOString().slice(0,10))}catch(e){}
+  const pct=S.max?S.stars/S.max:0, on=Math.min(5,Math.round(pct*5));
+  const head=pct>=.9?"Amazing!":pct>=.6?"Nice work!":"Good work sticking with it!";
+  const rules=[...S.missed].map(t=>`<li><b class="c-${t}">${NAME[t]}:</b> ${RULE[t]}</li>`).join('');
+  app.innerHTML=`
+  <section class="card center">
+    <span class="label">Results</span>
+    <h2>${head}</h2>
+    <div class="stars pop" aria-hidden="true">${'★'.repeat(on)}<span class="off">${'★'.repeat(5-on)}</span></div>
+    <p><b>${S.stars}</b> of ${S.max} stars</p>
+  </section>
+  ${rules?`<section class="card"><span class="label">Rules to remember</span><ul class="rules">${rules}</ul></section>`:''}
+  <button class="big-btn" data-act="start" data-mode="${S.mode}"><div>Another round<small>Same skill, new questions</small></div><span aria-hidden="true">→</span></button>
+  <button class="back" data-act="home">← Home</button>`;
+}
+home();
+</script>
+{% endraw %}
