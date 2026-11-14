@@ -28,12 +28,36 @@
     setTimeout(function () { ready(cb, tries + 1); }, 250);
   }
 
+  // Pull the practice questions from the numbered list just above the widget.
+  var QUESTIONS = [];
+  function findQuestions() {
+    var ol = null, el = host.previousElementSibling;
+    while (el) { if (el.tagName === "OL") { ol = el; break; } el = el.previousElementSibling; }
+    if (!ol) return [];
+    var out = [], items = ol.querySelectorAll(":scope > li");
+    for (var i = 0; i < items.length; i++) {
+      var t = (items[i].textContent || "").replace(/\s+/g, " ").replace(/_{2,}.*$/, "").trim();
+      if (t) out.push(t);
+    }
+    return out;
+  }
+
   function renderIntro() {
+    QUESTIONS = findQuestions();
+    var picker = "";
+    if (QUESTIONS.length) {
+      picker = '<label class="coach-picklabel" for="coach-q">Answering a practice question? Pick it:</label>' +
+        '<select id="coach-q" class="coach-sel"><option value="-1">— just my own writing —</option>' +
+        QUESTIONS.map(function (q, i) {
+          return '<option value="' + i + '">Q' + (i + 1) + ': ' + esc(q.length > 72 ? q.slice(0, 72) + "…" : q) + "</option>";
+        }).join("") + "</select>";
+    }
     host.innerHTML =
       '<div class="coach-card">' +
         '<div class="coach-head"><span class="coach-emoji" aria-hidden="true">💬</span>' +
-        '<div><b>Get writing feedback</b><small>A coach reads your writing and gives friendly tips. It never writes it for you.</small></div></div>' +
-        '<textarea id="coach-in" class="coach-ta" rows="6" placeholder="Paste or type your ' +
+        '<div><b>Get feedback</b><small>A coach gives friendly tips on your work — never the answer itself.</small></div></div>' +
+        picker +
+        '<textarea id="coach-in" class="coach-ta" rows="5" placeholder="Type your ' +
         LABEL + ' here…"></textarea>' +
         '<div class="coach-row"><button id="coach-go" class="coach-btn">Get feedback</button>' +
         '<span id="coach-note" class="coach-note"></span></div>' +
@@ -56,16 +80,22 @@
   function submit() {
     var ta = document.getElementById("coach-in");
     var text = (ta.value || "").trim();
-    if (text.length < 15) { note("Write a little more first (at least a sentence or two)."); return; }
+    var sel = document.getElementById("coach-q");
+    var qi = sel ? parseInt(sel.value, 10) : -1;
+    var min = qi >= 0 ? 2 : 15; // with a picked question, a short answer is fine
+    if (text.length < min) { note("Write your answer first."); return; }
+    var payload = (qi >= 0 && QUESTIONS[qi])
+      ? "Practice question: " + QUESTIONS[qi] + "\n\nMy answer:\n" + text
+      : text;
     ready(function (A) {
       if (!A) { note("Feedback isn't available right now."); return; }
       if (!A.user) {
         note("");
-        showOut('<p>Sign in to get feedback on your writing.</p>' +
+        showOut('<p>Sign in to get feedback on your work.</p>' +
           '<p><button class="coach-btn" data-hw="signin">Sign in with Google</button></p>', "");
         return;
       }
-      sendRequest(A, text);
+      sendRequest(A, payload);
     });
   }
 
@@ -137,6 +167,9 @@
       ".coach-emoji{font-size:1.6rem;line-height:1}" +
       ".coach-head b{display:block;font-size:1.1rem;color:#16233b}" +
       ".coach-head small{color:#8b93b0}" +
+      ".coach-picklabel{display:block;font-size:.85rem;color:#5b6386;font-weight:600;margin:0 0 6px}" +
+      ".coach-sel{width:100%;box-sizing:border-box;border:1px solid #cdd3e4;border-radius:10px;padding:10px 12px;font:inherit;font-size:.95rem;background:#fff;min-height:44px;margin-bottom:10px}" +
+      ".coach-sel:focus{outline:3px solid #0d9488;outline-offset:1px;border-color:#0d9488}" +
       ".coach-ta{width:100%;box-sizing:border-box;border:1px solid #cdd3e4;border-radius:12px;padding:12px;font:inherit;font-size:1rem;line-height:1.45;resize:vertical;min-height:120px}" +
       ".coach-ta:focus{outline:3px solid #0d9488;outline-offset:1px;border-color:#0d9488}" +
       ".coach-row{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}" +

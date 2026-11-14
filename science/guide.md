@@ -160,6 +160,13 @@ Answer each one, then say your *"because…"* out loud.
 5. Forces on a box: 45 N right, 15 N left. Net force? \_\_\_\_\_\_\_\_
 6. Why don't Newton's 3rd Law force pairs cancel out? \_\_\_\_\_\_\_\_
 
+## Try it: get feedback
+
+Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="math"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ## Cheat card (cut out and keep by the homework)
 
 |  | Ask yourself | Watch for |
@@ -169,14 +176,6 @@ Answer each one, then say your *"because…"* out loud.
 | **Calculations** | What's the formula? Plug in, then units. | s = d÷t · a = Δv÷t · F = m×a · W = m×g · p = m×v |
 
 **Always answer with a "because…" — the law or the formula.**
-
-## Check your math — get feedback
-
-Type your answer and how you solved it. A coach checks your work, gives tips, and tells
-you if a step looks off — but never gives you the answer. Then fix it and run STOP & CHECK.
-
-<div id="hw-coach" data-kind="math"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
 
 ---
 

@@ -78,6 +78,13 @@ reason. Then run the whole thing through **CUPS+E**:
 5. **\[Connect\]** A conclusion should start with a \_\_\_\_\_\_\_\_ and restate the main idea.
 6. **\[Topic\]** Trick — is this a strong topic sentence? *"There are three reasons exercise is good for you."* \_\_\_\_\_\_\_\_
 
+## Try it: get feedback
+
+Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="paragraph"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ## Cheat card (cut out and keep by the homework)
 
 |  | Ask yourself | Watch for |
@@ -99,14 +106,6 @@ You're not done until **every box is ticked**:
 - ☐ I **whisper-read** it and it makes sense.
 
 **Evidence without a "so what?" loses points. Explain every reason, then connect it.**
-
-## Try it: get feedback
-
-Type a paragraph below and a coach gives you friendly tips — it never writes it for
-you. Then fix it yourself and run it through STOP & CHECK.
-
-<div id="hw-coach" data-kind="paragraph"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
 
 ---
 

@@ -70,6 +70,13 @@ Each one paraphrases the same idea. Write a better version (or mark it "already 
 5. **\[Own words\]** Trick — is this already a good paraphrase? Original: *"Bees move pollen between flowers."* → *"Bees carry pollen from flower to flower."* \_\_\_\_\_\_\_\_
 6. **\[Check\]** Choose: *"The cats chased \_\_\_ toy."* (there / their) \_\_\_\_\_\_\_\_
 
+## Try it: get feedback
+
+Pick a practice question above and type your answer. A coach gives you friendly tips — never the answer itself. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="paraphrase"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ## Cheat card (cut out and keep by the homework)
 
 |  | Ask yourself | Watch for |
@@ -90,14 +97,6 @@ You're not done until **every box is ticked**:
 - ☐ I checked **homophones** (there/their, to/too/two).
 
 **A paraphrase that's "too similar" loses points. New words, new order, same meaning.**
-
-## Try it: get feedback
-
-Type a paraphrase below and a coach gives you friendly tips — it never writes it for
-you. Then fix it yourself and run it through STOP & CHECK.
-
-<div id="hw-coach" data-kind="paraphrase"></div>
-<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
 
 ---
 
