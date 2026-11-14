@@ -166,6 +166,14 @@ thinking the way every teacher wants — with **ACE**:
 
 **Always label the answer with its units, and match what the question asked for.**
 
+## Check your math — get feedback
+
+Type your answer and how you solved it. A coach checks your work, gives tips, and tells
+you if a step looks off — but never gives you the answer. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="math"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ---
 
 <small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>

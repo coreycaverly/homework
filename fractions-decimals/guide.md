@@ -100,3 +100,11 @@ thinking the way every teacher wants — with **ACE**:
 1. 2  (⅘ × 5⁄2 = 20⁄10). &nbsp; 2. 10. &nbsp; 3. 3.35. &nbsp; 4. 0.42. &nbsp; 5. 9 (36 ÷ 4).
 
 </details>
+
+## Check your math — get feedback
+
+Type your answer and how you solved it. A coach checks your work, gives tips, and tells
+you if a step looks off — but never gives you the answer. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="math"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>

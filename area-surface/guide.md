@@ -99,3 +99,11 @@ thinking the way every teacher wants — with **ACE**:
 3. 52 square units (2·12 + 2·8 + 2·6 = 24 + 16 + 12).
 
 </details>
+
+## Check your math — get feedback
+
+Type your answer and how you solved it. A coach checks your work, gives tips, and tells
+you if a step looks off — but never gives you the answer. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="math"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>

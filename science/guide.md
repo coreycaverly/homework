@@ -170,6 +170,14 @@ Answer each one, then say your *"because…"* out loud.
 
 **Always answer with a "because…" — the law or the formula.**
 
+## Check your math — get feedback
+
+Type your answer and how you solved it. A coach checks your work, gives tips, and tells
+you if a step looks off — but never gives you the answer. Then fix it and run STOP & CHECK.
+
+<div id="hw-coach" data-kind="math"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ---
 
 <small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>
