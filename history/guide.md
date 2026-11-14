@@ -113,6 +113,14 @@ You're not done until **every box is ticked**:
 
 **Done and checked beats long and rushed. Reread the directions, tick the last box, then upload it on time.**
 
+## Try it: get feedback
+
+Type your research answer below and a coach gives you friendly tips — it never writes it
+for you. Then fix it yourself and run it through STOP & CHECK.
+
+<div id="hw-coach" data-kind="research"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ---
 
 <small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>

@@ -19,7 +19,7 @@ const admin = require("firebase-admin");
 const KEY_PATH = process.env.GOOGLE_APPLICATION_CREDENTIALS
   || path.join(__dirname, "service-account.json");
 const OLLAMA_URL = (process.env.OLLAMA_URL || "http://127.0.0.1:11434").replace(/\/$/, "");
-const MODEL = process.env.OLLAMA_MODEL || "gemma4:12b-mlx";
+const MODEL_OVERRIDE = process.env.OLLAMA_MODEL || null; // set to force ONE model for all kinds
 const GEN_TIMEOUT_MS = Number(process.env.GEN_TIMEOUT_MS || 180000);
 const MAX_INPUT = Number(process.env.MAX_INPUT_CHARS || 4000);
 
@@ -32,6 +32,14 @@ if (!fs.existsSync(KEY_PATH)) {
 admin.initializeApp({ credential: admin.credential.cert(require(KEY_PATH)) });
 const db = admin.firestore();
 const COL = db.collection("feedbackRequests");
+
+// ---- per-kind model routing (edit models.json to change) ----
+let MODEL_MAP = { default: "gemma4:12b-mlx", byKind: {} };
+try { MODEL_MAP = Object.assign({ byKind: {} }, require("./models.json")); }
+catch (e) { console.warn("[worker] no models.json — using default model only"); }
+function modelFor(kind) {
+  return MODEL_OVERRIDE || (MODEL_MAP.byKind && MODEL_MAP.byKind[kind]) || MODEL_MAP.default;
+}
 
 // ---- coaching prompts (kid-appropriate; coach, don't rewrite) ----
 const COACH_RULES =
@@ -47,26 +55,35 @@ const COACH_RULES =
   "can find it. Do not list every tiny error; pick the one or two that matter most. " +
   "Never be harsh; never say 'wrong'.";
 
+// What each kind of feedback should focus on. Add a kind here + a model in
+// models.json to support a new feedback type (e.g. math).
+const FOCUS = {
+  paragraph:
+    "The student is writing a PARAGRAPH (topic sentence, 3 pieces of evidence, conclusion). " +
+    "Focus your suggestions on: ELABORATION — after each piece of evidence, explaining the 'so what / why it matters'; " +
+    "adding TRANSITIONS between points (First, Next, Finally, In conclusion); restating the question in the topic sentence; " +
+    "and complete sentences.",
+  paraphrase:
+    "The student is practicing PARAPHRASING (putting a text in their own words). " +
+    "Focus your suggestions on: using more of their own words / synonyms instead of copying key words; " +
+    "changing the ORDER of the ideas (not the original with a few words swapped); keeping the same meaning; " +
+    "and writing complete sentences (no fragments or run-ons).",
+  research:
+    "The student is answering a research/history question in a short response. " +
+    "Focus your suggestions on: restating the question in the first sentence; covering WHAT happened, WHEN, WHERE, " +
+    "and WHY it mattered; using their own words (not copied); and complete sentences.",
+  math:
+    "The student is EXPLAINING a math answer (not just giving a number). " +
+    "Focus your suggestions on: restating the question in a sentence; showing the steps with LABELS and units (not a bare number); " +
+    "and explaining WHY the answer is right. If a step looks off, gently point them to recheck it — do NOT give them the final answer.",
+};
 function buildPrompt(kind, input) {
-  let focus;
-  if (kind === "paraphrase") {
-    focus =
-      "The student is practicing PARAPHRASING (putting a text in their own words). " +
-      "Focus your suggestions on: using more of their own words / synonyms instead of copying key words; " +
-      "changing the ORDER of the ideas (not the original with a few words swapped); keeping the same meaning; " +
-      "and writing complete sentences (no fragments or run-ons).";
-  } else {
-    focus =
-      "The student is writing a PARAGRAPH (topic sentence, 3 pieces of evidence, conclusion). " +
-      "Focus your suggestions on: ELABORATION — after each piece of evidence, explaining the 'so what / why it matters'; " +
-      "adding TRANSITIONS between points (First, Next, Finally, In conclusion); restating the question in the topic sentence; " +
-      "and complete sentences.";
-  }
+  const focus = FOCUS[kind] || FOCUS.paragraph;
   return `${COACH_RULES}\n\n${focus}\n\nHere is what the student wrote:\n"""\n${input}\n"""\n\nYour feedback:`;
 }
 
 // ---- Ollama call ----
-async function runModel(prompt) {
+async function runModel(prompt, model) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), GEN_TIMEOUT_MS);
   try {
@@ -75,7 +92,7 @@ async function runModel(prompt) {
       headers: { "Content-Type": "application/json" },
       // think:false → Gemma/Qwen "thinking" models answer directly instead of
       // spending the token budget on hidden reasoning (which leaves response empty).
-      body: JSON.stringify({ model: MODEL, prompt, stream: false, think: false, options: { num_predict: 512 } }),
+      body: JSON.stringify({ model, prompt, stream: false, think: false, options: { num_predict: 512 } }),
       signal: ctrl.signal,
     });
     if (!res.ok) throw new Error(`Ollama HTTP ${res.status}: ${await res.text()}`);
@@ -114,14 +131,16 @@ async function handleRequest(ref) {
   try {
     const input = String(claimed.input || "").slice(0, MAX_INPUT).trim();
     if (!input) throw new Error("empty input");
-    console.log(`[worker] ${id} (${claimed.kind || "paragraph"}) → ${MODEL}`);
+    const kind = claimed.kind || "paragraph";
+    const model = modelFor(kind);
+    console.log(`[worker] ${id} (${kind}) → ${model}`);
     const started = Date.now();
-    const response = await runModel(buildPrompt(claimed.kind, input));
+    const response = await runModel(buildPrompt(kind, input), model);
     console.log(`[worker] ${id} done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
     await ref.update({
       status: "done",
       response,
-      model: MODEL,
+      model,
       finishedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
   } catch (e) {
@@ -137,7 +156,10 @@ async function handleRequest(ref) {
 }
 
 // ---- watch for pending requests ----
-console.log(`[worker] watching feedbackRequests · model=${MODEL} · ollama=${OLLAMA_URL}`);
+console.log(`[worker] watching feedbackRequests · ollama=${OLLAMA_URL}`);
+console.log(`[worker] models: default=${MODEL_OVERRIDE || MODEL_MAP.default}` +
+  (MODEL_OVERRIDE ? " (OLLAMA_MODEL override forces all kinds)" :
+   " · byKind=" + JSON.stringify(MODEL_MAP.byKind || {})));
 COL.where("status", "==", "pending").onSnapshot(
   (snap) => {
     snap.docChanges().forEach((c) => {

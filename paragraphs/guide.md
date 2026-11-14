@@ -100,6 +100,14 @@ You're not done until **every box is ticked**:
 
 **Evidence without a "so what?" loses points. Explain every reason, then connect it.**
 
+## Try it: get feedback
+
+Type a paragraph below and a coach gives you friendly tips — it never writes it for
+you. Then fix it yourself and run it through STOP & CHECK.
+
+<div id="hw-coach" data-kind="paragraph"></div>
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>
+
 ---
 
 <small>Parents: the [answer key for the practice section](answer-key.html) is on a separate page.</small>

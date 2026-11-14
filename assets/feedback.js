@@ -13,6 +13,8 @@
   if (!window.HW_FIREBASE_READY) { return; } // auth not set up → quietly skip
 
   var KIND = host.getAttribute("data-kind") || "paragraph";
+  var LABELS = { paragraph: "paragraph", paraphrase: "paraphrase", research: "research answer", math: "explanation" };
+  var LABEL = LABELS[KIND] || "writing";
   var TIMEOUT_MS = 150000; // after this with no reply, assume the coach is offline
   var esc = function (s) { return ("" + (s == null ? "" : s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
 
@@ -32,7 +34,7 @@
         '<div class="coach-head"><span class="coach-emoji" aria-hidden="true">💬</span>' +
         '<div><b>Get writing feedback</b><small>A coach reads your writing and gives friendly tips. It never writes it for you.</small></div></div>' +
         '<textarea id="coach-in" class="coach-ta" rows="6" placeholder="Paste or type your ' +
-        (KIND === "paraphrase" ? "paraphrase" : "paragraph") + ' here…"></textarea>' +
+        LABEL + ' here…"></textarea>' +
         '<div class="coach-row"><button id="coach-go" class="coach-btn">Get feedback</button>' +
         '<span id="coach-note" class="coach-note"></span></div>' +
         '<div id="coach-out" class="coach-out" hidden></div>' +

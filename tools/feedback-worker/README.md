@@ -68,9 +68,22 @@ launchctl load ~/Library/LaunchAgents/net.caverly.feedback-worker.plist
 
 (Adjust the node path if you use nvm: `which node` and hardcode it in ProgramArguments.)
 
+## Per-kind models (`models.json`)
+Each feedback **kind** (set by `data-kind` on the site's `#hw-coach` widget) can use a
+different model, mapped in `models.json`:
+```json
+{ "default": "gemma4:12b-mlx",
+  "byKind": { "paragraph": "gemma4:12b-mlx", "paraphrase": "gemma4:12b-mlx",
+              "research": "gemma4:12b-mlx", "math": "qwen3.6:35b-mlx" } }
+```
+Add a kind here (and a matching `FOCUS` prompt in `worker.js`) to support a new feedback
+type with its own model — e.g. point `math` at a math-tuned model. Setting `OLLAMA_MODEL`
+in the environment overrides **all** kinds (handy for testing); leave it unset to use the
+per-kind map, so **don't set `OLLAMA_MODEL` in the launchd plist** if you want routing.
+
 ## Notes
-- **Model:** set `OLLAMA_MODEL`. 35b-mlx is best quality but slower; `qwen3:4b-instruct`
-  is snappy if you want faster feedback.
+- **Model:** per-kind via `models.json` (above). Prefer MLX builds on Apple Silicon;
+  `gemma4:e4b-mlx` is snappier (~1s), `gemma4:31b-mlx` a touch richer but slower (~7s).
 - **Security:** the worker makes only outbound connections. The service-account key is
   the one secret — it stays on Dune. Firestore rules stop students from reading each
   other's requests or forging responses.

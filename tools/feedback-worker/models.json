@@ -1,0 +1,10 @@
+{
+  "_note": "Which local model answers each feedback KIND. The site sends a kind (data-kind on the #hw-coach widget); the worker picks the model here. Prefer MLX builds on Apple Silicon. Setting OLLAMA_MODEL in the environment overrides ALL kinds (handy for testing).",
+  "default": "gemma4:12b-mlx",
+  "byKind": {
+    "paragraph": "gemma4:12b-mlx",
+    "paraphrase": "gemma4:12b-mlx",
+    "research": "gemma4:12b-mlx",
+    "math": "qwen3.6:35b-mlx"
+  }
+}
