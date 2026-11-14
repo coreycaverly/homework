@@ -44,7 +44,8 @@ function modelFor(kind) {
 // Math needs to REASON to catch wrong answers, so thinking is on with a big enough
 // token budget that it finishes thinking and still emits the coaching.
 const KIND_OPTS = {
-  math: { think: true, num_predict: 3000 },
+  // gpt-oss reasons compactly and still emits the answer within this budget.
+  math: { think: true, num_predict: 1500 },
 };
 function optsFor(kind) {
   return KIND_OPTS[kind] || { think: false, num_predict: 512 };
