@@ -23,7 +23,16 @@ area: english
   </ul>
 </nav>
 
+<section class="eng-coach">
+  <h2 class="eng-coach-h">✍️ Writing feedback</h2>
+  <p class="eng-coach-p">Working on any writing — a paragraph, an answer, an email? Type or paste it here and a coach gives friendly tips (never the answer itself). Your draft is saved on this device, so it won't be lost if you close the page.</p>
+  <div id="hw-coach" data-kind="paragraph" data-label="writing"></div>
+</section>
+
 <style>
+  .eng-coach { max-width: 560px; margin: 2rem auto 0; }
+  .eng-coach-h { margin: 0 0 .35rem; }
+  .eng-coach-p { margin: 0; color: #4a5578; }
   .hub-intro { max-width: 560px; margin: 1.25rem auto 0; color: #4a5578; }
   .hub { max-width: 560px; margin: 1.25rem auto 0; }
   .hub .subj-list { list-style: none; margin: 0; padding: 0; }
@@ -56,3 +65,5 @@ area: english
 })();
 </script>
 {% endraw %}
+
+<script src="{{ '/assets/feedback.js' | relative_url }}" defer></script>

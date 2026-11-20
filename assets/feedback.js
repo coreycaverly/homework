@@ -14,9 +14,15 @@
 
   var KIND = host.getAttribute("data-kind") || "paragraph";
   var LABELS = { paragraph: "paragraph", paraphrase: "paraphrase", research: "research answer", math: "explanation" };
-  var LABEL = LABELS[KIND] || "writing";
+  var LABEL = host.getAttribute("data-label") || LABELS[KIND] || "writing";
   var TIMEOUT_MS = 150000; // after this with no reply, assume the coach is offline
   var esc = function (s) { return ("" + (s == null ? "" : s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+
+  // Keep the learner's draft on this device so closing the page doesn't lose it.
+  // Keyed per page + kind; survives reloads, and we never auto-clear it.
+  var DRAFT_KEY = "hw-coach-draft:" + location.pathname + ":" + KIND;
+  function loadDraft() { try { return localStorage.getItem(DRAFT_KEY) || ""; } catch (e) { return ""; } }
+  function saveDraft(v) { try { v ? localStorage.setItem(DRAFT_KEY, v) : localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
 
   injectStyles();
   renderIntro();
@@ -64,6 +70,12 @@
         '<div id="coach-out" class="coach-out" hidden></div>' +
       "</div>";
     document.getElementById("coach-go").onclick = submit;
+    var ta = document.getElementById("coach-in");
+    if (ta) {
+      var saved = loadDraft();
+      if (saved) ta.value = saved;
+      ta.addEventListener("input", function () { saveDraft(ta.value); });
+    }
   }
 
   function note(t) { var n = document.getElementById("coach-note"); if (n) n.textContent = t || ""; }
